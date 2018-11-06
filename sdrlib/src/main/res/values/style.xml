@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自定义的Dialog-->
+    <style name="SDR.Theme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="SDR.Theme.Dialog.NoBlur">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <!--————————————————————toolbar主题 start——————————————————————————-->
+
+
+    <!--黑色-->
+    <style name="ThemeToolbarBlack" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+
+    </style>
+
+    <!--白色-->
+    <style name="ThemeToolbarWhite" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <!--toolbar popwindow样式-->
+    <!--黑色背景-->
+    <style name="ThemeToolbarWhite.OverFlowMenuTheme" parent="ThemeOverlay.AppCompat.Dark">
+
+    </style>
+
+    <!--白色背景-->
+    <style name="ThemeToolbarBlack.OverFlowMenuTheme" parent="ThemeOverlay.AppCompat.Light">
+
+    </style>
+
+    <!--————————————————————toolbar主题 end——————————————————————————-->
+
+
+    <!--————————————————————popupwindow的显示动画 start——————————————————————-->
+
+    <!--popwindow从下方显示-->
+    <style name="Popwindow.Animation.Bottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/sdr_anim_pop_show_bottom</item>
+        <item name="android:windowExitAnimation">@anim/sdr_anim_pop_hide_bottom</item>
+    </style>
+
+    <!--popwindow从左上角显示-->
+    <style name="Popwindow.Animation.LeftTop" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/sdr_anim_pop_show_left_top</item>
+        <item name="android:windowExitAnimation">@anim/sdr_anim_pop_hide_left_top</item>
+    </style>
+
+    <!--popwindow从右上角显示-->
+    <style name="Popwindow.Animation.RightTop" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/sdr_anim_pop_show_right_top</item>
+        <item name="android:windowExitAnimation">@anim/sdr_anim_pop_hide_right_top</item>
+    </style>
+    <!--popwindow从左下角显示-->
+    <style name="Popwindow.Animation.LeftBottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/sdr_anim_pop_show_left_bottom</item>
+        <item name="android:windowExitAnimation">@anim/sdr_anim_pop_hide_left_bottom</item>
+    </style>
+    <!--popwindow从右下角显示-->
+    <style name="Popwindow.Animation.RightBottom" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/sdr_anim_pop_show_right_bottom</item>
+        <item name="android:windowExitAnimation">@anim/sdr_anim_pop_hide_right_bottom</item>
+    </style>
+    <!--————————————————————popupwindow的显示动画 end——————————————————————-->
+</resources>

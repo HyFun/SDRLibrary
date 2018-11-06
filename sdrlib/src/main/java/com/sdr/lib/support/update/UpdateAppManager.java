@@ -1,0 +1,184 @@
+package com.sdr.lib.support.update;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+
+import com.sdr.lib.ui.dialog.SDRSimpleDialog;
+import com.sdr.lib.ui.dialog.SDRUpdateDialog;
+import com.sdr.lib.ui.dialog.SDRUpdateDownloadDialog;
+import com.sdr.lib.util.CommonUtil;
+
+import java.io.File;
+
+/**
+ * Created by HyFun on 2018/10/30.
+ * Email:775183940@qq.com
+ */
+
+public class UpdateAppManager {
+
+    public static final void checkUpdate(Context context, String appName, int versionCode, String savePath, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
+        UpdatePresenter presenter = new UpdatePresenter(new UpdateImp(context, savePath, showDialog, needUpdateListener));
+        presenter.check(appName, versionCode);
+    }
+
+
+    private static class UpdateImp implements UpdateView {
+        private Context context;
+        private String savePath;
+        private boolean showDialog;
+        private AppNeedUpdateListener needUpdateListener;
+
+        public UpdateImp(Context context, String savePath, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
+            this.context = context;
+            this.savePath = savePath;
+            this.showDialog = showDialog;
+            this.needUpdateListener = needUpdateListener;
+        }
+
+        private SDRSimpleDialog simpleDialog;
+
+        @Override
+        public void showCheckDialog(String message) {
+            if (showDialog) {
+                if (simpleDialog == null) {
+                    simpleDialog = new SDRSimpleDialog.Builder(context)
+                            .cancel(false)
+                            .blur(true)
+                            .content(message)
+                            .build();
+                }
+                simpleDialog.show();
+            }
+        }
+
+        @Override
+        public void showCheckDialogResult(String message) {
+            if (showDialog) {
+                if (simpleDialog != null) {
+                    simpleDialog.setContent(message);
+                    simpleDialog.setCancel(true);
+                }
+            }
+        }
+
+        @Override
+        public void hideCheckDialog() {
+            if (simpleDialog != null) {
+                simpleDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void isNeedUpdate(boolean need) {
+            if (needUpdateListener != null) {
+                needUpdateListener.isNeedUpdate(need);
+            }
+        }
+
+        @Override
+        public void showUpdateDialog(UpdatePresenter presenter, String versionName, String downLoadUrl, String updateDetail) {
+            // 显示更新提示框
+            // 首先判断该activity是否已经下载了
+            String apkName = getFileNameByUrl(downLoadUrl);
+            File localFile = getLocalExistFile(apkName, savePath);
+
+            new SDRUpdateDialog.Builder(context)
+                    .title(localFile == null ? "是否更新到" + versionName + "版本？" : "已下载好" + versionName + "版本，是否安装？")
+                    .content(updateDetail)
+                    .positiveText(localFile == null ? "立即更新" : "立即安装")
+                    .listener(new SDRUpdateDialog.OnclickUpdateListener() {
+                        @Override
+                        public void clickUpdate(SDRUpdateDialog dialog) {
+                            if (localFile == null) {
+                                presenter.downLoadApk(downLoadUrl, apkName, savePath);
+                            } else {
+                                CommonUtil.installApk(context, localFile);
+                            }
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void clickBrowser(SDRUpdateDialog dialog) {
+                            // 跳转到浏览器去下载
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            Uri content_url = Uri.parse(downLoadUrl);
+                            intent.setData(content_url);
+                            context.startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    })
+                    .build()
+                    .show();
+        }
+
+
+        private SDRUpdateDownloadDialog downloadDialog;
+
+        @Override
+        public void showDownLoadDilog(String message) {
+            if (downloadDialog == null) {
+                downloadDialog = new SDRUpdateDownloadDialog.Builder(context)
+                        .build();
+            }
+            downloadDialog.show();
+        }
+
+        @Override
+        public void onDownLoadProgress(int progress) {
+            if (downloadDialog != null) {
+                downloadDialog.setProgress(progress);
+            }
+        }
+
+        @Override
+        public void onDownLoadSuccess(File file) {
+            if (downloadDialog != null) {
+                downloadDialog.dismiss();
+            }
+            // 安装app
+            CommonUtil.installApk(context, file);
+        }
+
+        @Override
+        public void onDownLoadFailed(String message) {
+            if (downloadDialog != null) {
+                downloadDialog.setError(message);
+            }
+        }
+
+    }
+
+
+    // ———————————————————————私有方法—————————————————————
+
+    /**
+     * 通过URL获取文件名
+     *
+     * @param url
+     * @return
+     */
+    private static final String getFileNameByUrl(String url) {
+        String filename = url.substring(url.lastIndexOf("/") + 1);
+        filename = filename.substring(0, filename.indexOf("?") == -1 ? filename.length() : filename.indexOf("?"));
+        return filename;
+    }
+
+
+    private static final File getLocalExistFile(String fileName, String path) {
+        File file = null;
+        File parentDir = new File(path);
+        if (parentDir.isDirectory()) {
+            File[] files = parentDir.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                if (fileName.equals(files[i].getName())) {
+                    file = files[i];
+                    return file;
+                }
+            }
+        }
+        return file;
+    }
+}

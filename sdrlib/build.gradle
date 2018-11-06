@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.HyfSunshine'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // base
+    compileOnly 'com.android.support:design:27.1.1'
+    // 必须依赖的库
+    // rx java     rx android
+    compile 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.2.2'
+    // retrofit2  已依赖OKHttp3
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'  // 打印log的interceptor
+
+    // other
+    // glide 变换
+    compile('jp.wasabeef:glide-transformations:3.3.0') {
+        exclude group: 'com.android.support'
+    }
+    // material dialog
+    compile('com.afollestad.material-dialogs:core:0.9.6.0')
+    // okdownload
+    // core
+    compile 'com.liulishuo.okdownload:okdownload:1.0.4'
+    // provide sqlite to store breakpoints
+    compile 'com.liulishuo.okdownload:sqlite:1.0.4'
+    // provide okhttp to connect to backend
+    // and then please import okhttp dependencies by yourself
+    compile 'com.liulishuo.okdownload:okhttp:1.0.4'
+
+    compile 'com.orhanobut:logger:2.2.0'
+
+    // Android 6.0授权
+    compile 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+}

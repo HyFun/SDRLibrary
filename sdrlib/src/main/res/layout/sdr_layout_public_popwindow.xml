@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/hyf_popwindow_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/hyf_popwindow_triangle_left_top"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/sdr_shape_popupwindow_triangle_up"
+            android:tint="@android:color/white"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/hyf_popwindow_triangle_right_top"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/sdr_shape_popupwindow_triangle_up"
+            android:tint="@android:color/white"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/hyf_popwindow_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/hyf_popwindow_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"/>
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/hyf_popwindow_triangle_left_bottom"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/sdr_shape_popupwindow_triangle_down"
+            android:tint="@android:color/white"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/hyf_popwindow_triangle_right_bottom"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/sdr_shape_popupwindow_triangle_down"
+            android:tint="@android:color/white"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

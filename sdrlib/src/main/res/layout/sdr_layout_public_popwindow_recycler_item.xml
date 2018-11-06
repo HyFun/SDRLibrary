@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/hyf_popwindow_recyclerview_item_container"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="?selectableItemBackground"
+              android:gravity="center_vertical"
+              android:minHeight="44dp"
+              android:orientation="horizontal"
+              android:paddingBottom="10dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/hyf_popwindow_recyclerview_item_iv_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="16dp"/>
+
+    <TextView
+        android:id="@+id/hyf_popwindow_recyclerview_item_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="16sp"
+        tools:text="创建群聊"/>
+</LinearLayout>

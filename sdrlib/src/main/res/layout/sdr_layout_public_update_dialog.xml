@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/sdr_layout_public_update_dialog_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sdr_shape_bg_bottom_radius_5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/hyf_dialog_update_tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#333"
+                android:textSize="20sp"
+                tools:text="发现新版本" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/hyf_dialog_update_tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="15dp"
+                    android:textSize="16sp"
+                    tools:text="如果使用480P的手机看界面，会发小图标相对整个界面变小了，但是由于全部控件都变小了，所以很多时候，并不会去察觉有什么不妥，更多的是影响内存消耗，要知道，480P的手机属于低端手机，对内存的消耗就更加苛刻，此时使用720P包下的图片资源，必定带来内存的高消耗。
+对于1080P的手机
+此时内存消耗的重要性相比之下反而不是那么重要了，大环境加载小内存，没毛病。可是界面上就赤裸裸地暴露了我们开发上的不足，全部界面资源被拉伸，控件资源由于是绘制的，影响不大，但是图片资源是加载的，在高像素硬件下使用了低分辨率图片，为了保持原有的界面控件相对的占用控件，图片就必须得拉伸，这就导致了图片分辨率降低，同时拉伸后内存消耗也相应地增大" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/hyf_dialog_update_btn_browser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="浏览器下载"
+                android:textColor="#737373" />
+
+            <Button
+                android:id="@+id/hyf_dialog_update_btn_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="立即更新"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
