@@ -1,5 +1,6 @@
 package com.sdr.sdrlib;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
+import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
 import com.sdr.sdrlib.util.AppUtil;
 import com.sdr.sdrlib.util.AssetsDataUtil;
 
@@ -118,6 +120,10 @@ public class MainActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }));
+
+        adapter.addData(new MainItem("懒加载fragment", v -> {
+            startActivity(new Intent(getContext(), LazyFragmentActivity.class));
         }));
     }
 
