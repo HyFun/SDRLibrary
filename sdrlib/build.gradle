@@ -27,6 +27,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // base
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     compileOnly 'com.android.support:design:27.1.1'
     // 必须依赖的库
     // rx java     rx android
@@ -55,6 +56,8 @@ dependencies {
     compile 'com.liulishuo.okdownload:okhttp:1.0.4'
 
     compile 'com.orhanobut:logger:2.2.0'
+
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
 
     // Android 6.0授权
     compile 'com.github.tbruyelle:rxpermissions:0.10.2'

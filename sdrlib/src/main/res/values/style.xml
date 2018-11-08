@@ -71,4 +71,16 @@
         <item name="android:windowExitAnimation">@anim/sdr_anim_pop_hide_right_bottom</item>
     </style>
     <!--————————————————————popupwindow的显示动画 end——————————————————————-->
+
+    <!--查看大图页面，全屏显示-->
+    <style name="ViewBigPicTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/default_animation_up</item>
+    </style>
+
+    <!--打开图片详情时有动画-->
+    <style name="default_animation_up" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/sdr_activity_up_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/sdr_activity_up_out</item>
+    </style>
 </resources>
