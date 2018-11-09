@@ -38,7 +38,6 @@ import java.util.UUID;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
 import io.reactivex.functions.Function;
 
 /**
@@ -56,42 +55,40 @@ public class RxSaveImage {
      * @param url
      */
     public static void saveImageToGallery(Context context, String savePath, Object url) {
-        Observable.unsafeCreate(new ObservableSource<File>() {
-            @Override
-            public void subscribe(Observer<? super File> observer) {
-                if (TextUtils.isEmpty(savePath) || TextUtils.isEmpty(url.toString())) {
-                    observer.onError(new Exception("请检查图片路径"));
-                }
-                File file = null;
-                try {
-                    file = Glide.with(context)
-                            .download(url)
-                            .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                            .get();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    observer.onError(e);
-                }
-                if (file == null) {
-                    observer.onError(new Exception("无法下载到图片"));
-                }
-                observer.onNext(file);
-                observer.onComplete();
-            }
-        }).flatMap(new Function<File, ObservableSource<Uri>>() {
-            @Override
-            public ObservableSource<Uri> apply(File resource) throws Exception {
-                // 生成UUID
-                File file = new File(savePath, UUID.randomUUID().toString().replaceAll("-", "") + ".jpg");
-                if (!file.exists()) file.createNewFile();
-                copyFileUsingFileChannels(resource, file);
-                Uri uri = Uri.fromFile(file);
-                // 通知图库更新
-                Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
-                context.sendBroadcast(scannerIntent);
-                return Observable.just(uri);
-            }
-        })
+        Observable.just(url)
+                .flatMap(new Function<Object, ObservableSource<File>>() {
+                    @Override
+                    public ObservableSource<File> apply(Object u) throws Exception {
+                        if (TextUtils.isEmpty(savePath) || TextUtils.isEmpty(url.toString())) {
+                            throw new NullPointerException("请检查图片路径");
+                        }
+                        File file = Glide.with(context)
+                                .download(url)
+                                .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                .get();
+                        if (file == null) {
+                            throw new Exception("无法下载到图片");
+                        }
+                        return observer -> {
+                            observer.onNext(file);
+                            observer.onComplete();
+                        };
+                    }
+                })
+                .flatMap(new Function<File, ObservableSource<Uri>>() {
+                    @Override
+                    public ObservableSource<Uri> apply(File resource) throws Exception {
+                        // 生成UUID
+                        File file = new File(savePath, UUID.randomUUID().toString().replaceAll("-", "") + ".jpg");
+                        if (!file.exists()) file.createNewFile();
+                        copyFileUsingFileChannels(resource, file);
+                        Uri uri = Uri.fromFile(file);
+                        // 通知图库更新
+                        Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+                        context.sendBroadcast(scannerIntent);
+                        return Observable.just(uri);
+                    }
+                })
                 .compose(RxUtils.io_main())
                 .subscribe(uri -> {
                     ToastUtil.showCorrectMsg("图片已保存至" + savePath);
