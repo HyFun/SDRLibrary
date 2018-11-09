@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.gitee.romanticprogrammer'
 group = 'com.github.HyfSunshine'
 
 
