@@ -15,10 +15,11 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.gson.JsonSyntaxException;
-import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.ui.viewbigimage.ViewBigImageActivity;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HyFun on 2018/10/11.
@@ -116,7 +117,8 @@ public class CommonUtil {
     }
 
     /**
-     *  获取屏幕宽度
+     * 获取屏幕宽度
+     *
      * @param activity
      * @return
      */
@@ -127,7 +129,8 @@ public class CommonUtil {
     }
 
     /**
-     *  获取屏幕高度
+     * 获取屏幕高度
+     *
      * @param activity
      * @return
      */
@@ -152,5 +155,30 @@ public class CommonUtil {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
         }
         activity.getWindow().setAttributes(lp);
+    }
+
+
+    /**
+     * 查看多张图片
+     *
+     * @param context
+     * @param isLocal
+     * @param position
+     * @param imageList
+     */
+    public static void viewImageList(Context context, boolean isLocal, int position, List imageList) {
+        ViewBigImageActivity.startImageList(context, isLocal, position, imageList);
+    }
+
+    /**
+     * 查看一张图片
+     *
+     * @param context
+     * @param image
+     */
+    public static void viewImage(Context context, boolean isLocal, Object image) {
+        List imageList = new ArrayList<>();
+        imageList.add(image);
+        viewImageList(context, isLocal, 0, imageList);
     }
 }
