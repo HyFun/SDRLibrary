@@ -58,6 +58,7 @@ compile 'com.github.tbruyelle:rxpermissions:0.10.2'
 ```
 
 ## 使用
+
 ### 初始化
 在application中
 ```java
@@ -86,13 +87,13 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
     ```
     方法中什么都不用操作
 
-## MVP
+### MVP
 
 - AbstractPresenter
 
 - AbstractView
 
-## Support
+### Support
 
 - update app 检测、更新APP
     ```java
@@ -112,7 +113,7 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
     new WeatherObservable().getWeatherData()
     ```
 
-## UI
+### UI
 
 - dialog
 
@@ -134,7 +135,7 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
 
     关键类：RxSaveImage
 
-## Util
+### Util
 
 - CommonUtil
 
