@@ -7,7 +7,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/sdr_view_big_image_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:overScrollMode="never"/>
 
     <TextView
         android:id="@+id/sdr_view_big_image_tv_pager"

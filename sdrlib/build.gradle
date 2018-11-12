@@ -56,8 +56,10 @@ dependencies {
     // and then please import okhttp dependencies by yourself
     compile 'com.liulishuo.okdownload:okhttp:1.0.4'
 
+    // logger
     compile 'com.orhanobut:logger:2.2.0'
 
+    // 图片查看 缩放
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     // Android 6.0授权

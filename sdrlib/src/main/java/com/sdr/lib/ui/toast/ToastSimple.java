@@ -67,6 +67,9 @@ public class ToastSimple {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         mView = new TextView(mContext);
+        int padding = CommonUtil.dip2px(mContext, 15);
+        mView.setPadding(padding, padding / 2, padding, padding / 2);
+        mView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
     }
 
     public ToastSimple background(int backgroundColor) {
@@ -119,10 +122,7 @@ public class ToastSimple {
         drawable.setCornerRadius(radius);
         mView.setBackgroundDrawable(drawable);
         mView.setTextColor(textColor);
-        mView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         mView.setText(text);
-        int padding = CommonUtil.dip2px(mContext, 10);
-        mView.setPadding(padding, padding / 2, padding, padding / 2);
         if (mHandler == null) {
             mHandler = new Handler() {
                 @Override

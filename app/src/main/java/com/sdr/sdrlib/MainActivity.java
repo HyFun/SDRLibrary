@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +19,7 @@ import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.ui.tree.TreeNode;
 import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.CommonUtil;
+import com.sdr.lib.util.ToastTopUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
@@ -144,6 +144,49 @@ public class MainActivity extends BaseActivity {
                 images.add("https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike220%2C5%2C5%2C220%2C73/sign=e2b9f9478013632701e0ca61f0e6cb89/8644ebf81a4c510f2a9f87816a59252dd52aa5d6.jpg");
                 images.add(R.mipmap.big_width);
                 CommonUtil.viewImageList(getContext(), false, 2, images);
+            }
+        }));
+
+        adapter.addData(new MainItem("Toast 正常", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showNormalMsg("正常的toast");
+            }
+        }));
+
+        adapter.addData(new MainItem("Toast 正确", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showCorrectMsg("Toast 正确");
+            }
+        }));
+
+        adapter.addData(new MainItem("Toast 错误", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showErrorMsg("Toast 错误");
+            }
+        }));
+
+
+        adapter.addData(new MainItem("TopToast 正常", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastTopUtil.showNormalTopToast("正常的TopToast");
+            }
+        }));
+
+        adapter.addData(new MainItem("TopToast 成功", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastTopUtil.showCorrectTopToast("成功的TopToast");
+            }
+        }));
+
+        adapter.addData(new MainItem("TopToast 错误", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastTopUtil.showErrorTopToast("错误的TopToast");
             }
         }));
     }
