@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 
-import com.sdr.lib.base.BaseFragment;
+import com.sdr.lib.base.BaseSimpleFragment;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 
@@ -35,9 +35,9 @@ public class LazyFragmentActivity extends BaseActivity {
         setTitle("懒加载fragment");
         setDisplayHomeAsUpEnabled();
 
-        List<BaseFragment> fragmentList = new ArrayList<>();
+        List<BaseSimpleFragment> fragmentList = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
-            fragmentList.add(new LazyFragment(titles[i]));
+            fragmentList.add(new LazySimpleFragment(titles[i]));
         }
 
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPageAdapter(getSupportFragmentManager(), titles, fragmentList);
@@ -46,11 +46,11 @@ public class LazyFragmentActivity extends BaseActivity {
 
     }
 
-    private class FragmentPageAdapter extends FragmentPagerAdapter {
+    public static class FragmentPageAdapter extends FragmentPagerAdapter {
         private String[] titles;
-        private List<BaseFragment> fragmentList;
+        private List<BaseSimpleFragment> fragmentList;
 
-        public FragmentPageAdapter(FragmentManager fm, String[] titles, List<BaseFragment> fragmentList) {
+        public FragmentPageAdapter(FragmentManager fm, String[] titles, List<BaseSimpleFragment> fragmentList) {
             super(fm);
             this.titles = titles;
             this.fragmentList = fragmentList;

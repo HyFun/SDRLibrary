@@ -6,16 +6,15 @@ import android.view.View;
 import butterknife.ButterKnife;
 
 /**
- * Created by HyFun on 2018/11/06.
- * Email:775183940@qq.com
+ * Created by HyFun on 2018/11/23.
+ * Email: 775183940@qq.com
+ * Description:
  */
 
-public class BaseActivity extends com.sdr.lib.base.BaseActivity {
-
+public abstract class BaseFragment extends com.sdr.lib.base.BaseFragment {
     @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        ButterKnife.bind(this);
+    protected void bindButterKnife(View view) {
+        ButterKnife.bind(this, view);
     }
 
     @Override
@@ -25,12 +24,7 @@ public class BaseActivity extends com.sdr.lib.base.BaseActivity {
 
     @Override
     protected Drawable onHeaderBarDrawable() {
-        return BaseConfig.onHeaderBarDrawable(this);
-    }
-
-    @Override
-    protected int onHeaderBarStatusViewAlpha() {
-        return BaseConfig.onHeaderBarStatusViewAlpha();
+        return BaseConfig.onHeaderBarDrawable(getContext());
     }
 
     @Override

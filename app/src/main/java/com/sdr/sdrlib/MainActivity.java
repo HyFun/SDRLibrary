@@ -23,6 +23,7 @@ import com.sdr.lib.util.ToastTopUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
+import com.sdr.sdrlib.ui.basefragment.LazyBaseFragmentActivity;
 import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
 import com.sdr.sdrlib.util.AppUtil;
 import com.sdr.sdrlib.util.AssetsDataUtil;
@@ -126,6 +127,10 @@ public class MainActivity extends BaseActivity {
 
         adapter.addData(new MainItem("懒加载fragment", v -> {
             startActivity(new Intent(getContext(), LazyFragmentActivity.class));
+        }));
+
+        adapter.addData(new MainItem("懒加载basefragment", v -> {
+            startActivity(new Intent(getContext(), LazyBaseFragmentActivity.class));
         }));
 
         // 下载图片

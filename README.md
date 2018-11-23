@@ -69,7 +69,7 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
 - BaseActivity
     沉浸式状态栏的activity
 - BaseFragment
-    懒加载fragment，
+    沉浸式状态栏+懒加载fragment，
 
     ```java
     protected void onFragmentFirstVisible() {
@@ -86,6 +86,39 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
     }
     ```
     方法中什么都不用操作
+
+- 配置方法
+
+    | 方法名 | 作用 | 备注 |
+    | ------ | ------ | ------ |
+    | int onHeaderBarToolbarRes() | 设置toolbar的res，不设置返回0 |
+    | int onHeaderBarStatusViewAlpha() | 设置状态栏的透明度（0~255），一般0/90 |
+    | Drawable onHeaderBarDrawable() | 设置HeaderBar的drawable |
+    | Object onHeaderBarImage() | 设置HeaderBar的图片，如果不设置，默认加载onHeaderBarDrawable()的drawable |
+    | boolean isImageHeader() | 设置HeaderBar顶部是否是图片模式。true则HeaderBar在content顶部，覆盖着content，false则是在content顶部，没有覆盖 |
+    | int onHeaderBarTitleGravity() | 设置标题位置 |
+
+- 设置方法
+
+    | 方法名 | 作用 | 备注 |
+    | ------ | ------ | ------ |
+    | setHeaderImage(Object image) | 设置HeaderBar的image |
+    | setHeaderBarAlpha(@IntRange(from = 0, to = 255) int alpha) | 设置状态栏的透明度（0~255），一般0/90 |
+    | setHeaderBarScrollChange(OnScrollListenerView view, int viewHeight) | 设置HeaderBar的滑动监听，boolean isImageHeader()返回true时才生效 |
+    | setDisplayHomeAsUpEnabled() | 设置点击toolbar返回时finish()该activity |
+    | setNavigationOnClickListener() | 点击navigation的监听事件 |
+    | setToolbarPadding(Toolbar toolBar) | 设置toolbar的padding |
+    | setTitle(int titleId) | 设置toolbar标题 |
+    | setHeaderBarTitleViewAlpha(float alpha) | 设置HeaderBar title的透明度 |
+
+- 获取方法
+
+    | 方法名 | 作用 | 备注 |
+    | ------ | ------ | ------ |
+    | int getHeaderBarHeight() | 获取HeaderBar的高度 |
+    | int getStatusBarHeight() | 获取状态栏的高度 |
+    | FrameLayout getHeaderBarView() | 获取HeaderBarView |
+    | ToolbarMarqueeTextView getHeaderBarTitleView(Toolbar toolbar) | 获取toolbar 的titleview |
 
 ### MVP
 
