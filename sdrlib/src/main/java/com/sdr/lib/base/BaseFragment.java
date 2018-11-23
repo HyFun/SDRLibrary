@@ -87,13 +87,13 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
                 contentView.setLayoutParams(params);
                 setHeaderBarAlpha(255);
             }
+            // 设置toolbar的margin
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolBar.getLayoutParams();
+            layoutParams.setMargins(0, Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? getStatusBarHeight() : 0, 0, 0);
         }
         // 添加 content view  和  loading view
         contentView.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         contentView.addView(loadingView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        // 设置toolbar的margin
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolBar.getLayoutParams();
-        layoutParams.setMargins(0, Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? getStatusBarHeight() : 0, 0, 0);
 
         ImageView loadingImage = loadingView.findViewById(R.id.sdr_base_activity_iv_loading);
         // 加载动画
