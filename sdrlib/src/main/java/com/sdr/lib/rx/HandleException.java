@@ -7,6 +7,7 @@ import com.sdr.lib.util.CommonUtil;
 import org.json.JSONException;
 
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 
 import retrofit2.HttpException;
 
@@ -46,7 +47,6 @@ public abstract class HandleException {
         if (!CommonUtil.isNetworkConnected(SDRLibrary.getInstance().getApplication())) {
             // 说明没网
             ce.message = "网络不给力，请检查网络设置";
-            commonException(ce);
         } else if (throwable instanceof HttpException) {
             //HTTP错误
             HttpException httpException = (HttpException) throwable;
@@ -63,48 +63,15 @@ public abstract class HandleException {
                     ce.message = "网络连接错误";  //均视为网络错误
                     break;
             }
-            commonException(ce);
         } else if (throwable instanceof JsonParseException || throwable instanceof JSONException || throwable instanceof java.text.ParseException) {
             ce.message = "解析数据出错";            //均视为解析错误
-            commonException(ce);
+        } else if (throwable instanceof SocketTimeoutException) {
+            ce.message = "连接超时";
         } else if (throwable instanceof ConnectException) {
             ce.message = "服务器异常";  //均视为网络错误
-            commonException(ce);
         } else if (!parseException(throwable)) {
             ce.message = "未知错误";          //未知错误
-            commonException(ce);
         }
+        commonException(ce);
     }
-
-
-//    public final static CommonException handleException(Throwable e) {
-//        CommonException ce = new CommonException(e);
-//        if (!CommonUtil.isNetworkConnected(SDRLibrary.getInstance().getApplication())) {
-//            // 说明没网
-//            ce.message = "网络不给力，请检查网络设置";
-//        } else if (e instanceof HttpException) {
-//            //HTTP错误
-//            HttpException httpException = (HttpException) e;
-//            switch (httpException.code()) {
-//                case UNAUTHORIZED:
-//                case FORBIDDEN:
-//                case NOT_FOUND:
-//                case REQUEST_TIMEOUT:
-//                case GATEWAY_TIMEOUT:
-//                case INTERNAL_SERVER_ERROR:
-//                case BAD_GATEWAY:
-//                case SERVICE_UNAVAILABLE:
-//                default:
-//                    ce.message = "网络连接错误";  //均视为网络错误
-//                    break;
-//            }
-//        } else if (e instanceof JsonParseException || e instanceof JSONException || e instanceof java.text.ParseException) {
-//            ce.message = "解析数据出错";            //均视为解析错误
-//        } else if (e instanceof ConnectException) {
-//            ce.message = "服务器异常";  //均视为网络错误
-//        } else {
-//            ce.message = "未知错误";          //未知错误
-//        }
-//        return ce;
-//    }
 }

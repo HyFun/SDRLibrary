@@ -7,7 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
  * Email:775183940@qq.com
  */
 
-public class BaseSimpleFragment extends AbstractFragment implements SwipeRefreshLayout.OnRefreshListener {
+abstract class BaseSimpleFragment extends AbstractFragment implements SwipeRefreshLayout.OnRefreshListener {
+
     @Override
     public void onRefresh() {
 
