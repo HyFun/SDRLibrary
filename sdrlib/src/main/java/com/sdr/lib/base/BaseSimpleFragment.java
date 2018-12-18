@@ -13,4 +13,13 @@ abstract class BaseSimpleFragment extends AbstractFragment implements SwipeRefre
     public void onRefresh() {
 
     }
+
+    /**
+     * 获取title
+     *
+     * @return
+     */
+    public String getFragmentTitle() {
+        return "";
+    }
 }

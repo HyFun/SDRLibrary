@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.R;
+import com.sdr.lib.support.ActivityCollector;
 import com.sdr.lib.util.StatusBarUtils;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -55,6 +56,13 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        ActivityCollector.getInstance().addActivity(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityCollector.getInstance().removeActivity(this);
+        super.onDestroy();
     }
 
     @Override
