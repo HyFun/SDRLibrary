@@ -18,7 +18,12 @@ import com.sdr.lib.support.SDRAPI;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.ResourceObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by HyFun on 2018/10/30.
@@ -51,7 +56,13 @@ class UpdatePresenter {
         view.showCheckDialog("正在检测更新");
 
         sdrapi.checkUpdate(appName, versionCode)
-                .compose(RxUtils.io_main())
+                .compose(new ObservableTransformer<UpdateInfo, UpdateInfo>() {
+                    @Override
+                    public ObservableSource<UpdateInfo> apply(Observable<UpdateInfo> upstream) {
+                        return upstream.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread());
+                    }
+                })
                 .subscribeWith(new ResourceObserver<UpdateInfo>() {
                     @Override
                     public void onNext(UpdateInfo updateInfo) {

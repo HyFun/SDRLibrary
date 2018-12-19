@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+
 public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
     /**
@@ -105,10 +107,13 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                 // 授权
                 new RxPermissions(getActivity())
                         .request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .subscribe(grant -> {
-                            if (grant) {
-                                ToastUtil.showNormalMsg("开始下载图片");
-                                RxSaveImage.saveImageToGallery(getContext(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), imageList.get(position));
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if (aBoolean) {
+                                    ToastUtil.showNormalMsg("开始下载图片");
+                                    RxSaveImage.saveImageToGallery(getContext(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), imageList.get(position));
+                                }
                             }
                         });
             }
@@ -172,8 +177,8 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             View view = LayoutInflater.from(getContext()).inflate(R.layout.sdr_layout_view_big_image_item, container, false);
-            SubsamplingScaleImageView imageView = view.findViewById(R.id.sdr_view_big_image_item_photoview);
-            ProgressBar progressBar = view.findViewById(R.id.sdr_view_big_image_item_progress);
+            final SubsamplingScaleImageView imageView = view.findViewById(R.id.sdr_view_big_image_item_photoview);
+            final ProgressBar progressBar = view.findViewById(R.id.sdr_view_big_image_item_progress);
             progressBar.setVisibility(View.VISIBLE);
             imageView.setOnClickListener(ViewBigImageActivity.this);
             imageView.setMinimumDpi(50);

@@ -3,6 +3,7 @@ package com.sdr.sdrlib.util;
 import android.Manifest;
 import android.support.v4.app.FragmentActivity;
 
+import com.sdr.lib.support.path.AppPath;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.update.UpdateAppManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;

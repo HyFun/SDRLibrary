@@ -78,11 +78,11 @@ public class UpdateAppManager {
         }
 
         @Override
-        public void showUpdateDialog(UpdatePresenter presenter, String versionName, String downLoadUrl, String updateDetail) {
+        public void showUpdateDialog(final UpdatePresenter presenter, String versionName, final String downLoadUrl, String updateDetail) {
             // 显示更新提示框
             // 首先判断该activity是否已经下载了
-            String apkName = getFileNameByUrl(downLoadUrl);
-            File localFile = getLocalExistFile(apkName, savePath);
+            final String apkName = getFileNameByUrl(downLoadUrl);
+            final File localFile = getLocalExistFile(apkName, savePath);
 
             new SDRUpdateDialog.Builder(context)
                     .title(localFile == null ? "是否更新到" + versionName + "版本？" : "已下载好" + versionName + "版本，是否安装？")

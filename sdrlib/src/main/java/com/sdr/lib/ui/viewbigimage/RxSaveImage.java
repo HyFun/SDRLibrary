@@ -38,6 +38,7 @@ import java.util.UUID;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
@@ -54,7 +55,7 @@ public class RxSaveImage {
      * @param savePath
      * @param url
      */
-    public static void saveImageToGallery(Context context, String savePath, Object url) {
+    public static void saveImageToGallery(final Context context, final String savePath, final Object url) {
         Observable.just(url)
                 .flatMap(new Function<Object, ObservableSource<File>>() {
                     @Override
@@ -69,10 +70,7 @@ public class RxSaveImage {
                         if (file == null) {
                             throw new Exception("无法下载到图片");
                         }
-                        return observer -> {
-                            observer.onNext(file);
-                            observer.onComplete();
-                        };
+                        return RxUtils.createData(file);
                     }
                 })
                 .flatMap(new Function<File, ObservableSource<Uri>>() {
@@ -90,10 +88,16 @@ public class RxSaveImage {
                     }
                 })
                 .compose(RxUtils.io_main())
-                .subscribe(uri -> {
-                    ToastUtil.showCorrectMsg("图片已保存至" + savePath);
-                }, error -> {
-                    ToastUtil.showErrorMsg(error.getMessage());
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        ToastUtil.showCorrectMsg("图片已保存至" + savePath);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtil.showErrorMsg(throwable.getMessage());
+                    }
                 });
 
     }
