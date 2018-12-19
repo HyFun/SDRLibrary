@@ -1,17 +1,14 @@
 package com.sdr.sdrlib.ui.lazyfragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.ViewGroup;
 
-import com.sdr.lib.base.BaseSimpleFragment;
+import com.sdr.lib.base.BaseFragmentPagerAdapter;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
+import com.sdr.sdrlib.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,46 +32,14 @@ public class LazyFragmentActivity extends BaseActivity {
         setTitle("懒加载fragment");
         setDisplayHomeAsUpEnabled();
 
-        List<BaseSimpleFragment> fragmentList = new ArrayList<>();
+        List<BaseFragment> fragmentList = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             fragmentList.add(new LazySimpleFragment(titles[i]));
         }
 
-        FragmentPagerAdapter fragmentPagerAdapter = new FragmentPageAdapter(getSupportFragmentManager(), titles, fragmentList);
+        FragmentPagerAdapter fragmentPagerAdapter = new BaseFragmentPagerAdapter<BaseFragment>(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentPagerAdapter);
         tab.setupWithViewPager(viewPager);
 
-    }
-
-    public static class FragmentPageAdapter extends FragmentPagerAdapter {
-        private String[] titles;
-        private List<BaseSimpleFragment> fragmentList;
-
-        public FragmentPageAdapter(FragmentManager fm, String[] titles, List<BaseSimpleFragment> fragmentList) {
-            super(fm);
-            this.titles = titles;
-            this.fragmentList = fragmentList;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles[position];
-        }
     }
 }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sdr.sdrlib.R;
+import com.sdr.sdrlib.base.BaseConfig;
 import com.sdr.sdrlib.base.BaseFragment;
 
 import butterknife.BindView;
@@ -29,6 +30,7 @@ public class LazyBaseFragment extends BaseFragment {
     public LazyBaseFragment(String title) {
         this.title = title;
     }
+
     @BindView(R.id.lazy_fragment_swipe)
     SwipeRefreshLayout swipe;
     @BindView(R.id.lazy_fragment_textview)
@@ -66,5 +68,10 @@ public class LazyBaseFragment extends BaseFragment {
                 textView.setText(title);
             }
         }, 1000);
+    }
+
+    @Override
+    protected int onHeaderBarToolbarRes() {
+        return BaseConfig.onHeaderBarRes();
     }
 }

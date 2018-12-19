@@ -60,8 +60,8 @@ public class ToastSimple {
         mParams.windowAnimations = android.R.style.Animation_Toast;
         mParams.setTitle("Toast");
         // 位置属性
-        mParams.gravity = Gravity.CENTER | Gravity.BOTTOM;  // 左上
-        mParams.y = CommonUtil.dip2px(mContext, 60);
+        mParams.gravity = Gravity.CENTER;  // 左上
+        //mParams.y = CommonUtil.dip2px(mContext, 60);
 
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -69,7 +69,7 @@ public class ToastSimple {
         mView = new TextView(mContext);
         int padding = CommonUtil.dip2px(mContext, 15);
         mView.setPadding(padding, padding / 2, padding, padding / 2);
-        mView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        mView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
     }
 
     public ToastSimple background(int backgroundColor) {

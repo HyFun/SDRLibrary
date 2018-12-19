@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sdr.lib.base.BaseSimpleFragment;
 import com.sdr.sdrlib.R;
+import com.sdr.sdrlib.base.BaseConfig;
+import com.sdr.sdrlib.base.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by HyFun on 2018/11/06.
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  */
 
 @SuppressLint("ValidFragment")
-public class LazySimpleFragment extends BaseSimpleFragment {
+public class LazySimpleFragment extends BaseFragment {
     private String title;
 
     public LazySimpleFragment(String title) {
@@ -37,19 +37,9 @@ public class LazySimpleFragment extends BaseSimpleFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateFragmentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lazy_fragment, container, false);
-        ButterKnife.bind(this, view);
         return view;
-    }
-
-
-    @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
-        super.onFragmentVisibleChange(isVisible);
-        if (isVisible) {
-
-        }
     }
 
     @Override
@@ -76,5 +66,10 @@ public class LazySimpleFragment extends BaseSimpleFragment {
                 textView.setText(title);
             }
         }, 1000);
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return title;
     }
 }

@@ -21,7 +21,7 @@ public class ToastUtil {
         if (niceToast == null)
             synchronized (ToastUtil.class) {
                 if (niceToast == null)
-                    niceToast = new ToastSimple(getContext()).radius(CommonUtil.dip2px(getContext(), 20));
+                    niceToast = new ToastSimple(getContext()).radius(CommonUtil.dip2px(getContext(), 5));
             }
         return niceToast;
     }

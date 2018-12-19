@@ -19,7 +19,7 @@ public abstract class BaseFragment extends com.sdr.lib.base.BaseFragment {
 
     @Override
     protected int onHeaderBarToolbarRes() {
-        return BaseConfig.onHeaderBarRes();
+        return 0;
     }
 
     @Override

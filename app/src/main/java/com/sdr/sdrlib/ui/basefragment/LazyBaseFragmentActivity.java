@@ -4,11 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.sdr.lib.base.BaseSimpleFragment;
+import com.sdr.lib.base.BaseFragmentPagerAdapter;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
-import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
-import com.sdr.sdrlib.ui.lazyfragment.LazySimpleFragment;
+import com.sdr.sdrlib.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +24,11 @@ public class LazyBaseFragmentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lazy_base_fragment);
-        List<BaseSimpleFragment> fragmentList = new ArrayList<>();
+        List<BaseFragment> fragmentList = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             fragmentList.add(new LazyBaseFragment(titles[i]));
         }
-        FragmentPagerAdapter fragmentPagerAdapter = new LazyFragmentActivity.FragmentPageAdapter(getSupportFragmentManager(), titles, fragmentList);
+        FragmentPagerAdapter fragmentPagerAdapter = new BaseFragmentPagerAdapter<BaseFragment>(getSupportFragmentManager(),fragmentList);
         viewPager.setAdapter(fragmentPagerAdapter);
     }
 
