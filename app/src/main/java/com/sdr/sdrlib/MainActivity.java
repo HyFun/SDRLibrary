@@ -23,6 +23,7 @@ import com.sdr.lib.util.ToastTopUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
+import com.sdr.sdrlib.ui.MarqueeViewActivity;
 import com.sdr.sdrlib.ui.basefragment.LazyBaseFragmentActivity;
 import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
 import com.sdr.sdrlib.util.AppUtil;
@@ -192,6 +193,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ToastTopUtil.showErrorTopToast("错误的TopToast");
+            }
+        }));
+
+        adapter.addData(new MainItem("跑马灯标题", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MarqueeViewActivity.class));
             }
         }));
     }

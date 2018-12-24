@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.lazyfragment.LazyFragmentActivity" />
-        <activity android:name=".ui.basefragment.LazyBaseFragmentActivity"></activity>
+        <activity android:name=".ui.basefragment.LazyBaseFragmentActivity" />
+        <activity android:name=".ui.MarqueeViewActivity"></activity>
     </application>
 
 </manifest>
