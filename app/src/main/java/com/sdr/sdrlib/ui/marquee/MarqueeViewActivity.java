@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.ui;
+package com.sdr.sdrlib.ui.marquee;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -26,7 +26,7 @@ public class MarqueeViewActivity extends BaseActivity implements ViewWeb {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marquee_view);
         setDisplayHomeAsUpEnabled();
-        setTitle("marquee textview");
+        setTitle("或许理解不了遗弃这个词，但是它也能明白发生了什么。");
         initWebView();
         webView.loadUrl("http://60.191.39.34:8088/bpm/work/list?appflg=1&crossaccount=0013");
 

@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.ui;
+package com.sdr.sdrlib.ui.marquee;
 
 import android.app.Activity;
 import android.content.Intent;

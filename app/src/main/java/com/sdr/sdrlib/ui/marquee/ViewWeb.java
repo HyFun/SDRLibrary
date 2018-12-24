@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.ui;
+package com.sdr.sdrlib.ui.marquee;
 
 /**
  * Created by HyFun on 2018/10/15.

@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.R;
+import com.sdr.lib.widget.MarqueeTextView;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropTransformation;
@@ -332,15 +332,9 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
         toolbar.setTitle("");
         toolbar.setContentInsetStartWithNavigation(0);
         // 添加自定义的textview 首先寻找
-        ToolbarMarqueeTextView textView = getHeaderBarTitleView(toolbar);
-
+        MarqueeTextView textView = getHeaderBarTitleView(toolbar);
         if (textView == null) {
-            textView = new ToolbarMarqueeTextView(getContext());
-            textView.setSingleLine();
-            textView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            textView.setMarqueeRepeatLimit(-1);
-            textView.setFocusable(true);
-            textView.setFocusableInTouchMode(true);
+            textView = new MarqueeTextView(getContext());
             textView.setText(title);
             textView.setTextColor(Color.WHITE);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
@@ -411,11 +405,11 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
      * @param toolbar
      * @return
      */
-    public final ToolbarMarqueeTextView getHeaderBarTitleView(Toolbar toolbar) {
-        ToolbarMarqueeTextView textView = null;
+    public final MarqueeTextView getHeaderBarTitleView(Toolbar toolbar) {
+        MarqueeTextView textView = null;
         for (int i = 0; i < toolbar.getChildCount(); i++) {
-            if (toolbar.getChildAt(i) instanceof ToolbarMarqueeTextView) {
-                textView = (ToolbarMarqueeTextView) toolbar.getChildAt(i);
+            if (toolbar.getChildAt(i) instanceof MarqueeTextView) {
+                textView = (MarqueeTextView) toolbar.getChildAt(i);
                 break;
             }
         }

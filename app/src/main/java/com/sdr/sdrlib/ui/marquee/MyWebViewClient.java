@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.ui;
+package com.sdr.sdrlib.ui.marquee;
 
 import android.webkit.WebView;
 import android.webkit.WebViewClient;

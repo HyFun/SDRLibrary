@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sdr.lib.R;
+import com.sdr.lib.util.CommonUtil;
 
 
 /**
@@ -110,7 +111,8 @@ public class SDRUpdateDialog extends AlertDialog {
                     sdrUpdateDialog.dismiss();
                 }
             });
-            sdrUpdateDialog.setView(view);
+            int space = CommonUtil.dip2px(mContext, 10);
+            sdrUpdateDialog.setView(view, space, space, space, space);
             sdrUpdateDialog.setCancelable(cancel);
             return sdrUpdateDialog;
         }

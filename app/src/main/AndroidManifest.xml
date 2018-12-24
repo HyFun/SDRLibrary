@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".ui.lazyfragment.LazyFragmentActivity" />
         <activity android:name=".ui.basefragment.LazyBaseFragmentActivity" />
-        <activity android:name=".ui.MarqueeViewActivity"></activity>
+        <activity android:name=".ui.marquee.MarqueeViewActivity"></activity>
     </application>
 
 </manifest>

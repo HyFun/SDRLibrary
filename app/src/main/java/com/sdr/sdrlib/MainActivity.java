@@ -23,7 +23,7 @@ import com.sdr.lib.util.ToastTopUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
-import com.sdr.sdrlib.ui.MarqueeViewActivity;
+import com.sdr.sdrlib.ui.marquee.MarqueeViewActivity;
 import com.sdr.sdrlib.ui.basefragment.LazyBaseFragmentActivity;
 import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
 import com.sdr.sdrlib.util.AppUtil;

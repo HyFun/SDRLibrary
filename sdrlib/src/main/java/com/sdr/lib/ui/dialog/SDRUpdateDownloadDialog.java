@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sdr.lib.R;
+import com.sdr.lib.util.CommonUtil;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
@@ -64,7 +65,8 @@ public class SDRUpdateDownloadDialog extends AlertDialog {
             mTvProgress = view.findViewById(R.id.hyf_dialog_update_download_tv_progress);
             mProgressBar = view.findViewById(R.id.hyf_dialog_update_download_progress);
             ivClose.setVisibility(View.INVISIBLE);
-            sdrUpdateDownloadDialog.setView(view);
+            int space = CommonUtil.dip2px(mContext, 10);
+            sdrUpdateDownloadDialog.setView(view, space, space, space, space);
             sdrUpdateDownloadDialog.setCancelable(false);
             return sdrUpdateDownloadDialog;
         }
