@@ -47,6 +47,7 @@ public abstract class HandleException {
         if (!CommonUtil.isNetworkConnected(SDRLibrary.getInstance().getApplication())) {
             // 说明没网
             ce.message = "网络不给力，请检查网络设置";
+            commonException(ce);
         } else if (throwable instanceof HttpException) {
             //HTTP错误
             HttpException httpException = (HttpException) throwable;
@@ -61,17 +62,21 @@ public abstract class HandleException {
                 case SERVICE_UNAVAILABLE:
                 default:
                     ce.message = "网络连接错误";  //均视为网络错误
+                    commonException(ce);
                     break;
             }
         } else if (throwable instanceof JsonParseException || throwable instanceof JSONException || throwable instanceof java.text.ParseException) {
             ce.message = "解析数据出错";            //均视为解析错误
+            commonException(ce);
         } else if (throwable instanceof SocketTimeoutException) {
             ce.message = "连接超时";
+            commonException(ce);
         } else if (throwable instanceof ConnectException) {
             ce.message = "服务器异常";  //均视为网络错误
+            commonException(ce);
         } else if (!parseException(throwable)) {
             ce.message = "未知错误";          //未知错误
+            commonException(ce);
         }
-        commonException(ce);
     }
 }
