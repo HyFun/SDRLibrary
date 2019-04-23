@@ -21,10 +21,13 @@ import io.reactivex.functions.Function;
 
 public class WeatherObservable {
 
-    private static final List<String> keylist = new ArrayList<>();
+    private List<String> keylist = new ArrayList<>();
 
-    static {
-        keylist.clear();
+    private int currentIndex = 0;
+    private String locationCode;  // 城市代码
+    private SDRAPI weatherAPI;
+
+    public WeatherObservable(String locationCode) {
         keylist.add("720b3dbddc5c4d6391b0ae457cfede34"); // 18738079950@163.com
         keylist.add("fcd6cf466aa64d52b2577578c26aeab7"); // 2823288867@qq.com
         keylist.add("10de6ec03cea4938a7bfe4dd4ce00e94"); //1240452759@qq.com
@@ -32,14 +35,7 @@ public class WeatherObservable {
         keylist.add("477210d57370499caea971e4efdcdf44"); //heyongfeng@sdesrd.com
         keylist.add("fee7141b24c647e7a918017889490307"); //18738079950@139.com
         keylist.add("e78e9e23a1c3449d95926abb2b531cd0"); //18738079950@sohu.com
-    }
 
-
-    private int currentIndex = 0;
-    private String locationCode;  // 城市代码
-    private SDRAPI weatherAPI;
-
-    public WeatherObservable(String locationCode) {
         this.locationCode = locationCode;
         weatherAPI = HttpClient.getInstance().createRetrofit(SDRAPI.WEATHER_URL,
                 HttpClient.getInstance().getOkHttpClient(), SDRAPI.class);

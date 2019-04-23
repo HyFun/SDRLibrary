@@ -15,19 +15,22 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.support.fingerprint.BiometricPromptManager;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.ui.tree.TreeNode;
 import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.CommonUtil;
+import com.sdr.lib.util.NotificationUtils;
 import com.sdr.lib.util.ToastTopUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
-import com.sdr.sdrlib.ui.marquee.MarqueeViewActivity;
 import com.sdr.sdrlib.ui.basefragment.LazyBaseFragmentActivity;
 import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
+import com.sdr.sdrlib.ui.marquee.MarqueeViewActivity;
 import com.sdr.sdrlib.util.AppUtil;
 import com.sdr.sdrlib.util.AssetsDataUtil;
+import com.sdr.sdrlib.util.NotificationIdHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,6 +203,57 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), MarqueeViewActivity.class));
+            }
+        }));
+
+
+        adapter.addData(new MainItem("通知栏提示", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NotificationUtils(getContext(), R.drawable.ic_notification)
+                        .sendNotification(NotificationIdHelper.getInstance().getNotifyId(), "您有新的消息", "在火的一步之遥处吟唱,我一度清楚,有人知道你身在何处");
+            }
+        }));
+
+        BiometricPromptManager manager = BiometricPromptManager.from(getActivity());
+
+        adapter.addData(new MainItem("验证指纹", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (manager.isHardwareDetected()) {
+                    if (manager.hasEnrolledFingerprints()) {
+                        manager.authenticate(new BiometricPromptManager.OnBiometricIdentifyCallback() {
+                            @Override
+                            public void onUsePassword() {
+
+                            }
+
+                            @Override
+                            public void onSucceeded() {
+                                ToastUtil.showCorrectMsg("验证通过");
+                            }
+
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onError(int code, String reason) {
+
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+                    } else {
+                        ToastUtil.showErrorMsg("您的设备没有设置指纹，请先设置指纹");
+                    }
+                } else {
+                    ToastUtil.showErrorMsg("您的设备不支持指纹");
+                }
             }
         }));
     }

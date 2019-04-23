@@ -60,8 +60,8 @@ public class ToastSimple {
         mParams.windowAnimations = android.R.style.Animation_Toast;
         mParams.setTitle("Toast");
         // 位置属性
-        mParams.gravity = Gravity.CENTER;  // 左上
-        //mParams.y = CommonUtil.dip2px(mContext, 60);
+        mParams.gravity = Gravity.CENTER | Gravity.BOTTOM;  // 左上
+        mParams.y = CommonUtil.dip2px(mContext, 60);
 
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
