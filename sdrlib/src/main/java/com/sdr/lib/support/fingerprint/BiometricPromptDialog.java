@@ -148,7 +148,7 @@ class BiometricPromptDialog extends DialogFragment {
                 break;
             case STATE_ERROR:
                 mStateTv.setTextColor(Color.parseColor("#FF5555"));
-                mStateTv.setText("验证失败，请输入密码");
+                mStateTv.setText("多次验证失败，请稍后重试");
                 break;
             case STATE_SUCCEED:
                 mStateTv.setTextColor(Color.parseColor("#82C785"));
