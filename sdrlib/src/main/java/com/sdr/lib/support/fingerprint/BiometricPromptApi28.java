@@ -51,7 +51,6 @@ class BiometricPromptApi28 implements IBiometricPromptImpl {
                                     mManagerIdentifyCallback.onCancel();
                                 }
                                 mCancellationSignal.cancel();
-                                dialogInterface.dismiss();
                             }
                         })
                 .build();
