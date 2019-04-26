@@ -18,17 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    compileOptions {
-//        targetCompatibility 1.8
-//        sourceCompatibility 1.8
-//    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // base
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     compileOnly 'com.android.support:design:27.1.1'
     // 必须依赖的库
     // rx java     rx android
@@ -47,7 +42,7 @@ dependencies {
     }
     // material dialog
     compile('com.afollestad.material-dialogs:core:0.9.6.0')
-    // okdownload
+    // okdownload  下载文件时候使用
     // core
     compile 'com.liulishuo.okdownload:okdownload:1.0.4'
     // provide sqlite to store breakpoints

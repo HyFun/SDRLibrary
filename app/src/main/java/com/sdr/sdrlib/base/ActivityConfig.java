@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 
+import com.sdr.lib.base.BaseActivityConfig;
 import com.sdr.sdrlib.R;
 
 /**
@@ -13,22 +14,33 @@ import com.sdr.sdrlib.R;
  * Description:
  */
 
-public class BaseConfig {
-    public static final int onHeaderBarRes() {
+public class ActivityConfig extends BaseActivityConfig {
+
+    private Context context;
+
+    public ActivityConfig(Context context) {
+        this.context = context;
+    }
+
+
+    @Override
+    public int onHeaderBarStatusViewAlpha() {
+        return 90;
+    }
+
+    @Override
+    public int onHeaderBarToolbarRes() {
         return R.layout.layout_public_toolbar_white;
     }
 
-    public static final Drawable onHeaderBarDrawable(Context context) {
+    @Override
+    public Drawable onHeaderBarDrawable() {
         ColorDrawable colorDrawable = new ColorDrawable(context.getResources().getColor(R.color.colorPrimary));
         return colorDrawable;
     }
 
-    public static final int onHeaderBarStatusViewAlpha() {
-        return 90;
-    }
-
-    public static final int onHeaderBarGravity() {
+    @Override
+    public int onHeaderBarTitleGravity() {
         return Gravity.CENTER;
     }
-
 }

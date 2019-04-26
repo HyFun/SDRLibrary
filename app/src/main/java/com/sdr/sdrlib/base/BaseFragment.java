@@ -1,6 +1,5 @@
 package com.sdr.sdrlib.base;
 
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import butterknife.ButterKnife;
@@ -15,20 +14,5 @@ public abstract class BaseFragment extends com.sdr.lib.base.BaseFragment {
     @Override
     protected void bindButterKnife(View view) {
         ButterKnife.bind(this, view);
-    }
-
-    @Override
-    protected int onHeaderBarToolbarRes() {
-        return 0;
-    }
-
-    @Override
-    protected Drawable onHeaderBarDrawable() {
-        return BaseConfig.onHeaderBarDrawable(getContext());
-    }
-
-    @Override
-    protected int onHeaderBarTitleGravity() {
-        return BaseConfig.onHeaderBarGravity();
     }
 }

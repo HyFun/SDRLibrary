@@ -3,7 +3,6 @@ package com.sdr.lib.base;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +21,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.R;
+import com.sdr.lib.SDR;
 import com.sdr.lib.widget.MarqueeTextView;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -194,7 +193,7 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
      * @return
      */
     protected Drawable onHeaderBarDrawable() {
-        return new ColorDrawable(Color.parseColor("#333333"));
+        return SDR.getInstance().getActivityConfig().onHeaderBarDrawable();
     }
 
     /**
@@ -222,7 +221,7 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
      * @return
      */
     protected int onHeaderBarTitleGravity() {
-        return Gravity.LEFT;
+        return SDR.getInstance().getActivityConfig().onHeaderBarTitleGravity();
     }
 
     // -----------------------------------------------设置方法--------------------------------------------

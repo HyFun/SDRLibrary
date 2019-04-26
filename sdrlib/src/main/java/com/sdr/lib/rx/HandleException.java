@@ -1,7 +1,7 @@
 package com.sdr.lib.rx;
 
 import com.google.gson.JsonParseException;
-import com.sdr.lib.SDRLibrary;
+import com.sdr.lib.SDR;
 import com.sdr.lib.util.CommonUtil;
 
 import org.json.JSONException;
@@ -44,7 +44,7 @@ public abstract class HandleException {
 
     private void handleException() {
         CommonException ce = new CommonException(throwable);
-        if (!CommonUtil.isNetworkConnected(SDRLibrary.getInstance().getApplication())) {
+        if (!CommonUtil.isNetworkConnected(SDR.getInstance().getApplication())) {
             // 说明没网
             ce.message = "网络不给力，请检查网络设置";
             commonException(ce);

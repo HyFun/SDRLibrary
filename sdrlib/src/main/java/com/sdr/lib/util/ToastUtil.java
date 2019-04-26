@@ -3,7 +3,7 @@ package com.sdr.lib.util;
 import android.content.Context;
 import android.graphics.Color;
 
-import com.sdr.lib.SDRLibrary;
+import com.sdr.lib.SDR;
 import com.sdr.lib.ui.toast.ToastSimple;
 
 /**
@@ -48,6 +48,6 @@ public class ToastUtil {
     }
 
     private static Context getContext() {
-        return SDRLibrary.getInstance().getApplication().getApplicationContext();
+        return SDR.getInstance().getApplication().getApplicationContext();
     }
 }

@@ -1,1 +1,3 @@
-<resources></resources>
+<resources>
+    <color name="colorBackground">#F5F5F5</color>
+</resources>

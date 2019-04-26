@@ -1,7 +1,7 @@
 package com.sdr.lib.http;
 
 import com.google.gson.Gson;
-import com.sdr.lib.SDRLibrary;
+import com.sdr.lib.SDR;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -73,19 +73,19 @@ public class HttpClient {
     private OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         // 缓存  只会存放get缓存 存放在data/data/cache/NetCache文件夹下
-        File cacheFile = new File(HttpClientUtil.getNetCachePath(SDRLibrary.getInstance().getApplication().getApplicationContext()));
+        File cacheFile = new File(HttpClientUtil.getNetCachePath(SDR.getInstance().getApplication().getApplicationContext()));
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         // 超时时间 30秒
         builder.readTimeout(30, TimeUnit.SECONDS);
         builder.connectTimeout(30, TimeUnit.SECONDS);
         builder.writeTimeout(30, TimeUnit.SECONDS);
         //设置缓存
-        AddCacheInterceptor cacheInterceptor = new AddCacheInterceptor(SDRLibrary.getInstance().getApplication().getApplicationContext());
+        AddCacheInterceptor cacheInterceptor = new AddCacheInterceptor(SDR.getInstance().getApplication().getApplicationContext());
         builder.addNetworkInterceptor(cacheInterceptor);
         builder.addInterceptor(cacheInterceptor);
         builder.cache(cache);
         // interceptor  log
-        builder.addNetworkInterceptor(getLoggingInterceptor(SDRLibrary.getInstance().isDebug()));
+        builder.addNetworkInterceptor(getLoggingInterceptor(SDR.getInstance().isDebug()));
         //错误重连
         builder.retryOnConnectionFailure(true);
         return builder.build();

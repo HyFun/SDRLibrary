@@ -2,7 +2,7 @@ package com.sdr.lib.support.path;
 
 import android.os.Environment;
 
-import com.sdr.lib.SDRLibrary;
+import com.sdr.lib.SDR;
 
 import java.io.File;
 
@@ -14,13 +14,13 @@ import java.io.File;
 
 public class AppPath {
     // app内部存储位置   更改缓存存储位置 防止华为手机自动清除缓存  用户信息就会被删
-    private final static String APP_CACHE = SDRLibrary.getInstance().getApplication().getFilesDir().getAbsolutePath();
+    private final static String APP_CACHE = SDR.getInstance().getApplication().getFilesDir().getAbsolutePath();
 
     // 存储用户信息的地址
     private final static String USER_INFO_CACHE = APP_CACHE + File.separator + "user";
 
     // sd卡中应用的缓存地址
-    private final static String APP_SD_CACHE = SDRLibrary.getInstance().getApplication().getExternalCacheDir().getAbsolutePath();
+    private final static String APP_SD_CACHE = SDR.getInstance().getApplication().getExternalCacheDir().getAbsolutePath();
 
     // sd 卡中缓存json的地址
     private final static String DATA_CACHE = APP_SD_CACHE + File.separator + "string";
@@ -30,7 +30,7 @@ public class AppPath {
 
     // ------------------------------------------------------------------------------
     // sd 卡中的路径
-    private final static String APP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "SDR" + File.separator + SDRLibrary.getInstance().getApplication().getPackageName();
+    private final static String APP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "SDR" + File.separator + SDR.getInstance().getApplication().getPackageName();
 
     // sd 卡中的文件
     private final static String FILE_PATH = APP_PATH + File.separator + "file";

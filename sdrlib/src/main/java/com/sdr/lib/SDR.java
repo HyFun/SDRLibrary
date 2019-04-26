@@ -7,24 +7,26 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.sdr.lib.base.BaseActivityConfig;
+import com.sdr.lib.util.CommonUtil;
 
 /**
  * Created by HYF on 2018/10/13.
  * Email：775183940@qq.com
  */
 
-public class SDRLibrary {
+public class SDR {
 
-    private SDRLibrary() {
+    private SDR() {
     }
 
-    private static SDRLibrary instance;
+    private static SDR instance;
 
-    public static SDRLibrary getInstance() {
+    public static SDR getInstance() {
         if (instance == null) {
-            synchronized (SDRLibrary.class) {
+            synchronized (SDR.class) {
                 if (instance == null) {
-                    instance = new SDRLibrary();
+                    instance = new SDR();
                 }
             }
         }
@@ -34,10 +36,21 @@ public class SDRLibrary {
 
     private Application application;
     private boolean debug;
+    private BaseActivityConfig activityConfig;
 
-    public void init(Application application, final boolean debug) {
-        this.application = application;
-        this.debug = debug;
+
+    /**
+     * 注册
+     * 需要在 application中注册
+     *
+     * @param application
+     */
+    public static void register(Application application, BaseActivityConfig activityConfig) {
+        getInstance().setApplication(application);
+        getInstance().setDebug(CommonUtil.isApkInDebug(application));
+        getInstance().setActivityConfig(activityConfig);
+
+
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
 //                .methodCount(0)         // (Optional) How many method line to show. Default 2
@@ -48,16 +61,33 @@ public class SDRLibrary {
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
-                return debug;
+                return getInstance().isDebug();
             }
         });
     }
+
 
     public Application getApplication() {
         return application;
     }
 
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
     public boolean isDebug() {
         return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public BaseActivityConfig getActivityConfig() {
+        return activityConfig;
+    }
+
+    public void setActivityConfig(BaseActivityConfig activityConfig) {
+        this.activityConfig = activityConfig;
     }
 }

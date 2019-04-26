@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +23,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.R;
+import com.sdr.lib.SDR;
 import com.sdr.lib.support.ActivityCollector;
 import com.sdr.lib.util.StatusBarUtils;
 import com.sdr.lib.widget.MarqueeTextView;
@@ -179,7 +178,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected int onHeaderBarToolbarRes() {
-        return 0;
+        return SDR.getInstance().getActivityConfig().onHeaderBarToolbarRes();
     }
 
     /**
@@ -189,7 +188,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      */
     @IntRange(from = 0, to = 255)
     protected int onHeaderBarStatusViewAlpha() {
-        return 0;
+        return SDR.getInstance().getActivityConfig().onHeaderBarStatusViewAlpha();
     }
 
     /**
@@ -198,7 +197,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected Drawable onHeaderBarDrawable() {
-        return new ColorDrawable(Color.parseColor("#333333"));
+        return SDR.getInstance().getActivityConfig().onHeaderBarDrawable();
     }
 
     /**
@@ -226,7 +225,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected int onHeaderBarTitleGravity() {
-        return Gravity.LEFT;
+        return SDR.getInstance().getActivityConfig().onHeaderBarTitleGravity();
     }
 
     // -----------------------------------------------设置方法--------------------------------------------

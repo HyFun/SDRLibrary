@@ -1,6 +1,5 @@
 package com.sdr.sdrlib.base;
 
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import butterknife.ButterKnife;
@@ -16,25 +15,5 @@ public class BaseActivity extends com.sdr.lib.base.BaseActivity {
     public void setContentView(View view) {
         super.setContentView(view);
         ButterKnife.bind(this);
-    }
-
-    @Override
-    protected int onHeaderBarToolbarRes() {
-        return BaseConfig.onHeaderBarRes();
-    }
-
-    @Override
-    protected Drawable onHeaderBarDrawable() {
-        return BaseConfig.onHeaderBarDrawable(this);
-    }
-
-    @Override
-    protected int onHeaderBarStatusViewAlpha() {
-        return BaseConfig.onHeaderBarStatusViewAlpha();
-    }
-
-    @Override
-    protected int onHeaderBarTitleGravity() {
-        return BaseConfig.onHeaderBarGravity();
     }
 }

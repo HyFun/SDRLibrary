@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 
 import com.sdr.lib.R;
-import com.sdr.lib.SDRLibrary;
+import com.sdr.lib.SDR;
 import com.sdr.lib.ui.toast.ToastTop;
 
 /**
@@ -66,6 +66,6 @@ public class ToastTopUtil {
     }
 
     private static Context getContext() {
-        return SDRLibrary.getInstance().getApplication().getApplicationContext();
+        return SDR.getInstance().getApplication().getApplicationContext();
     }
 }

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sdr.sdrlib.R;
-import com.sdr.sdrlib.base.BaseConfig;
+import com.sdr.sdrlib.base.ActivityConfig;
 import com.sdr.sdrlib.base.BaseFragment;
 
 import butterknife.BindView;
@@ -72,6 +72,6 @@ public class LazyBaseFragment extends BaseFragment {
 
     @Override
     protected int onHeaderBarToolbarRes() {
-        return BaseConfig.onHeaderBarRes();
+        return new ActivityConfig(getContext()).onHeaderBarToolbarRes();
     }
 }
