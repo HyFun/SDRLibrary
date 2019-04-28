@@ -41,8 +41,11 @@ public class WeatherObservable {
                 HttpClient.getInstance().getOkHttpClient(), SDRAPI.class);
     }
 
+    public Observable<Weather> getWeather() {
+        return getWeatherData();
+    }
 
-    public Observable<Weather> getWeatherData() {
+    private Observable<Weather> getWeatherData() {
         if (currentIndex < keylist.size()) {
             String key = keylist.get(currentIndex);
             return weatherAPI.getWeatherData(locationCode, key)
