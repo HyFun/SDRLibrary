@@ -19,6 +19,7 @@ import com.sdr.lib.support.fingerprint.BiometricPromptManager;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.ui.tree.TreeNode;
 import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
+import com.sdr.lib.util.AlertUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.util.NotificationUtils;
 import com.sdr.lib.util.ToastTopUtil;
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onSigleClick(TreeNode treeNode, int visablePositon, int realDatasPositon, boolean isLeaf) {
                         if (!isLeaf) return;
-                        ToastUtil.showNormalMsg(treeNode.getLabel());
+                        ToastUtil.showNormalToast(treeNode.getLabel());
                     }
                 });
                 RecyclerView recyclerView = new RecyclerView(getContext());
@@ -114,7 +115,7 @@ public class MainActivity extends BaseActivity {
                                 sb.append(",");
                             }
                         }
-                        ToastUtil.showNormalMsg(sb.toString());
+                        ToastUtil.showNormalToast(sb.toString());
                     }
                 });
                 RecyclerView recyclerView = new RecyclerView(getContext());
@@ -159,21 +160,42 @@ public class MainActivity extends BaseActivity {
         adapter.addData(new MainItem("Toast 正常", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showNormalMsg("正常的toast");
+                ToastUtil.showNormalToast("正常的toast");
             }
         }));
 
         adapter.addData(new MainItem("Toast 正确", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showCorrectMsg("Toast 正确");
+                ToastUtil.showPositiveToast("Toast 正确");
             }
         }));
 
         adapter.addData(new MainItem("Toast 错误", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showErrorMsg("Toast 错误");
+                ToastUtil.showNegativeToast("Toast 错误");
+            }
+        }));
+
+        adapter.addData(new MainItem("Toast 长内容", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showNegativeToast(getResources().getString(R.string.long_string));
+            }
+        }));
+
+        adapter.addData(new MainItem("Alert 简单Dialog", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertUtil.showDialog(getActivity(),"提示","登录失败，密码错误!!!");
+            }
+        }));
+
+        adapter.addData(new MainItem("Alert 长Dialog", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertUtil.showDialog(getActivity(),"提示",getResources().getString(R.string.long_string));
             }
         }));
 
@@ -188,14 +210,14 @@ public class MainActivity extends BaseActivity {
         adapter.addData(new MainItem("TopToast 成功", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastTopUtil.showCorrectTopToast("成功的TopToast");
+                ToastTopUtil.showPositiveTopToast("成功的TopToast");
             }
         }));
 
         adapter.addData(new MainItem("TopToast 错误", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastTopUtil.showErrorTopToast("错误的TopToast");
+                ToastTopUtil.showNegativeTopToast("错误的TopToast");
             }
         }));
 
@@ -230,7 +252,7 @@ public class MainActivity extends BaseActivity {
 
                             @Override
                             public void onSucceeded() {
-                                ToastUtil.showCorrectMsg("验证通过");
+                                ToastUtil.showPositiveToast("验证通过");
                             }
 
                             @Override
@@ -249,10 +271,10 @@ public class MainActivity extends BaseActivity {
                             }
                         });
                     } else {
-                        ToastUtil.showErrorMsg("您的设备没有设置指纹，请先设置指纹");
+                        ToastUtil.showNegativeToast("您的设备没有设置指纹，请先设置指纹");
                     }
                 } else {
-                    ToastUtil.showErrorMsg("您的设备不支持指纹");
+                    ToastUtil.showNegativeToast("您的设备不支持指纹");
                 }
             }
         }));

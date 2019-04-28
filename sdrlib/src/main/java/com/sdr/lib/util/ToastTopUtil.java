@@ -12,42 +12,42 @@ import com.sdr.lib.ui.toast.ToastTop;
  * Email:775183940@qq.com
  * 用于显示信息提示
  */
-
+@Deprecated
 public class ToastTopUtil {
     private ToastTopUtil() {
     }
 
     private static ToastTop snackTopToast;
 
-    public static void showCorrectTopToast(String title) {
+    public static void showPositiveTopToast(String title) {
         getInstance()
-                .setBackgroundColor(Color.parseColor("#34C156"))
+                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
-                .setIconRes(R.drawable.sdr_ic_success_outline_black_24dp)
-                .setTitleColor(Color.WHITE)
-                .setIconColor(Color.WHITE)
+                .setIconRes(R.drawable.sdr_ic_toast_success_24dp)
+                .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
+                .setIconColor(getContext().getResources().getColor(R.color.colorPositive))
                 .setShowTime(3000)
                 .show();
     }
 
-    public static void showErrorTopToast(String title) {
+    public static void showNegativeTopToast(String title) {
         getInstance()
-                .setBackgroundColor(Color.parseColor("#FC443A"))
+                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
-                .setIconRes(R.drawable.sdr_ic_warning_outline_black_24dp)
-                .setTitleColor(Color.WHITE)
-                .setIconColor(Color.WHITE)
+                .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
+                .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
+                .setIconColor(getContext().getResources().getColor(R.color.colorNegative))
                 .setShowTime(3000)
                 .show();
     }
 
     public static void showNormalTopToast(String title) {
         getInstance()
-                .setBackgroundColor(Color.parseColor("#999999"))
+                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
-                .setIconRes(R.drawable.sdr_ic_warning_outline_black_24dp)
-                .setTitleColor(Color.WHITE)
-                .setIconColor(Color.WHITE)
+                .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
+                .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
+                .setIconColor(getContext().getResources().getColor(R.color.colorPrimary))
                 .setShowTime(3000)
                 .show();
     }

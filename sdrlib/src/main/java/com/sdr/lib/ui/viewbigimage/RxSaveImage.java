@@ -91,12 +91,12 @@ public class RxSaveImage {
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        ToastUtil.showCorrectMsg("图片已保存至" + savePath);
+                        ToastUtil.showPositiveToast("图片已保存至" + savePath);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ToastUtil.showErrorMsg(throwable.getMessage());
+                        ToastUtil.showNegativeToast(throwable.getMessage());
                     }
                 });
 

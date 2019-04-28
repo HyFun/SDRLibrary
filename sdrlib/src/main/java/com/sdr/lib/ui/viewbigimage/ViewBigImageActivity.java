@@ -79,7 +79,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         position = intent.getIntExtra("position", 0);
         imageList = (List) intent.getSerializableExtra("imageList");
         if (imageList == null || imageList.isEmpty()) {
-            ToastUtil.showErrorMsg("图片集合不能为空");
+            ToastUtil.showNegativeToast("图片集合不能为空");
             finish();
         }
     }
@@ -101,7 +101,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
             @Override
             public void onClick(View v) {
                 if (!CommonUtil.isNetworkConnected(getContext())) {
-                    ToastUtil.showErrorMsg("当前网络不可用，请检查你的网络设置");
+                    ToastUtil.showNegativeToast("当前网络不可用，请检查你的网络设置");
                     return;
                 }
                 // 授权
@@ -111,7 +111,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
                                 if (aBoolean) {
-                                    ToastUtil.showNormalMsg("开始下载图片");
+                                    ToastUtil.showNormalToast("开始下载图片");
                                     RxSaveImage.saveImageToGallery(getContext(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), imageList.get(position));
                                 }
                             }
@@ -196,7 +196,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                         @Override
                         public void onLoadFailed(@Nullable Drawable errorDrawable) {
                             super.onLoadFailed(errorDrawable);
-                            ToastUtil.showErrorMsg("资源加载失败");
+                            ToastUtil.showNegativeToast("资源加载失败");
                             progressBar.setVisibility(View.GONE);
                         }
                     });

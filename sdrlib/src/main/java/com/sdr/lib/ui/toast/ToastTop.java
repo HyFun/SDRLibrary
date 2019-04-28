@@ -14,7 +14,6 @@ import android.provider.Settings;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sdr.lib.R;
+import com.sdr.lib.util.CommonUtil;
 
 
 /**
@@ -43,7 +43,7 @@ public class ToastTop {
     private LayoutInflater mLayoutInflater;
 
     // 视图
-    private FrameLayout contentView;
+    private View contentView;
     private ImageView mImageView;
     private TextView mTextView;
 
@@ -90,17 +90,17 @@ public class ToastTop {
 
         // 初始化吐司窗口布局
         mView = mLayoutInflater.inflate(R.layout.sdr_layout_snack_top_bar, null, false);
-        contentView = (FrameLayout) mView.findViewById(R.id.hyf_snackbar_view);
+        contentView = (LinearLayout) mView.findViewById(R.id.hyf_snackbar_view);
         mImageView = (ImageView) mView.findViewById(R.id.hyf_iv_sanckbar);
         mTextView = (TextView) mView.findViewById(R.id.hyf_tv_sanckbar);
-        // 设置margintop
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            LinearLayout parent = (LinearLayout) contentView.getChildAt(0);
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) parent.getLayoutParams();
-            params.topMargin = getStatusBarHeight(mContext);
-            parent.setLayoutParams(params);
-            mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
+//        // 设置margintop
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            LinearLayout parent = (LinearLayout) contentView.getChildAt(0);
+//            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) parent.getLayoutParams();
+//            params.topMargin = getStatusBarHeight(mContext);
+//            parent.setLayoutParams(params);
+//            mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//        }
     }
 
     private Handler mHandler;
@@ -206,19 +206,4 @@ public class ToastTop {
             hide();
         }
     };
-
-    /**
-     * 获取状态栏的高度
-     *
-     * @param context
-     * @return
-     */
-    private int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
 }
