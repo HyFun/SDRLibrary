@@ -123,7 +123,9 @@ public class AlertUtil {
                 .content(content)
                 .positiveText("确定");
         if (positiveListener != null) {
-            builder.onPositive(positiveListener);
+            builder
+                    .cancelable(false)
+                    .onPositive(positiveListener);
         }
         if (negativeListener != null) {
             builder.negativeText("取消")

@@ -1,5 +1,6 @@
 package com.sdr.sdrlib;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,8 +16,11 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.fingerprint.BiometricPromptManager;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
+import com.sdr.lib.support.weather.Weather;
+import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.ui.tree.TreeNode;
 import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.AlertUtil;
@@ -32,11 +36,14 @@ import com.sdr.sdrlib.ui.marquee.MarqueeViewActivity;
 import com.sdr.sdrlib.util.AppUtil;
 import com.sdr.sdrlib.util.AssetsDataUtil;
 import com.sdr.sdrlib.util.NotificationIdHelper;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
+import io.reactivex.observers.ResourceObserver;
 
 public class MainActivity extends BaseActivity {
 
@@ -49,6 +56,21 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         setTitle(R.string.app_name);
 
+        String[] permissions = {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        };
+        new RxPermissions(getActivity())
+                .request(permissions)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        Logger.e("MainActivity>>>>>>>" + aBoolean);
+                    }
+                });
 
         MainRecycleAdapter adapter = new MainRecycleAdapter(R.layout.layout_main_recycler_item, new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -188,14 +210,14 @@ public class MainActivity extends BaseActivity {
         adapter.addData(new MainItem("Alert 简单Dialog", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertUtil.showDialog(getActivity(),"提示","登录失败，密码错误!!!");
+                AlertUtil.showDialog(getActivity(), "提示", "登录失败，密码错误!!!");
             }
         }));
 
         adapter.addData(new MainItem("Alert 长Dialog", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertUtil.showDialog(getActivity(),"提示",getResources().getString(R.string.long_string));
+                AlertUtil.showDialog(getActivity(), "提示", getResources().getString(R.string.long_string));
             }
         }));
 
@@ -276,6 +298,45 @@ public class MainActivity extends BaseActivity {
                 } else {
                     ToastUtil.showNegativeToast("您的设备不支持指纹");
                 }
+            }
+        }));
+
+        adapter.addData(new MainItem("获取天气数据", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new RxPermissions(getActivity())
+                        .request(
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_PHONE_STATE,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if (aBoolean) {
+                                    new WeatherObservable(getActivity()).getWeather()
+                                            .compose(RxUtils.io_main())
+                                            .subscribeWith(new ResourceObserver<Weather>() {
+                                                @Override
+                                                public void onNext(Weather weather) {
+                                                    AlertUtil.showDialog(getActivity(), "获取天气成功", HttpClient.gson.toJson(weather));
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                    Logger.e(e, e.getMessage());
+                                                }
+
+                                                @Override
+                                                public void onComplete() {
+
+                                                }
+                                            });
+                                }
+                            }
+                        });
             }
         }));
     }

@@ -20,7 +20,7 @@ public class Weather implements Serializable{
         this.HeWeather6 = HeWeather6;
     }
 
-    public static class HeWeather6Bean {
+    public static class HeWeather6Bean implements Serializable{
         /**
          * basic : {"cid":"CN101190401","location":"苏州","parent_city":"苏州","admin_area":"江苏","cnty":"中国","lat":"31.29937935","lon":"120.61958313","tz":"+8.00"}
          * update : {"loc":"2018-10-29 12:46","utc":"2018-10-29 04:46"}
@@ -177,7 +177,7 @@ public class Weather implements Serializable{
             }
         }
 
-        public static class DailyForecastBean {
+        public static class DailyForecastBean implements Serializable{
             /**
              * cond_code_d : 100
              * cond_code_n : 101
