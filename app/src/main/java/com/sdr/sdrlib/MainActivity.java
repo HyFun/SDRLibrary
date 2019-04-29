@@ -30,6 +30,7 @@ import com.sdr.lib.util.ToastTopUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.entity.Person;
+import com.sdr.sdrlib.ui.main.MainModeOneActivity;
 import com.sdr.sdrlib.ui.basefragment.LazyBaseFragmentActivity;
 import com.sdr.sdrlib.ui.lazyfragment.LazyFragmentActivity;
 import com.sdr.sdrlib.ui.marquee.MarqueeViewActivity;
@@ -337,6 +338,14 @@ public class MainActivity extends BaseActivity {
                                 }
                             }
                         });
+            }
+        }));
+
+
+        adapter.addData(new MainItem("主页面Mode One", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MainModeOneActivity.class));
             }
         }));
     }

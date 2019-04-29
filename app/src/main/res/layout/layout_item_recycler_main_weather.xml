@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="20dp"
+    tools:background="#333333">
+
+    <TextView
+        android:id="@+id/tv_item_weather_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        tools:text="5-24 星期三" />
+
+    <ImageView
+        android:id="@+id/img_item_weather"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:tint="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_item_weather_tem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        tools:text="21℃~25℃" />
+
+    <TextView
+        android:id="@+id/tv_item_weather_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        tools:text="多云" />
+</LinearLayout>
