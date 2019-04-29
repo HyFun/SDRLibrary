@@ -21,9 +21,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by HyFun on 2018/10/29.
@@ -106,8 +104,6 @@ public class WeatherObservable {
                         }
                     }
                 })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
                 .flatMap(new Function<String, ObservableSource<Weather>>() {
                     @Override
                     public ObservableSource<Weather> apply(String s) throws Exception {
@@ -156,7 +152,8 @@ public class WeatherObservable {
                         if (weatherJson == null) {
                             return Observable.error(new WeatherException("天气获取异常"));
                         } else {
-                            Weather weather = HttpClient.gson.fromJson(weatherJson,new TypeToken<Weather>(){}.getType());
+                            Weather weather = HttpClient.gson.fromJson(weatherJson, new TypeToken<Weather>() {
+                            }.getType());
                             return RxUtils.createData(weather);
                         }
                     }
