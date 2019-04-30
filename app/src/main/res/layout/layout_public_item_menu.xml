@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sdr.lib.widget.RoundFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:background="@color/colorWhite">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <com.sdr.lib.widget.SquareFramLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/main_home_top_menu_recycler_item_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+            </com.sdr.lib.widget.SquareFramLayout>
+
+            <TextView
+                android:id="@+id/main_home_top_menu_recycler_item_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!--角标-->
+        <TextView
+            android:id="@+id/main_home_top_menu_recycler_item_tv_badge"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_margin="10dp"
+            android:background="@drawable/sdr_shape_circle"
+            android:backgroundTint="@color/colorNegative"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            app:backgroundTint="@color/colorNegative" />
+    </FrameLayout>
+</com.sdr.lib.widget.RoundFrameLayout>

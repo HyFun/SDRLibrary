@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sdr.lib.widget.VPSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_two_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <com.sdr.lib.widget.InnerViewPagerNestedScrollView
+        android:id="@+id/main_two_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--天气区域-->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:background="@color/colorWhite">
+
+                <ImageView
+                    android:id="@+id/main_two_image_weather_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/main_two_recycler_weather"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <!--top info-->
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <net.lucode.hackware.magicindicator.MagicIndicator
+                            android:id="@+id/main_two_top_indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp" />
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/main_two_top_viewpager"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:overScrollMode="never" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <!--菜单-->
+                <!--<android.support.v7.widget.CardView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--app:cardBackgroundColor="@color/colorWhite"-->
+                <!--app:cardElevation="0dp"-->
+                <!--app:cardCornerRadius="10dp">-->
+                <!--<com.sdr.lib.widget.WrapContentHeightViewPager-->
+                <!--android:id="@+id/main_two_viewpager_menu"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:overScrollMode="never"/>-->
+                <!--</android.support.v7.widget.CardView>-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+
+                    <com.sdr.lib.widget.WrapContentHeightViewPager
+                        android:id="@+id/main_two_viewpager_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
+                    <!--圆形的-->
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.sdr.lib.widget.InnerViewPagerNestedScrollView>
+</com.sdr.lib.widget.VPSwipeRefreshLayout>
