@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 
+import com.sdr.lib.support.menu.MenuItem;
+import com.sdr.lib.support.menu.OnClickMenuItemListener;
 import com.sdr.lib.util.AlertUtil;
 import com.sdr.sdrlib.R;
-import com.sdr.sdrlib.common.menu.MenuItem;
-import com.sdr.sdrlib.common.menu.OnClickMenuItemListener;
 
 import java.util.ArrayList;
 import java.util.List;

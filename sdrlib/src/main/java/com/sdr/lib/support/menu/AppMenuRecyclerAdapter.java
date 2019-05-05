@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.common.menu;
+package com.sdr.lib.support.menu;
 
 import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
@@ -15,42 +15,44 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sdr.sdrlib.R;
+import com.sdr.lib.R;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2018/4/23.
+ * Created by HyFun on 2019/05/05.
+ * Email: 775183940@qq.com
+ * Description:
  */
 
-public class MenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewHolder> {
+public class AppMenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewHolder> {
 
-    public MenuRecyclerAdapter(int layoutResId, @Nullable List<MenuItem> data) {
+    public AppMenuRecyclerAdapter(int layoutResId, @Nullable List<MenuItem> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, final MenuItem item) {
-        ImageView imageView = helper.getView(R.id.main_home_top_menu_recycler_item_iv);
-        TextView textView = helper.getView(R.id.main_home_top_menu_recycler_item_tv_title);
-        TextView badge = helper.getView(R.id.main_home_top_menu_recycler_item_tv_badge);
+        ImageView imageView = helper.getView(R.id.sdr_public_recycler_item_menu_iv_icon);
+        TextView tvTitle = helper.getView(R.id.sdr_public_recycler_item_menu_tv_title);
+        TextView tvMark = helper.getView(R.id.sdr_public_recycler_item_menu_tv_marks);
 
         // 菜单图标
         Glide.with(mContext).load(item.getImageRes()).into(imageView);
         imageView.setColorFilter(item.getImgColor(), PorterDuff.Mode.SRC_IN);
         // 菜单标题
-        textView.setText(item.getTitle());
-        textView.setTextColor(item.getTitleColor());
+        tvTitle.setText(item.getTitle());
+        tvTitle.setTextColor(item.getTitleColor());
 
         // 菜单角标
         String badgeStr = item.getBadge();
         if (TextUtils.isEmpty(badgeStr) || "0".equals(badgeStr)) {
-            badge.setVisibility(View.GONE);
+            tvMark.setVisibility(View.GONE);
         } else {
-            badge.setText(badgeStr);
-            badge.setVisibility(View.VISIBLE);
+            tvMark.setText(badgeStr);
+            tvMark.setVisibility(View.VISIBLE);
             // 显示动画
-            setViewZoomInAnim(badge, 800);
+            setViewZoomInAnim(tvMark, 800);
         }
         // 点击事件
         helper.itemView.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +98,8 @@ public class MenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewHold
     }
 
 
-    public static final MenuRecyclerAdapter setAdapter(RecyclerView recyclerView, List<MenuItem> menuItemList) {
-        MenuRecyclerAdapter mSecondMenuAdapter = new MenuRecyclerAdapter(R.layout.layout_public_item_menu, menuItemList);
+    public static final AppMenuRecyclerAdapter setAdapter(RecyclerView recyclerView, List<MenuItem> menuItemList) {
+        AppMenuRecyclerAdapter mSecondMenuAdapter = new AppMenuRecyclerAdapter(R.layout.sdr_layout_public_recycler_item_app_menu, menuItemList);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 4));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(mSecondMenuAdapter);

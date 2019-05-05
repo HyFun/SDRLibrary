@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.rx.RxUtils;
+import com.sdr.lib.support.menu.MenuItem;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.support.weather.WeatherUtil;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.observers.ResourceObserver;
+import me.relex.circleindicator.CircleIndicator;
 
 public class MainModeTwoActivity extends BaseActivity {
 
@@ -59,6 +61,8 @@ public class MainModeTwoActivity extends BaseActivity {
 
     @BindView(R.id.main_two_viewpager_menu)
     ViewPager viewMenuVeiwPager;
+    @BindView(R.id.main_two_menu_indicator)
+    CircleIndicator viewMenuIndicator;
 
 
     private MainWeatherAdapter mainWeatherAdapter;
@@ -132,7 +136,21 @@ public class MainModeTwoActivity extends BaseActivity {
         // 菜单
         {
             AppMenu appMenu = new AppMenu(getActivity());
-            viewMenuVeiwPager.setAdapter(new MainSecondMenuPagerAdapter(getContext(), appMenu.getSecondMenuList()));
+            MainSecondMenuPagerAdapter mainSecondMenuPagerAdapter = new MainSecondMenuPagerAdapter(getContext(), appMenu.getSecondMenuList());
+            viewMenuVeiwPager.setAdapter(mainSecondMenuPagerAdapter);
+            viewMenuIndicator.setViewPager(viewMenuVeiwPager);
+
+            // 更新
+            List<List<MenuItem>> datas = mainSecondMenuPagerAdapter.getDatas();
+            for (int i = 0; i < datas.size(); i++) {
+                List<MenuItem> menuItemList = datas.get(i);
+                for (int j = 0; j < menuItemList.size(); j++) {
+                    MenuItem menuItem = menuItemList.get(j);
+                    menuItem.setBadge("9");
+                }
+            }
+
+            mainSecondMenuPagerAdapter.notifyDataSetChanged();
         }
 
 

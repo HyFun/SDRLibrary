@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.common.menu;
+package com.sdr.lib.support.menu;
 
 /**
  * Created by Administrator on 2018/3/2.

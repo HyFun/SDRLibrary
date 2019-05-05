@@ -60,4 +60,7 @@ dependencies {
     // Android 6.0授权
     compile 'com.github.tbruyelle:rxpermissions:0.10.2'
 
+    //BaseRecyclerViewAdapterHelper
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+
 }

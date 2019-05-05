@@ -43,4 +43,5 @@ dependencies {
     // other
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'       // viewpager indicator
+    implementation 'me.relex:circleindicator:1.2.2' // indicator
 }
