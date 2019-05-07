@@ -23,6 +23,7 @@ import com.sdr.lib.widget.VPSwipeRefreshLayout;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuPagerAdapter;
+import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuPagerAdapter2;
 import com.sdr.sdrlib.ui.main.adapter.MainTopPagerAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -63,6 +64,10 @@ public class MainModeTwoActivity extends BaseActivity {
     ViewPager viewMenuVeiwPager;
     @BindView(R.id.main_two_menu_indicator)
     CircleIndicator viewMenuIndicator;
+    @BindView(R.id.main_two_viewpager_menu_2)
+    ViewPager viewMenuViewPager2;
+    @BindView(R.id.main_two_menu_indicator_2)
+    CircleIndicator viewMenuIndicator2;
 
 
     private MainWeatherAdapter mainWeatherAdapter;
@@ -133,13 +138,32 @@ public class MainModeTwoActivity extends BaseActivity {
             ViewPagerHelper.bind(viewTopIndicator, viewTopViewPager);
         }
 
-        // 菜单
+        // 菜单 1
         {
             AppMenu appMenu = new AppMenu(getActivity());
             MainSecondMenuPagerAdapter mainSecondMenuPagerAdapter = new MainSecondMenuPagerAdapter(getContext(), appMenu.getSecondMenuList());
             viewMenuVeiwPager.setAdapter(mainSecondMenuPagerAdapter);
             viewMenuIndicator.setViewPager(viewMenuVeiwPager);
 
+            // 更新
+            List<List<MenuItem>> datas = mainSecondMenuPagerAdapter.getDatas();
+            for (int i = 0; i < datas.size(); i++) {
+                List<MenuItem> menuItemList = datas.get(i);
+                for (int j = 0; j < menuItemList.size(); j++) {
+                    MenuItem menuItem = menuItemList.get(j);
+                    menuItem.setBadge("9");
+                }
+            }
+
+            mainSecondMenuPagerAdapter.notifyDataSetChanged();
+        }
+
+        // 菜单2
+        {
+            AppMenu appMenu = new AppMenu(getActivity());
+            MainSecondMenuPagerAdapter2 mainSecondMenuPagerAdapter = new MainSecondMenuPagerAdapter2(getContext(), appMenu.getSecondMenuList());
+            viewMenuViewPager2.setAdapter(mainSecondMenuPagerAdapter);
+            viewMenuIndicator2.setViewPager(viewMenuViewPager2);
             // 更新
             List<List<MenuItem>> datas = mainSecondMenuPagerAdapter.getDatas();
             for (int i = 0; i < datas.size(); i++) {

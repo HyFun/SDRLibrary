@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sdr.lib.widget.RoundFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sdr_public_recycler_item_menu_rf"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/sdr_public_recycler_item_menu_iv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                tools:src="@mipmap/weather_fog" />
+
+            <TextView
+                android:id="@+id/sdr_public_recycler_item_menu_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <!--角标-->
+        <TextView
+            android:id="@+id/sdr_public_recycler_item_menu_tv_marks"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_margin="5dp"
+            android:background="@drawable/sdr_shape_circle"
+            android:backgroundTint="@color/colorNegative"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            app:backgroundTint="@color/colorNegative" />
+    </FrameLayout>
+</com.sdr.lib.widget.RoundFrameLayout>

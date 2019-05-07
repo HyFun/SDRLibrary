@@ -1,7 +1,6 @@
-package com.sdr.lib.support.menu;
+package com.sdr.sdrlib.ui.main.adapter;
 
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,41 +15,39 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sdr.lib.R;
+import com.sdr.lib.support.menu.MenuItem;
+import com.sdr.lib.util.CommonUtil;
+import com.sdr.lib.widget.RoundFrameLayout;
+import com.sdr.sdrlib.R;
 
 import java.util.List;
 
 /**
- * Created by HyFun on 2019/05/05.
+ * Created by HyFun on 2019/05/06.
  * Email: 775183940@qq.com
  * Description:
  */
 
-public class AppMenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewHolder> {
+public class AppMenuSpaceRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewHolder> {
 
-    private boolean background;
-
-    public AppMenuRecyclerAdapter(int layoutResId, @Nullable List<MenuItem> data, boolean background) {
+    public AppMenuSpaceRecyclerAdapter(int layoutResId, @Nullable List<MenuItem> data) {
         super(layoutResId, data);
-        this.background = background;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final MenuItem item) {
-        ImageView imageView = helper.getView(R.id.sdr_public_recycler_item_menu_iv_icon);
-        TextView tvTitle = helper.getView(R.id.sdr_public_recycler_item_menu_tv_title);
-        TextView tvMark = helper.getView(R.id.sdr_public_recycler_item_menu_tv_marks);
+    protected void convert(BaseViewHolder helper, MenuItem item) {
+        RoundFrameLayout frameLayout = helper.getView(R.id.sdr_public_recycler_item_menu_rf);
+        ImageView imageView = helper.getView(com.sdr.lib.R.id.sdr_public_recycler_item_menu_iv_icon);
+        TextView tvTitle = helper.getView(com.sdr.lib.R.id.sdr_public_recycler_item_menu_tv_title);
+        TextView tvMark = helper.getView(com.sdr.lib.R.id.sdr_public_recycler_item_menu_tv_marks);
+        int position = helper.getLayoutPosition();
+        int radius = CommonUtil.dip2px(mContext, 10);
+        frameLayout.setRadius(position == 0 ? radius : 0, position == 3 ? radius : 0, position == 4 ? radius : 0, position == 7 ? radius : 0);
+
 
         // 菜单图标
         Glide.with(mContext).load(item.getImageRes()).into(imageView);
         imageView.setColorFilter(item.getImgColor(), PorterDuff.Mode.SRC_IN);
-
-        if (background) {
-            Drawable drawable = mContext.getResources().getDrawable(R.drawable.sdr_shape_circle);
-            drawable.setColorFilter(mContext.getResources().getColor(R.color.colorBackground), PorterDuff.Mode.SRC_IN);
-            imageView.setBackgroundDrawable(drawable);
-        }
-
         // 菜单标题
         tvTitle.setText(item.getTitle());
         tvTitle.setTextColor(item.getTitleColor());
@@ -74,9 +71,7 @@ public class AppMenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewH
                 }
             }
         });
-
     }
-
 
     /**
      * 首页由小变大的动画
@@ -109,19 +104,11 @@ public class AppMenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewH
     }
 
 
-    public static final AppMenuRecyclerAdapter setAdapter(RecyclerView recyclerView, List<MenuItem> menuItemList) {
-        AppMenuRecyclerAdapter mSecondMenuAdapter = new AppMenuRecyclerAdapter(R.layout.sdr_layout_public_recycler_item_app_menu, menuItemList, false);
+    public static final AppMenuSpaceRecyclerAdapter setAdapter(RecyclerView recyclerView, List<MenuItem> menuItemList) {
+        AppMenuSpaceRecyclerAdapter menuSpaceRecyclerAdapter = new AppMenuSpaceRecyclerAdapter(R.layout.layout_item_recycler_app_menu_space, menuItemList);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 4));
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(mSecondMenuAdapter);
-        return mSecondMenuAdapter;
-    }
-
-    public static final AppMenuRecyclerAdapter setAdapterBackground(RecyclerView recyclerView, List<MenuItem> menuItemList) {
-        AppMenuRecyclerAdapter mSecondMenuAdapter = new AppMenuRecyclerAdapter(R.layout.sdr_layout_public_recycler_item_app_menu_background, menuItemList, true);
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 4));
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(mSecondMenuAdapter);
-        return mSecondMenuAdapter;
+        recyclerView.setAdapter(menuSpaceRecyclerAdapter);
+        return menuSpaceRecyclerAdapter;
     }
 }

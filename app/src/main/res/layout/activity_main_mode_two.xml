@@ -116,6 +116,25 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
+                <!--菜单2-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+                    <com.sdr.lib.widget.WrapContentHeightViewPager
+                        android:id="@+id/main_two_viewpager_menu_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
+                    <!--圆形的-->
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/main_two_menu_indicator_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:ci_drawable="@color/colorPrimary"
+                        app:ci_drawable_unselected="@color/colorPrimaryDisable" />
+                </LinearLayout>
 
             </LinearLayout>
 
