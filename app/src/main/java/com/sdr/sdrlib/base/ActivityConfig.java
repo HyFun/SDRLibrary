@@ -25,7 +25,8 @@ public class ActivityConfig extends BaseActivityConfig {
 
     @Override
     public int onHeaderBarStatusViewAlpha() {
-        return 90;
+//        return 90;
+        return 0;
     }
 
     @Override

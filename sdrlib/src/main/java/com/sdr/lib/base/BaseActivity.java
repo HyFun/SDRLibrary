@@ -342,7 +342,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
         if (textView == null) {
             textView = new MarqueeTextView(getContext());
             textView.setText(title);
-            textView.setTextColor(Color.WHITE);
+            textView.setTextColor(SDR.getInstance().getActivityConfig().onHeaderBarTitleColor());
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
             params.gravity = gravity;

@@ -1,7 +1,6 @@
 package com.sdr.lib.base;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntRange;
 import android.view.Gravity;
@@ -32,6 +31,15 @@ public abstract class BaseActivityConfig {
      */
     public int onHeaderBarTitleGravity() {
         return Gravity.LEFT;
+    }
+
+    /**
+     * header bar 标题文字的颜色
+     *
+     * @return
+     */
+    public int onHeaderBarTitleColor() {
+        return Color.WHITE;
     }
 
     /**
