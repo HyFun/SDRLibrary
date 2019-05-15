@@ -1,9 +1,6 @@
 package com.sdr.lib.support.weather;
 
-import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
@@ -14,6 +11,7 @@ import com.sdr.lib.rx.WeatherException;
 import com.sdr.lib.support.ACache;
 import com.sdr.lib.support.SDRAPI;
 import com.sdr.lib.support.path.AppPath;
+import com.sdr.lib.util.CommonUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -90,12 +88,7 @@ public class WeatherObservable {
                     @Override
                     public ObservableSource<String> apply(Integer integer) throws Exception {
                         try {
-                            LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-                            String bestProvider = locationManager.getBestProvider(getProvider(), true);
-                            Location location = locationManager.getLastKnownLocation(bestProvider);
-                            if (location == null) {
-                                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                            }
+                            Location location = CommonUtil.getLocation(activity);
                             String longitude = location.getLongitude() + "";
                             String latitude = location.getLatitude() + "";
                             return RxUtils.createData(longitude + "," + latitude);
@@ -158,30 +151,5 @@ public class WeatherObservable {
                         }
                     }
                 });
-    }
-
-    /**
-     * 定位查询条件
-     * 返回查询条件 ，获取目前设备状态下，最适合的定位方式
-     */
-    private Criteria getProvider() {
-        // 构建位置查询条件
-        Criteria criteria = new Criteria();
-        // 设置定位精确度 Criteria.ACCURACY_COARSE比较粗略，Criteria.ACCURACY_FINE则比较精细
-        //Criteria.ACCURACY_FINE,当使用该值时，在建筑物当中，可能定位不了,建议在对定位要求并不是很高的时候用Criteria.ACCURACY_COARSE，避免定位失败
-        // 查询精度：高
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        // 设置是否要求速度
-        criteria.setSpeedRequired(false);
-        // 是否查询海拨：否
-        criteria.setAltitudeRequired(false);
-        // 是否查询方位角 : 否
-        criteria.setBearingRequired(false);
-        // 是否允许付费：是
-        criteria.setCostAllowed(false);
-        // 电量要求：低
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
-        // 返回最合适的符合条件的provider，第2个参数为true说明 , 如果只有一个provider是有效的,则返回当前provider
-        return criteria;
     }
 }

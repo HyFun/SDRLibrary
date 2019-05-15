@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -184,5 +187,38 @@ public class CommonUtil {
         Uri content_url = Uri.parse(url);
         intent.setData(content_url);
         context.startActivity(intent);
+    }
+
+    /**
+     * 原生定位  需要定位权限
+     *
+     * @param context
+     * @return
+     */
+    public static Location getLocation(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        // 构建位置查询条件
+        Criteria criteria = new Criteria();
+        // 设置定位精确度 Criteria.ACCURACY_COARSE比较粗略，Criteria.ACCURACY_FINE则比较精细
+        //Criteria.ACCURACY_FINE,当使用该值时，在建筑物当中，可能定位不了,建议在对定位要求并不是很高的时候用Criteria.ACCURACY_COARSE，避免定位失败
+        // 查询精度：高
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        // 设置是否要求速度
+        criteria.setSpeedRequired(false);
+        // 是否查询海拨：否
+        criteria.setAltitudeRequired(false);
+        // 是否查询方位角 : 否
+        criteria.setBearingRequired(false);
+        // 是否允许付费：是
+        criteria.setCostAllowed(false);
+        // 电量要求：低
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        // 返回最合适的符合条件的provider，第2个参数为true说明 , 如果只有一个provider是有效的,则返回当前provider
+        String bestProvider = locationManager.getBestProvider(criteria, true);
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        if (location == null) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+        return location;
     }
 }
