@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
+import com.sdr.lib.support.weather.WeatherRecyclerAdapter;
 import com.sdr.lib.support.weather.WeatherUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.widget.InnerViewPagerNestedScrollView;
@@ -32,7 +33,7 @@ public class MainModeOneActivity extends BaseActivity {
     ImageView viewWeatherBg;
     @BindView(R.id.main_one_recycler_weather)
     RecyclerView viewRecyclerWeather;
-    private MainWeatherAdapter mainWeatherAdapter;
+    private WeatherRecyclerAdapter mainWeatherAdapter;
 
 
     @Override
@@ -53,7 +54,7 @@ public class MainModeOneActivity extends BaseActivity {
     private void initData() {
         setTitle(getResources().getString(R.string.app_name));
 
-        mainWeatherAdapter = MainWeatherAdapter.setAdapter(viewRecyclerWeather);
+        mainWeatherAdapter = WeatherRecyclerAdapter.setAdapter(viewRecyclerWeather);
 
 
         // 获取数据

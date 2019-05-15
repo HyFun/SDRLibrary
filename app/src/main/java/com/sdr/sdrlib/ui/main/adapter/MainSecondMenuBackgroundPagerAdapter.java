@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.sdr.lib.support.menu.AppMenuRecyclerAdapter;
 import com.sdr.lib.support.menu.MenuItem;
 
@@ -18,12 +19,12 @@ import java.util.List;
  * Email:775183940@qq.com
  */
 
-public class MainSecondMenuPagerAdapter2 extends PagerAdapter {
+public class MainSecondMenuBackgroundPagerAdapter extends PagerAdapter {
     private Context context;
     private List<List<MenuItem>> datas;
-    private List<AppMenuSpaceRecyclerAdapter> recyclerAdapterList = new ArrayList<>();
+    private List<AppMenuRecyclerAdapter> recyclerAdapterList = new ArrayList<>();
 
-    public MainSecondMenuPagerAdapter2(Context context, List<List<MenuItem>> datas) {
+    public MainSecondMenuBackgroundPagerAdapter(Context context, List<List<MenuItem>> datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -42,7 +43,7 @@ public class MainSecondMenuPagerAdapter2 extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         RecyclerView recyclerView = new RecyclerView(context);
-        AppMenuSpaceRecyclerAdapter menuRecyclerAdapter = AppMenuSpaceRecyclerAdapter.setAdapter(recyclerView, datas.get(position));
+        AppMenuRecyclerAdapter menuRecyclerAdapter = AppMenuRecyclerAdapter.setAdapterBackground(recyclerView, datas.get(position));
         recyclerAdapterList.add(menuRecyclerAdapter);
         container.addView(recyclerView);
         return recyclerView;
@@ -56,7 +57,7 @@ public class MainSecondMenuPagerAdapter2 extends PagerAdapter {
     @Override
     public void notifyDataSetChanged() {
         //super.notifyDataSetChanged();
-        for (AppMenuSpaceRecyclerAdapter adapter : recyclerAdapterList) {
+        for (AppMenuRecyclerAdapter adapter : recyclerAdapterList) {
             adapter.notifyDataSetChanged();
         }
     }

@@ -16,14 +16,15 @@ import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.menu.MenuItem;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
+import com.sdr.lib.support.weather.WeatherRecyclerAdapter;
 import com.sdr.lib.support.weather.WeatherUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.widget.InnerViewPagerNestedScrollView;
 import com.sdr.lib.widget.VPSwipeRefreshLayout;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
+import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuBackgroundPagerAdapter;
 import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuPagerAdapter;
-import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuPagerAdapter2;
 import com.sdr.sdrlib.ui.main.adapter.MainTopPagerAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -70,7 +71,7 @@ public class MainModeTwoActivity extends BaseActivity {
     CircleIndicator viewMenuIndicator2;
 
 
-    private MainWeatherAdapter mainWeatherAdapter;
+    private WeatherRecyclerAdapter weatherRecyclerAdapter;
     private String subTitle;
 
     @Override
@@ -87,7 +88,7 @@ public class MainModeTwoActivity extends BaseActivity {
     }
 
     private void initData() {
-        mainWeatherAdapter = MainWeatherAdapter.setAdapter(viewRecyclerWeather);
+        weatherRecyclerAdapter = WeatherRecyclerAdapter.setAdapter(viewRecyclerWeather);
         // top info
         {
             List<String> titles = new ArrayList<>();
@@ -141,12 +142,12 @@ public class MainModeTwoActivity extends BaseActivity {
         // 菜单 1
         {
             AppMenu appMenu = new AppMenu(getActivity());
-            MainSecondMenuPagerAdapter mainSecondMenuPagerAdapter = new MainSecondMenuPagerAdapter(getContext(), appMenu.getSecondMenuList());
-            viewMenuVeiwPager.setAdapter(mainSecondMenuPagerAdapter);
+            MainSecondMenuBackgroundPagerAdapter mainSecondMenuBackgroundPagerAdapter = new MainSecondMenuBackgroundPagerAdapter(getContext(), appMenu.getSecondMenuList());
+            viewMenuVeiwPager.setAdapter(mainSecondMenuBackgroundPagerAdapter);
             viewMenuIndicator.setViewPager(viewMenuVeiwPager);
 
             // 更新
-            List<List<MenuItem>> datas = mainSecondMenuPagerAdapter.getDatas();
+            List<List<MenuItem>> datas = mainSecondMenuBackgroundPagerAdapter.getDatas();
             for (int i = 0; i < datas.size(); i++) {
                 List<MenuItem> menuItemList = datas.get(i);
                 for (int j = 0; j < menuItemList.size(); j++) {
@@ -155,13 +156,13 @@ public class MainModeTwoActivity extends BaseActivity {
                 }
             }
 
-            mainSecondMenuPagerAdapter.notifyDataSetChanged();
+            mainSecondMenuBackgroundPagerAdapter.notifyDataSetChanged();
         }
 
         // 菜单2
         {
             AppMenu appMenu = new AppMenu(getActivity());
-            MainSecondMenuPagerAdapter2 mainSecondMenuPagerAdapter = new MainSecondMenuPagerAdapter2(getContext(), appMenu.getSecondMenuList());
+            MainSecondMenuPagerAdapter mainSecondMenuPagerAdapter = new MainSecondMenuPagerAdapter(getContext(), appMenu.getSecondMenuList());
             viewMenuViewPager2.setAdapter(mainSecondMenuPagerAdapter);
             viewMenuIndicator2.setViewPager(viewMenuViewPager2);
             // 更新
@@ -186,7 +187,7 @@ public class MainModeTwoActivity extends BaseActivity {
                     public void onNext(Weather weather) {
                         subTitle = weather.getHeWeather6().get(0).getBasic().getParent_city() + "天气";
                         setTitle(subTitle);
-                        mainWeatherAdapter.setNewData(weather.getHeWeather6().get(0).getDaily_forecast());
+                        weatherRecyclerAdapter.setNewData(weather.getHeWeather6().get(0).getDaily_forecast());
                         // 背景
                         int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
                         int res = WeatherUtil.getWeatherImage(code);

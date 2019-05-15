@@ -1,6 +1,11 @@
 package com.sdr.lib.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
+
+import com.sdr.lib.SDR;
 
 /**
  * Created by HyFun on 2018/10/31.
@@ -39,5 +44,25 @@ public class HttpUtil {
             return ipAddress;
         }
         return domainAddress;
+    }
+
+    /**
+     * 判断网络是否连通
+     */
+    public static boolean isNetworkConnected() {
+        Context context = SDR.getInstance().getApplication().getApplicationContext();
+        try {
+            if (context != null) {
+                ConnectivityManager cm = (ConnectivityManager) context
+                        .getSystemService(context.CONNECTIVITY_SERVICE);
+                NetworkInfo info = cm.getActiveNetworkInfo();
+                return info != null && info.isConnected();
+            } else {
+                /**如果context为空，就返回false，表示网络未连接*/
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

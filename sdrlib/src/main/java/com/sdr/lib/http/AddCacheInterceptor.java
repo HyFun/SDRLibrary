@@ -2,7 +2,7 @@ package com.sdr.lib.http;
 
 import android.content.Context;
 
-import com.sdr.lib.util.CommonUtil;
+import com.sdr.lib.util.HttpUtil;
 
 import java.io.IOException;
 
@@ -26,13 +26,13 @@ public class AddCacheInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (!CommonUtil.isNetworkConnected(context)) {
+        if (!HttpUtil.isNetworkConnected()) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
         }
         Response response = chain.proceed(request);
-        if (CommonUtil.isNetworkConnected(context)) {
+        if (HttpUtil.isNetworkConnected()) {
             int maxAge = 0;
             // 有网络时, 不缓存, 最大保存时长为0
             response.newBuilder()

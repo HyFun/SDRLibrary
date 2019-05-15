@@ -10,6 +10,8 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import com.sdr.lib.base.BaseActivityConfig;
 import com.sdr.lib.util.CommonUtil;
 
+import rx_activity_result2.RxActivityResult;
+
 /**
  * Created by HYF on 2018/10/13.
  * Email：775183940@qq.com
@@ -64,6 +66,8 @@ public class SDR {
                 return getInstance().isDebug();
             }
         });
+
+        RxActivityResult.register(application);
     }
 
 

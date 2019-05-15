@@ -27,6 +27,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.sdr.lib.R;
 import com.sdr.lib.base.BaseActivity;
 import com.sdr.lib.util.CommonUtil;
+import com.sdr.lib.util.HttpUtil;
 import com.sdr.lib.util.ToastUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -100,7 +101,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         tvSaveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!CommonUtil.isNetworkConnected(getContext())) {
+                if (!HttpUtil.isNetworkConnected()) {
                     ToastUtil.showNegativeToast("当前网络不可用，请检查你的网络设置");
                     return;
                 }

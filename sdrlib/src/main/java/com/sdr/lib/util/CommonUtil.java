@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -39,7 +37,6 @@ public class CommonUtil {
      */
     public static final PackageInfo getPackageInfo(Context context) {
         PackageManager manager = context.getPackageManager();
-
         try {
             PackageInfo packageInfo = manager.getPackageInfo(context.getPackageName(), 1);
             return packageInfo;
@@ -59,27 +56,6 @@ public class CommonUtil {
     public final static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
-    }
-
-
-    /**
-     * 判断网络是否连通
-     */
-    public static boolean isNetworkConnected(Context context) {
-        try {
-            if (context != null) {
-                @SuppressWarnings("static-access")
-                ConnectivityManager cm = (ConnectivityManager) context
-                        .getSystemService(context.CONNECTIVITY_SERVICE);
-                NetworkInfo info = cm.getActiveNetworkInfo();
-                return info != null && info.isConnected();
-            } else {
-                /**如果context为空，就返回false，表示网络未连接*/
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
     }
 
 
@@ -194,5 +170,19 @@ public class CommonUtil {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * 启动浏览器打开某个网页
+     *
+     * @param context
+     * @param url
+     */
+    public static void openUrlInBrowser(Context context, String url) {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(url);
+        intent.setData(content_url);
+        context.startActivity(intent);
     }
 }

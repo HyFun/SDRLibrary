@@ -1,4 +1,4 @@
-package com.sdr.sdrlib.ui.main;
+package com.sdr.lib.support.weather;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,9 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sdr.lib.support.weather.Weather;
-import com.sdr.sdrlib.R;
-import com.sdr.sdrlib.app.Constant;
+import com.sdr.lib.R;
+import com.sdr.lib.util.DateUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,9 +22,9 @@ import java.util.Date;
  * Created by Administrator on 2017/7/10.
  */
 
-public class MainWeatherAdapter extends BaseQuickAdapter<Weather.HeWeather6Bean.DailyForecastBean, BaseViewHolder> {
+public class WeatherRecyclerAdapter extends BaseQuickAdapter<Weather.HeWeather6Bean.DailyForecastBean, BaseViewHolder> {
 
-    public MainWeatherAdapter(int layoutResId) {
+    public WeatherRecyclerAdapter(int layoutResId) {
         super(layoutResId);
     }
 
@@ -42,14 +41,19 @@ public class MainWeatherAdapter extends BaseQuickAdapter<Weather.HeWeather6Bean.
         status.setText(item.getCond_txt_d());
     }
 
-
-    public static final MainWeatherAdapter  setAdapter(RecyclerView recyclerView){
-        MainWeatherAdapter mainWeatherAdapter = new MainWeatherAdapter(R.layout.layout_item_recycler_main_weather);
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(),3));
+    /**
+     * 设置adapter
+     *
+     * @param recyclerView
+     * @return
+     */
+    public static final WeatherRecyclerAdapter setAdapter(RecyclerView recyclerView) {
+        WeatherRecyclerAdapter weatherRecyclerAdapter = new WeatherRecyclerAdapter(R.layout.sdr_layout_public_recycler_item_weather);
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 3));
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(mainWeatherAdapter);
-        return mainWeatherAdapter;
+        recyclerView.setAdapter(weatherRecyclerAdapter);
+        return weatherRecyclerAdapter;
     }
 
 
@@ -61,6 +65,6 @@ public class MainWeatherAdapter extends BaseQuickAdapter<Weather.HeWeather6Bean.
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return new SimpleDateFormat("MM-dd").format(date) + " " + Constant.Date.weeks[date.getDay()];
+        return new SimpleDateFormat("MM-dd").format(date) + " " + DateUtil.WEEKS[date.getDay()];
     }
 }

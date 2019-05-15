@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.sdr.lib.support.menu.AppMenuRecyclerAdapter;
 import com.sdr.lib.support.menu.MenuItem;
 
@@ -43,7 +42,7 @@ public class MainSecondMenuPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         RecyclerView recyclerView = new RecyclerView(context);
-        AppMenuRecyclerAdapter menuRecyclerAdapter = AppMenuRecyclerAdapter.setAdapterBackground(recyclerView, datas.get(position));
+        AppMenuRecyclerAdapter menuRecyclerAdapter = AppMenuRecyclerAdapter.setAdapter(recyclerView, datas.get(position));
         recyclerAdapterList.add(menuRecyclerAdapter);
         container.addView(recyclerView);
         return recyclerView;
