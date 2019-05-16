@@ -1,4 +1,4 @@
-package com.sdr.qrcodelib;
+package com.sdr.identification;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:src="@drawable/sdr_identify_nfc_background_"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <TextView
+            android:id="@+id/identify_nfc_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="扫描成功"
+            android:textSize="21sp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/identify_nfc_tv_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            tools:text="扫描成功扫描成功扫描成功扫描成功扫描成功扫描成功扫描成功扫描成功"/>
+        <TextView
+            android:id="@+id/identify_nfc_tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPositive"
+            android:visibility="gone"
+            tools:text="扫描结果"/>
+    </LinearLayout>
+
+</LinearLayout>
