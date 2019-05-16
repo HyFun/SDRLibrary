@@ -77,5 +77,15 @@ public class SDRDeviceIdentificationActivity extends BaseActivity {
                         });
             }
         }));
+
+
+        adapter.addData(new MainItem("蓝牙地址", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxSDRDeviceIdentification.bluetooth(getContext());
+            }
+        }));
+
+
     }
 }

@@ -2,13 +2,20 @@ package com.sdr.identification;
 
 import android.Manifest;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import com.orhanobut.logger.Logger;
+import com.sdr.lib.http.HttpClient;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -229,6 +236,30 @@ public class RxSDRDeviceIdentification {
     public static Observable<Result<Fragment>> nfc(Fragment fragment) {
         return RxActivityResult.on(fragment)
                 .startIntent(new Intent(fragment.getContext(), SDRIdentifyNFCActivity.class));
+    }
+
+
+    public static String bluetooth(Context context) {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Logger.e("此设备不支持蓝牙传输功能");
+        } else {
+            Logger.d("此设备支持蓝牙传输功能");
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                enableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+                context.startActivity(enableIntent);
+            }
+        }
+
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice bluetoothDevice : pairedDevices) {
+                Logger.d(bluetoothDevice.getName()+">>>>>>>>>>>"+bluetoothDevice.getAddress()+">>>>>>>"+bluetoothDevice.getBondState());
+            }
+        }
+
+        return null;
     }
 
 
