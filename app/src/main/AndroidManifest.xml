@@ -21,16 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SDRLibraryActivity"/>
-        <activity android:name=".ui.SDRDeviceIdentificationActivity"/>
-
-
-
+        <activity android:name=".ui.SDRLibraryActivity" />
+        <activity android:name=".ui.SDRDeviceIdentificationActivity" />
         <activity android:name=".ui.lazyfragment.LazyFragmentActivity" />
         <activity android:name=".ui.basefragment.LazyBaseFragmentActivity" />
         <activity android:name=".ui.marquee.MarqueeViewActivity" />
         <activity android:name=".ui.main.MainModeOneActivity" />
-        <activity android:name=".ui.main.MainModeTwoActivity"></activity>
+        <activity android:name=".ui.main.MainModeTwoActivity" />
+        <activity android:name=".ui.qrcode.GenerateQRCodeActivity"></activity>
     </application>
 
 </manifest>

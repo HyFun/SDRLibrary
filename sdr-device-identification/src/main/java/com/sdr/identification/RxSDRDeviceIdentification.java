@@ -6,15 +6,23 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.orhanobut.logger.Logger;
-import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.util.CommonUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import io.reactivex.Observable;
@@ -239,27 +247,117 @@ public class RxSDRDeviceIdentification {
     }
 
 
-    public static String bluetooth(Context context) {
+    /**
+     * 获取蓝牙设备列表
+     *
+     * @return
+     */
+    public static Observable<List<BluetoothDevice>> bluetooth() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            Logger.e("此设备不支持蓝牙传输功能");
+            return Observable.error(new Exception("当前设备不支持蓝牙功能"));
         } else {
-            Logger.d("此设备支持蓝牙传输功能");
             if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                enableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-                context.startActivity(enableIntent);
+                return Observable.error(new Exception("请先打开您的蓝牙"));
+            } else {
+                Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+                if (pairedDevices.size() > 0) {
+                    List<BluetoothDevice> bluetoothDeviceList = new ArrayList<>();
+                    bluetoothDeviceList.addAll(pairedDevices);
+                    return Observable.just(bluetoothDeviceList);
+                } else {
+                    return Observable.error(new Exception("您至少需要连接一台蓝牙设备"));
+                }
             }
         }
+    }
 
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
-            for (BluetoothDevice bluetoothDevice : pairedDevices) {
-                Logger.d(bluetoothDevice.getName()+">>>>>>>>>>>"+bluetoothDevice.getAddress()+">>>>>>>"+bluetoothDevice.getBondState());
-            }
+
+    /**
+     * 获取已连接的Wifi路由器的Mac地址
+     */
+    public static Observable<String> wifi(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (wifiManager == null) {
+            return Observable.error(new Exception("当前设备不支持WIFI功能"));
         }
 
-        return null;
+        if (!wifiManager.isWifiEnabled()) {
+            return Observable.error(new Exception("请先打开WIFI"));
+        }
+        NetworkInfo mWifiInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (!mWifiInfo.isConnected()) {
+            return Observable.error(new Exception("至少需要连接一个WIFI热点"));
+        }
+
+        WifiInfo info = wifiManager.getConnectionInfo();
+        List<ScanResult> wifiList = wifiManager.getScanResults();
+        for (int i = 0; i < wifiList.size(); i++) {
+            ScanResult result = wifiList.get(i);
+            if (info.getBSSID().equals(result.BSSID)) {
+                return Observable.just(result.BSSID);
+            }
+        }
+        return Observable.error(new Exception("获取WIFI MAC地址失败"));
+    }
+
+
+    /**
+     * 获取当前所在的位置  自带的定位
+     * 坐标为wgs84坐标系
+     *
+     * @param activity
+     * @return
+     */
+    public static Observable<Location> location(final FragmentActivity activity) {
+        return new RxPermissions(activity)
+                .request(
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                .flatMap(new Function<Boolean, ObservableSource<Location>>() {
+                    @Override
+                    public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            return Observable.just(CommonUtil.getLocation(activity));
+                        } else {
+                            return Observable.error(new Exception("获取定位权限失败"));
+                        }
+                    }
+                });
+    }
+
+    public static Observable<Location> location(final Fragment fragment) {
+        return new RxPermissions(fragment)
+                .request(
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                .flatMap(new Function<Boolean, ObservableSource<Location>>() {
+                    @Override
+                    public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            return Observable.just(CommonUtil.getLocation(fragment.getContext()));
+                        } else {
+                            return Observable.error(new Exception("获取定位权限失败"));
+                        }
+                    }
+                });
+    }
+
+
+    /**
+     * 生成二维码
+     */
+    public static Bitmap createQRImage(String text, int width, Bitmap logo) {
+        return CodeUtils.createImage(text, width, width, logo);
+    }
+
+    public static Bitmap createQRImage(String text, int width) {
+        return CodeUtils.createImage(text, width, width, null);
     }
 
 

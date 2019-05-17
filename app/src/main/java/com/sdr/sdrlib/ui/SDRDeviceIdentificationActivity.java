@@ -1,5 +1,8 @@
 package com.sdr.sdrlib.ui;
 
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +15,9 @@ import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.common.AppItemRecyclerAdapter;
 import com.sdr.sdrlib.common.MainItem;
+import com.sdr.sdrlib.ui.qrcode.GenerateQRCodeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
@@ -82,7 +88,68 @@ public class SDRDeviceIdentificationActivity extends BaseActivity {
         adapter.addData(new MainItem("蓝牙地址", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxSDRDeviceIdentification.bluetooth(getContext());
+                RxSDRDeviceIdentification.bluetooth()
+                        .subscribe(new Consumer<List<BluetoothDevice>>() {
+                            @Override
+                            public void accept(List<BluetoothDevice> bluetoothDevices) throws Exception {
+                                StringBuilder sb = new StringBuilder();
+                                for (BluetoothDevice device : bluetoothDevices) {
+                                    sb.append(device.getName() + ">>>" + device.getAddress() + ">>>" + device.getBondState() + "\n");
+                                }
+                                AlertUtil.showPositiveToast(sb.toString());
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                AlertUtil.showNegativeToastTop(throwable.getMessage());
+                            }
+                        });
+            }
+        }));
+
+
+        adapter.addData(new MainItem("wifi路由器mac地址", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxSDRDeviceIdentification.wifi(getContext())
+                        .subscribe(new Consumer<String>() {
+                                       @Override
+                                       public void accept(String s) throws Exception {
+                                           AlertUtil.showPositiveToast(s);
+                                       }
+                                   },
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        AlertUtil.showNegativeToastTop(throwable.getMessage());
+                                    }
+                                });
+            }
+        }));
+
+
+        adapter.addData(new MainItem("定位", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RxSDRDeviceIdentification.location(getActivity())
+                        .subscribe(new Consumer<Location>() {
+                            @Override
+                            public void accept(Location location) throws Exception {
+                                AlertUtil.showPositiveToast(location.getLatitude() + ">>>" + location.getLongitude());
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                AlertUtil.showNegativeToastTop(throwable.getMessage());
+                            }
+                        });
+            }
+        }));
+
+        adapter.addData(new MainItem("生成二维码", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), GenerateQRCodeActivity.class));
             }
         }));
 
