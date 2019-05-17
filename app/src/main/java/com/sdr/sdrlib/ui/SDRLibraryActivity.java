@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.reflect.TypeToken;
@@ -367,12 +368,12 @@ public class SDRLibraryActivity extends BaseActivity {
             }
         }));
 
-
-        adapter.addData(new MainItem("自定义Toast", new View.OnClickListener() {
+        adapter.addData(new MainItem("系统Toast", new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                AlertUtil.showPositiveCustomToast("自定义Toast自定义Toast自定义Toast自定义Toast自定义Toast");
+            public void onClick(View view) {
+                Toast.makeText(SDRLibraryActivity.this, "这是系统自带的toast", Toast.LENGTH_SHORT).show();
             }
         }));
+
     }
 }

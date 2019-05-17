@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp"
-    xmlns:tools="http://schemas.android.com/tools">
-    <com.sdr.lib.widget.RoundFrameLayout
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/hyf_snackbar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:radius="10dp">
-        <LinearLayout
-            android:id="@+id/hyf_snackbar_view"
-            android:layout_width="match_parent"
+        android:background="@drawable/sdr_shape_bg_toast_top"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/hyf_iv_sanckbar"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:id="@+id/hyf_tv_sanckbar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:padding="15dp">
-            <ImageView
-                android:id="@+id/hyf_iv_sanckbar"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
-            <TextView
-                android:id="@+id/hyf_tv_sanckbar"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/colorBlack"
-                android:layout_marginLeft="5dp"
-                tools:text="在前面几篇文章中，都有出现过这个LayoutParams"
-                android:singleLine="true"/>
-        </LinearLayout>
-    </com.sdr.lib.widget.RoundFrameLayout>
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            tools:text="在前面几篇文章中，都有出现过这个LayoutParams" />
+    </LinearLayout>
 </FrameLayout>

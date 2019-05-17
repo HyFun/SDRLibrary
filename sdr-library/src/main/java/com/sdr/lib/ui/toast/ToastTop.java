@@ -50,7 +50,6 @@ public class ToastTop {
     /**
      * 逻辑
      */
-    private int backgroundColor = Color.WHITE;
     private int iconRes;
     private int iconColor = Color.BLACK;
     private String title = "";
@@ -83,7 +82,7 @@ public class ToastTop {
         // 透明，不透明会出现重叠效果
         mParams.format = PixelFormat.TRANSLUCENT;
         // 位置属性
-        mParams.gravity = Gravity.TOP + Gravity.LEFT;  // 左上
+        mParams.gravity = Gravity.TOP ;  // 左上
         //出现动画
         //mParams.windowAnimations = R.style.Animation_Snack_Toast;
         mParams.windowAnimations = android.R.style.Animation_Toast;
@@ -104,11 +103,6 @@ public class ToastTop {
     }
 
     private Handler mHandler;
-
-    public ToastTop setBackgroundColor(int backgroundColor) {
-        this.backgroundColor = backgroundColor;
-        return this;
-    }
 
     public ToastTop setIconRes(int iconRes) {
         this.iconRes = iconRes;
@@ -153,7 +147,6 @@ public class ToastTop {
     }
 
     private void create() {
-        contentView.setBackgroundColor(backgroundColor);
         if (iconRes != 0) {
             Drawable drawable = mContext.getResources().getDrawable(iconRes);
             drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);

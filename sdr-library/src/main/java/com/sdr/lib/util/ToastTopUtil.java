@@ -21,7 +21,6 @@ public class ToastTopUtil {
 
     public static void showPositiveTopToast(String title) {
         getInstance()
-                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_success_24dp)
                 .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
@@ -32,7 +31,6 @@ public class ToastTopUtil {
 
     public static void showNegativeTopToast(String title) {
         getInstance()
-                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
                 .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
@@ -43,7 +41,6 @@ public class ToastTopUtil {
 
     public static void showNormalTopToast(String title) {
         getInstance()
-                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
                 .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))

@@ -7,7 +7,6 @@ import android.graphics.Color;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sdr.lib.R;
 import com.sdr.lib.SDR;
-import com.sdr.lib.ui.toast.CustomToast;
 import com.sdr.lib.ui.toast.ToastSimple;
 import com.sdr.lib.ui.toast.ToastTop;
 
@@ -75,7 +74,6 @@ public class AlertUtil {
 
     public static void showPositiveToastTop(String title) {
         getToastTop()
-                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_success_24dp)
                 .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
@@ -86,7 +84,6 @@ public class AlertUtil {
 
     public static void showNegativeToastTop(String title) {
         getToastTop()
-                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
                 .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
@@ -97,7 +94,6 @@ public class AlertUtil {
 
     public static void showNormalToastTop(String title) {
         getToastTop()
-                .setBackgroundColor(Color.WHITE)
                 .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
                 .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
@@ -106,30 +102,6 @@ public class AlertUtil {
                 .show();
     }
 
-
-    /**
-     * ——————————————————————Toast Top——————————————————————
-     */
-    private static CustomToast customToast;
-
-    private static CustomToast getCustomToast() {
-        if (customToast == null) {
-            synchronized (AlertUtil.class) {
-                if (customToast == null) {
-                    customToast = new CustomToast(getContext());
-                }
-            }
-        }
-        return customToast;
-    }
-
-    public static void showPositiveCustomToast(String title) {
-        getCustomToast()
-                .setIconRes(R.drawable.sdr_ic_toast_success_24dp)
-                .setIconColor(getContext().getResources().getColor(R.color.colorPositive))
-                .setTitle(title)
-                .show();
-    }
 
     /**
      * ——————————————————————Dialog——————————————————————
