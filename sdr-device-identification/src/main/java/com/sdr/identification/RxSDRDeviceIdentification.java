@@ -7,7 +7,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -17,7 +16,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.sdr.lib.util.CommonUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -300,52 +298,6 @@ public class RxSDRDeviceIdentification {
             }
         }
         return Observable.error(new Exception("获取WIFI MAC地址失败"));
-    }
-
-
-    /**
-     * 获取当前所在的位置  自带的定位
-     * 坐标为wgs84坐标系
-     *
-     * @param activity
-     * @return
-     */
-    public static Observable<Location> location(final FragmentActivity activity) {
-        return new RxPermissions(activity)
-                .request(
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                .flatMap(new Function<Boolean, ObservableSource<Location>>() {
-                    @Override
-                    public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            return Observable.just(CommonUtil.getLocation(activity));
-                        } else {
-                            return Observable.error(new Exception("获取定位权限失败"));
-                        }
-                    }
-                });
-    }
-
-    public static Observable<Location> location(final Fragment fragment) {
-        return new RxPermissions(fragment)
-                .request(
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                .flatMap(new Function<Boolean, ObservableSource<Location>>() {
-                    @Override
-                    public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            return Observable.just(CommonUtil.getLocation(fragment.getContext()));
-                        } else {
-                            return Observable.error(new Exception("获取定位权限失败"));
-                        }
-                    }
-                });
     }
 
 

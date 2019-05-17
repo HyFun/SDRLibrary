@@ -83,18 +83,16 @@ public class WeatherObservable {
     }
 
     private Observable<Weather> getAuthorWeather() {
-        return Observable.just(0)
-                .flatMap(new Function<Integer, ObservableSource<String>>() {
+        return CommonUtil.getRxLocation(activity)
+                .flatMap(new Function<Location, ObservableSource<String>>() {
                     @Override
-                    public ObservableSource<String> apply(Integer integer) throws Exception {
-                        try {
-                            Location location = CommonUtil.getLocation(activity);
-                            String longitude = location.getLongitude() + "";
-                            String latitude = location.getLatitude() + "";
-                            return RxUtils.createData(longitude + "," + latitude);
-                        } catch (Exception e) {
+                    public ObservableSource<String> apply(Location location) throws Exception {
+                        String longitude = location.getLongitude() + "";
+                        String latitude = location.getLatitude() + "";
+                        if (TextUtils.isEmpty(longitude) || TextUtils.isEmpty(latitude)) {
                             return RxUtils.createData("");
                         }
+                        return RxUtils.createData(longitude + "," + latitude);
                     }
                 })
                 .flatMap(new Function<String, ObservableSource<Weather>>() {

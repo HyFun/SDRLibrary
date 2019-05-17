@@ -2,7 +2,6 @@ package com.sdr.sdrlib.ui;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -38,6 +37,7 @@ public class SDRDeviceIdentificationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("SDRDeviceIdentificationActivity");
+        setDisplayHomeAsUpEnabled();
 
         AppItemRecyclerAdapter adapter = AppItemRecyclerAdapter.setAdapter(recyclerView);
 
@@ -124,25 +124,6 @@ public class SDRDeviceIdentificationActivity extends BaseActivity {
                                         AlertUtil.showNegativeToastTop(throwable.getMessage());
                                     }
                                 });
-            }
-        }));
-
-
-        adapter.addData(new MainItem("定位", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RxSDRDeviceIdentification.location(getActivity())
-                        .subscribe(new Consumer<Location>() {
-                            @Override
-                            public void accept(Location location) throws Exception {
-                                AlertUtil.showPositiveToast(location.getLatitude() + ">>>" + location.getLongitude());
-                            }
-                        }, new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                AlertUtil.showNegativeToastTop(throwable.getMessage());
-                            }
-                        });
             }
         }));
 
