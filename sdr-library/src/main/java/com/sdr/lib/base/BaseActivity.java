@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.R;
-import com.sdr.lib.SDR;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.support.ActivityCollector;
 import com.sdr.lib.util.StatusBarUtils;
 import com.sdr.lib.widget.MarqueeTextView;
@@ -178,7 +178,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected int onHeaderBarToolbarRes() {
-        return SDR.getInstance().getActivityConfig().onHeaderBarToolbarRes();
+        return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarToolbarRes();
     }
 
     /**
@@ -188,7 +188,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      */
     @IntRange(from = 0, to = 255)
     protected int onHeaderBarStatusViewAlpha() {
-        return SDR.getInstance().getActivityConfig().onHeaderBarStatusViewAlpha();
+        return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarStatusViewAlpha();
     }
 
     /**
@@ -197,7 +197,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected Drawable onHeaderBarDrawable() {
-        return SDR.getInstance().getActivityConfig().onHeaderBarDrawable();
+        return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarDrawable();
     }
 
     /**
@@ -225,7 +225,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected int onHeaderBarTitleGravity() {
-        return SDR.getInstance().getActivityConfig().onHeaderBarTitleGravity();
+        return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarTitleGravity();
     }
 
     // -----------------------------------------------设置方法--------------------------------------------
@@ -342,7 +342,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
         if (textView == null) {
             textView = new MarqueeTextView(getContext());
             textView.setText(title);
-            textView.setTextColor(SDR.getInstance().getActivityConfig().onHeaderBarTitleColor());
+            textView.setTextColor(SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarTitleColor());
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
             params.gravity = gravity;

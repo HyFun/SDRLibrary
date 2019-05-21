@@ -17,18 +17,18 @@ import rx_activity_result2.RxActivityResult;
  * Email：775183940@qq.com
  */
 
-public class SDR {
+public class SDR_LIBRARY {
 
-    private SDR() {
+    private SDR_LIBRARY() {
     }
 
-    private static SDR instance;
+    private static SDR_LIBRARY instance;
 
-    public static SDR getInstance() {
+    public static SDR_LIBRARY getInstance() {
         if (instance == null) {
-            synchronized (SDR.class) {
+            synchronized (SDR_LIBRARY.class) {
                 if (instance == null) {
-                    instance = new SDR();
+                    instance = new SDR_LIBRARY();
                 }
             }
         }
@@ -75,7 +75,7 @@ public class SDR {
         return application;
     }
 
-    public void setApplication(Application application) {
+    private void setApplication(Application application) {
         this.application = application;
     }
 
@@ -83,7 +83,7 @@ public class SDR {
         return debug;
     }
 
-    public void setDebug(boolean debug) {
+    private void setDebug(boolean debug) {
         this.debug = debug;
     }
 
@@ -91,7 +91,7 @@ public class SDR {
         return activityConfig;
     }
 
-    public void setActivityConfig(BaseActivityConfig activityConfig) {
+    private void setActivityConfig(BaseActivityConfig activityConfig) {
         this.activityConfig = activityConfig;
     }
 }

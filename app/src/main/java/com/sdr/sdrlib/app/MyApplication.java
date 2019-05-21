@@ -2,7 +2,7 @@ package com.sdr.sdrlib.app;
 
 import android.app.Application;
 
-import com.sdr.lib.SDR;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.sdrlib.base.ActivityConfig;
 
 /**
@@ -17,7 +17,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        SDR.register(application, new ActivityConfig(application));
+        SDR_LIBRARY.register(application, new ActivityConfig(application));
     }
 
 

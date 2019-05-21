@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 
-import com.sdr.lib.SDR;
+import com.sdr.lib.SDR_LIBRARY;
 
 /**
  * Created by HyFun on 2018/10/31.
@@ -50,7 +50,7 @@ public class HttpUtil {
      * 判断网络是否连通
      */
     public static boolean isNetworkConnected() {
-        Context context = SDR.getInstance().getApplication().getApplicationContext();
+        Context context = SDR_LIBRARY.getInstance().getApplication().getApplicationContext();
         try {
             if (context != null) {
                 ConnectivityManager cm = (ConnectivityManager) context

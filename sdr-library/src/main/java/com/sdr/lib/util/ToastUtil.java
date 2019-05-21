@@ -3,7 +3,7 @@ package com.sdr.lib.util;
 import android.content.Context;
 
 import com.sdr.lib.R;
-import com.sdr.lib.SDR;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.ui.toast.ToastSimple;
 
 /**
@@ -49,6 +49,6 @@ public class ToastUtil {
 
 
     private static Context getContext() {
-        return SDR.getInstance().getApplication().getApplicationContext();
+        return SDR_LIBRARY.getInstance().getApplication().getApplicationContext();
     }
 }

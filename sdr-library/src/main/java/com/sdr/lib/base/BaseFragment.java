@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.R;
-import com.sdr.lib.SDR;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.widget.MarqueeTextView;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -193,7 +193,7 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
      * @return
      */
     protected Drawable onHeaderBarDrawable() {
-        return SDR.getInstance().getActivityConfig().onHeaderBarDrawable();
+        return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarDrawable();
     }
 
     /**
@@ -221,7 +221,7 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
      * @return
      */
     protected int onHeaderBarTitleGravity() {
-        return SDR.getInstance().getActivityConfig().onHeaderBarTitleGravity();
+        return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarTitleGravity();
     }
 
     // -----------------------------------------------设置方法--------------------------------------------
@@ -335,7 +335,7 @@ public abstract class BaseFragment extends BaseSimpleFragment implements OnScrol
         if (textView == null) {
             textView = new MarqueeTextView(getContext());
             textView.setText(title);
-            textView.setTextColor(SDR.getInstance().getActivityConfig().onHeaderBarTitleColor());
+            textView.setTextColor(SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarTitleColor());
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
             params.gravity = gravity;

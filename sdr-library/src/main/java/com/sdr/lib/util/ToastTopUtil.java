@@ -1,10 +1,9 @@
 package com.sdr.lib.util;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import com.sdr.lib.R;
-import com.sdr.lib.SDR;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.ui.toast.ToastTop;
 
 /**
@@ -63,6 +62,6 @@ public class ToastTopUtil {
     }
 
     private static Context getContext() {
-        return SDR.getInstance().getApplication().getApplicationContext();
+        return SDR_LIBRARY.getInstance().getApplication().getApplicationContext();
     }
 }
