@@ -1,1 +1,1 @@
-include ':app', ':sdr-library', ':sdr-device-identification'
+include ':app', ':sdr-library'

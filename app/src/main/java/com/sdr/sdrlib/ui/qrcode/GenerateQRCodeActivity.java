@@ -1,14 +1,11 @@
 package com.sdr.sdrlib.ui.qrcode;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.sdr.identification.RxSDRDeviceIdentification;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 
@@ -33,12 +30,12 @@ public class GenerateQRCodeActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = edtContent.getText().toString();
-                if (TextUtils.isEmpty(content)) {
-                    return;
-                }
-                Bitmap bitmap = RxSDRDeviceIdentification.createQRImage(content, 600);
-                imageView.setImageBitmap(bitmap);
+//                String content = edtContent.getText().toString();
+//                if (TextUtils.isEmpty(content)) {
+//                    return;
+//                }
+//                Bitmap bitmap = RxSDRDeviceIdentification.createQRImage(content, 600);
+//                imageView.setImageBitmap(bitmap);
             }
         });
     }
