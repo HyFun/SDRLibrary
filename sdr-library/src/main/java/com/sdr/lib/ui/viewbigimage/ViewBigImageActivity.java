@@ -26,9 +26,8 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.sdr.lib.R;
 import com.sdr.lib.base.BaseActivity;
-import com.sdr.lib.util.CommonUtil;
+import com.sdr.lib.util.AlertUtil;
 import com.sdr.lib.util.HttpUtil;
-import com.sdr.lib.util.ToastUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -80,7 +79,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         position = intent.getIntExtra("position", 0);
         imageList = (List) intent.getSerializableExtra("imageList");
         if (imageList == null || imageList.isEmpty()) {
-            ToastUtil.showNegativeToast("图片集合不能为空");
+            AlertUtil.showNegativeToastTop("图片集合不能为空");
             finish();
         }
     }
@@ -90,6 +89,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
 
         ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(imageList);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(5);
         if (position < imageList.size() && position >= 0) {
             viewPager.setCurrentItem(position);
             onPageSelected(position);
@@ -102,7 +102,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
             @Override
             public void onClick(View v) {
                 if (!HttpUtil.isNetworkConnected()) {
-                    ToastUtil.showNegativeToast("当前网络不可用，请检查你的网络设置");
+                    AlertUtil.showNegativeToastTop("当前网络不可用，请检查你的网络设置");
                     return;
                 }
                 // 授权
@@ -112,7 +112,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
                                 if (aBoolean) {
-                                    ToastUtil.showNormalToast("开始下载图片");
+                                    AlertUtil.showNormalToastTop("开始下载图片");
                                     RxSaveImage.saveImageToGallery(getContext(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), imageList.get(position));
                                 }
                             }
@@ -197,7 +197,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                         @Override
                         public void onLoadFailed(@Nullable Drawable errorDrawable) {
                             super.onLoadFailed(errorDrawable);
-                            ToastUtil.showNegativeToast("资源加载失败");
+                            AlertUtil.showNegativeToastTop("资源加载失败");
                             progressBar.setVisibility(View.GONE);
                         }
                     });
@@ -209,7 +209,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
 
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
+            container.removeView((View) object);
         }
     }
 

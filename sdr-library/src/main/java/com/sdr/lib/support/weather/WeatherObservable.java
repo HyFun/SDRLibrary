@@ -1,6 +1,7 @@
 package com.sdr.lib.support.weather;
 
 import android.location.Location;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
@@ -37,10 +38,16 @@ public class WeatherObservable {
     private ACache aCache;
 
     private FragmentActivity activity;
+    private Fragment fragment;
     private String locationCode;  // 城市代码
 
     public WeatherObservable(FragmentActivity activity) {
         this.activity = activity;
+        init();
+    }
+
+    public WeatherObservable(Fragment fragment) {
+        this.fragment = fragment;
         init();
     }
 
@@ -82,32 +89,12 @@ public class WeatherObservable {
         aCache = ACache.get(new File(AppPath.getUserInfoCache()));
     }
 
-    private Observable<Weather> getAuthorWeather() {
-        return CommonUtil.getRxLocation(activity)
-                .flatMap(new Function<Location, ObservableSource<String>>() {
-                    @Override
-                    public ObservableSource<String> apply(Location location) throws Exception {
-                        String longitude = location.getLongitude() + "";
-                        String latitude = location.getLatitude() + "";
-                        if (TextUtils.isEmpty(longitude) || TextUtils.isEmpty(latitude)) {
-                            return RxUtils.createData("");
-                        }
-                        return RxUtils.createData(longitude + "," + latitude);
-                    }
-                })
-                .flatMap(new Function<String, ObservableSource<Weather>>() {
-                    @Override
-                    public ObservableSource<Weather> apply(String s) throws Exception {
-                        if (TextUtils.isEmpty(s)) {
-                            locationCode = "CN101010100";
-                        } else {
-                            locationCode = s;
-                        }
-                        return getWeatherData();
-                    }
-                });
-    }
 
+    /**
+     * 请求网络  获取天气数据
+     *
+     * @return
+     */
     private Observable<Weather> getWeatherData() {
         if (currentIndex < keylist.size()) {
             String key = keylist.get(currentIndex);
@@ -135,6 +122,12 @@ public class WeatherObservable {
         }
     }
 
+    /**
+     * 获取存储在本地的天气数据
+     *
+     * @param weatherJson
+     * @return
+     */
     private Observable<Weather> getLocalWeather(final String weatherJson) {
         return Observable.just(0)
                 .flatMap(new Function<Integer, ObservableSource<Weather>>() {
@@ -147,6 +140,43 @@ public class WeatherObservable {
                             }.getType());
                             return RxUtils.createData(weather);
                         }
+                    }
+                });
+    }
+
+    /**
+     * 根据activity 、fragment 来进行授权定位
+     *
+     * @return
+     */
+    private Observable<Weather> getAuthorWeather() {
+        Observable<Location> locationObservable = null;
+        if (activity != null) {
+            locationObservable = CommonUtil.getRxLocation(activity);
+        } else {
+            locationObservable = CommonUtil.getRxLocation(fragment);
+        }
+        return locationObservable
+                .flatMap(new Function<Location, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(Location location) throws Exception {
+                        String longitude = location.getLongitude() + "";
+                        String latitude = location.getLatitude() + "";
+                        if (TextUtils.isEmpty(longitude) || TextUtils.isEmpty(latitude)) {
+                            return RxUtils.createData("");
+                        }
+                        return RxUtils.createData(longitude + "," + latitude);
+                    }
+                })
+                .flatMap(new Function<String, ObservableSource<Weather>>() {
+                    @Override
+                    public ObservableSource<Weather> apply(String s) throws Exception {
+                        if (TextUtils.isEmpty(s)) {
+                            locationCode = "CN101010100";
+                        } else {
+                            locationCode = s;
+                        }
+                        return getWeatherData();
                     }
                 });
     }
