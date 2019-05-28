@@ -23,40 +23,41 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // base
-    compileOnly 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     // 必须依赖的库
     // rx java     rx android
-    compile 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.2.2'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
     // retrofit2  已依赖OKHttp3
-    compile 'com.squareup.retrofit2:retrofit:2.4.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'  // 打印log的interceptor
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.9.1'  // 打印log的interceptor
 
     // other
     // glide 变换
-    compile('jp.wasabeef:glide-transformations:3.3.0') {
-        exclude group: 'com.android.support'
-    }
+    api 'jp.wasabeef:glide-transformations:4.0.0'
+    api "com.github.bumptech.glide:glide:4.8.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+
     // material dialog
-    compile('com.afollestad.material-dialogs:core:0.9.6.0')
+    api('com.afollestad.material-dialogs:core:0.9.6.0')
     // okdownload  下载文件时候使用
     // core
-    compile 'com.liulishuo.okdownload:okdownload:1.0.4'
+    api 'com.liulishuo.okdownload:okdownload:1.0.4'
     // provide sqlite to store breakpoints
-    compile 'com.liulishuo.okdownload:sqlite:1.0.4'
+    api 'com.liulishuo.okdownload:sqlite:1.0.4'
     // provide okhttp to connect to backend
     // and then please import okhttp dependencies by yourself
-    compile 'com.liulishuo.okdownload:okhttp:1.0.4'
+    api 'com.liulishuo.okdownload:okhttp:1.0.4'
     // logger
-    compile 'com.orhanobut:logger:2.2.0'
+    api 'com.orhanobut:logger:2.2.0'
     // 图片查看 缩放
-    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    api 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     // Android 6.0授权
-    compile 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
     //BaseRecyclerViewAdapterHelper
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     // RxActivityResult
-    compile 'com.github.VictorAlbertos:RxActivityResult:0.4.5-2.x'
+    api 'com.github.VictorAlbertos:RxActivityResult:0.4.5-2.x'
 }
