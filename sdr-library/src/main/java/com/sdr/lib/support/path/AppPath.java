@@ -30,7 +30,7 @@ public class AppPath {
 
     // ------------------------------------------------------------------------------
     // sd 卡中的路径
-    private final static String APP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "SDR_LIBRARY" + File.separator + SDR_LIBRARY.getInstance().getApplication().getPackageName();
+    private final static String APP_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "SDR" + File.separator + SDR_LIBRARY.getInstance().getApplication().getPackageName();
 
     // sd 卡中的文件
     private final static String FILE_PATH = APP_PATH + File.separator + "file";

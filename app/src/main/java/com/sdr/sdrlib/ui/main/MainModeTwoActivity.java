@@ -26,6 +26,7 @@ import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuBackgroundPagerAdapter;
 import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuPagerAdapter;
 import com.sdr.sdrlib.ui.main.adapter.MainTopPagerAdapter;
+import com.sdr.sdrlib.util.AppUtil;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -180,34 +181,32 @@ public class MainModeTwoActivity extends BaseActivity {
 
 
         // 获取数据
-        new WeatherObservable(getActivity()).getWeather()
-                .compose(RxUtils.io_main())
-                .subscribeWith(new ResourceObserver<Weather>() {
-                    @Override
-                    public void onNext(Weather weather) {
-                        subTitle = weather.getHeWeather6().get(0).getBasic().getParent_city() + "天气";
-                        setTitle(subTitle);
-                        weatherRecyclerAdapter.setNewData(weather.getHeWeather6().get(0).getDaily_forecast());
-                        // 背景
-                        int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
-                        int res = WeatherUtil.getWeatherImage(code);
-                        Glide.with(getContext())
-                                .load(res)
-                                .apply(RequestOptions.fitCenterTransform())
-                                .into(viewImageWeatherBg);
-                        setHeaderImage(res);
-                    }
+        AppUtil.getWeather(this,new ResourceObserver<Weather>() {
+            @Override
+            public void onNext(Weather weather) {
+                subTitle = weather.getHeWeather6().get(0).getBasic().getParent_city() + "天气";
+                setTitle(subTitle);
+                weatherRecyclerAdapter.setNewData(weather.getHeWeather6().get(0).getDaily_forecast());
+                // 背景
+                int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
+                int res = WeatherUtil.getWeatherImage(code);
+                Glide.with(getContext())
+                        .load(res)
+                        .apply(RequestOptions.fitCenterTransform())
+                        .into(viewImageWeatherBg);
+                setHeaderImage(res);
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
+            @Override
+            public void onError(Throwable e) {
 
-                    }
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
 
-                    }
-                });
+            }
+        });
     }
 
 

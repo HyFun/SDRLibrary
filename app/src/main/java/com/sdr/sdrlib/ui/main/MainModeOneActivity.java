@@ -11,13 +11,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.weather.Weather;
-import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.support.weather.WeatherRecyclerAdapter;
 import com.sdr.lib.support.weather.WeatherUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.widget.InnerViewPagerNestedScrollView;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
+import com.sdr.sdrlib.util.AppUtil;
 
 import butterknife.BindView;
 import io.reactivex.observers.ResourceObserver;
@@ -58,33 +58,31 @@ public class MainModeOneActivity extends BaseActivity {
 
 
         // 获取数据
-        new WeatherObservable(getActivity()).getWeather()
-                .compose(RxUtils.io_main())
-                .subscribeWith(new ResourceObserver<Weather>() {
-                    @Override
-                    public void onNext(Weather weather) {
-                        tvWeatherTitle.setText(weather.getHeWeather6().get(0).getBasic().getParent_city() + "天气");
-                        mainWeatherAdapter.setNewData(weather.getHeWeather6().get(0).getDaily_forecast());
-                        // 背景
-                        int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
-                        int res = WeatherUtil.getWeatherImage(code);
-                        Glide.with(getContext())
-                                .load(res)
-                                .apply(RequestOptions.fitCenterTransform())
-                                .into(viewWeatherBg);
-                        setHeaderImage(res);
-                    }
+        AppUtil.getWeather(getActivity(), new ResourceObserver<Weather>() {
+            @Override
+            public void onNext(Weather weather) {
+                tvWeatherTitle.setText(weather.getHeWeather6().get(0).getBasic().getParent_city() + "天气");
+                mainWeatherAdapter.setNewData(weather.getHeWeather6().get(0).getDaily_forecast());
+                // 背景
+                int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
+                int res = WeatherUtil.getWeatherImage(code);
+                Glide.with(getContext())
+                        .load(res)
+                        .apply(RequestOptions.fitCenterTransform())
+                        .into(viewWeatherBg);
+                setHeaderImage(res);
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
+            @Override
+            public void onError(Throwable e) {
 
-                    }
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
 
-                    }
-                });
+            }
+        });
     }
 
 

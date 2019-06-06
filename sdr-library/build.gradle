@@ -55,7 +55,7 @@ dependencies {
     // 图片查看 缩放
     api 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     // Android 6.0授权
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api 'com.github.HyFun:RxPermissions:0.10.4'
     //BaseRecyclerViewAdapterHelper
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     // RxActivityResult

@@ -19,7 +19,6 @@ import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.fingerprint.BiometricPromptManager;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.weather.Weather;
-import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.ui.tree.TreeNode;
 import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.AlertUtil;
@@ -46,7 +45,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.ResourceObserver;
 
 /**
@@ -296,39 +298,22 @@ public class SDRLibraryActivity extends BaseActivity {
         adapter.addData(new MainItem("获取天气数据", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RxPermissions(getActivity())
-                        .request(
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_PHONE_STATE,
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_FINE_LOCATION
-                        )
-                        .subscribe(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(Boolean aBoolean) throws Exception {
-                                if (aBoolean) {
-                                    new WeatherObservable(getActivity()).getWeather()
-                                            .compose(RxUtils.io_main())
-                                            .subscribeWith(new ResourceObserver<Weather>() {
-                                                @Override
-                                                public void onNext(Weather weather) {
-                                                    AlertUtil.showDialog(getActivity(), "获取天气成功", HttpClient.gson.toJson(weather));
-                                                }
+                AppUtil.getWeather(getActivity(),new ResourceObserver<Weather>() {
+                    @Override
+                    public void onNext(Weather weather) {
+                        AlertUtil.showDialog(getActivity(), "获取天气成功", HttpClient.gson.toJson(weather));
+                    }
 
-                                                @Override
-                                                public void onError(Throwable e) {
-                                                    Logger.e(e, e.getMessage());
-                                                }
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e(e, e.getMessage());
+                    }
 
-                                                @Override
-                                                public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                                                }
-                                            });
-                                }
-                            }
-                        });
+                    }
+                });
             }
         }));
 
@@ -351,7 +336,22 @@ public class SDRLibraryActivity extends BaseActivity {
         adapter.addData(new MainItem("原生定位", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtil.getRxLocation(getActivity())
+                new RxPermissions(getActivity())
+                        .request(
+                                Manifest.permission.READ_PHONE_STATE,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
+                        .flatMap(new Function<Boolean, ObservableSource<Location>>() {
+                            @Override
+                            public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
+                                if (aBoolean) {
+                                    return RxUtils.createData(CommonUtil.getLocation(getActivity()));
+                                } else {
+                                    return Observable.error(new Exception("获取定位权限失败"));
+                                }
+                            }
+                        })
                         .subscribe(new Consumer<Location>() {
                             @Override
                             public void accept(Location location) throws Exception {

@@ -2,6 +2,7 @@ package com.sdr.sdrlib.ui.lazyfragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.util.AlertUtil;
+import com.sdr.lib.util.CommonUtil;
+import com.sdr.sdrlib.MainActivity;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -83,7 +86,12 @@ public class LazySimpleFragment extends BaseFragment {
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
                                 if (aBoolean) {
-                                    new WeatherObservable(getActivity()).getWeather()
+                                    Location location = CommonUtil.getLocation(getContext());
+                                    double la = location.getLatitude();
+                                    double lo = location.getLongitude();
+                                    String loctionCode = la + "," + lo;
+                                    new WeatherObservable(loctionCode).
+                                            getWeather()
                                             .compose(RxUtils.io_main())
                                             .subscribeWith(new ResourceObserver<Weather>() {
                                                 @Override

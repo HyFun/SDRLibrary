@@ -1,6 +1,5 @@
 package com.sdr.lib.util;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,23 +12,16 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.sdr.lib.ui.viewbigimage.ViewBigImageActivity;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
 
 /**
  * Created by HyFun on 2018/10/11.
@@ -203,7 +195,7 @@ public class CommonUtil {
      * @param context
      * @return
      */
-    private static Location getLocation(Context context) {
+    public static Location getLocation(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         // 构建位置查询条件
         Criteria criteria = new Criteria();
@@ -228,51 +220,5 @@ public class CommonUtil {
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
         return location;
-    }
-
-
-    /**
-     * 获取当前所在的位置  自带的定位
-     * 坐标为wgs84坐标系
-     *
-     * @param activity
-     * @return
-     */
-    public static Observable<Location> getRxLocation(final FragmentActivity activity) {
-        return new RxPermissions(activity)
-                .request(
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                .flatMap(new Function<Boolean, ObservableSource<Location>>() {
-                    @Override
-                    public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            return Observable.just(getLocation(activity));
-                        } else {
-                            return Observable.error(new Exception("获取定位权限失败"));
-                        }
-                    }
-                });
-    }
-
-    public static Observable<Location> getRxLocation(final Fragment fragment){
-        return new RxPermissions(fragment)
-                .request(
-                        Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                .flatMap(new Function<Boolean, ObservableSource<Location>>() {
-                    @Override
-                    public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            return Observable.just(getLocation(fragment.getContext()));
-                        } else {
-                            return Observable.error(new Exception("获取定位权限失败"));
-                        }
-                    }
-                });
     }
 }

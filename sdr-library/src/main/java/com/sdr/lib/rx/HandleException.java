@@ -39,13 +39,14 @@ public abstract class HandleException {
         return false;
     }
 
-    public abstract void commonException(CommonException exception);
+    public abstract void commonException(Exception exception);
 
     private void handleException() {
-        CommonException ce = new CommonException(throwable);
+        // CommonException ce = new CommonException(throwable);
+        Exception ce = null;
         if (!HttpUtil.isNetworkConnected()) {
             // 说明没网
-            ce.message = "网络不给力，请检查网络设置";
+            ce = new Exception("网络不给力，请检查网络设置", throwable);
             commonException(ce);
         } else if (throwable instanceof HttpException) {
             //HTTP错误
@@ -60,21 +61,21 @@ public abstract class HandleException {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    ce.message = "网络连接错误";  //均视为网络错误
+                    ce = new Exception("网络连接错误", throwable);
                     commonException(ce);
                     break;
             }
         } else if (throwable instanceof JsonParseException || throwable instanceof JSONException || throwable instanceof java.text.ParseException) {
-            ce.message = "解析数据出错";            //均视为解析错误
+            ce = new Exception("解析数据出错", throwable);
             commonException(ce);
         } else if (throwable instanceof SocketTimeoutException) {
-            ce.message = "连接超时";
+            ce = new Exception("连接超时", throwable);
             commonException(ce);
         } else if (throwable instanceof ConnectException) {
-            ce.message = "服务器异常";  //均视为网络错误
+            ce = new Exception("服务器异常", throwable);
             commonException(ce);
         } else if (!parseException(throwable)) {
-            ce.message = "未知错误";          //未知错误
+            ce = new Exception("未知错误", throwable);
             commonException(ce);
         }
     }

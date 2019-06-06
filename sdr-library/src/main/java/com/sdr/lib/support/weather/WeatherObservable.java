@@ -1,18 +1,15 @@
 package com.sdr.lib.support.weather;
 
-import android.location.Location;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.rx.WeatherException;
 import com.sdr.lib.support.ACache;
 import com.sdr.lib.support.SDRAPI;
 import com.sdr.lib.support.path.AppPath;
-import com.sdr.lib.util.CommonUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +26,8 @@ import io.reactivex.functions.Function;
  */
 
 public class WeatherObservable {
+    private static final String TAG = WeatherObservable.class.getSimpleName();
+
     private static final String WEATHER_CACHE = "WEATHER_CACHE";
 
 
@@ -37,19 +36,7 @@ public class WeatherObservable {
     private SDRAPI weatherAPI;
     private ACache aCache;
 
-    private FragmentActivity activity;
-    private Fragment fragment;
     private String locationCode;  // 城市代码
-
-    public WeatherObservable(FragmentActivity activity) {
-        this.activity = activity;
-        init();
-    }
-
-    public WeatherObservable(Fragment fragment) {
-        this.fragment = fragment;
-        init();
-    }
 
     public WeatherObservable(String locationCode) {
         this.locationCode = locationCode;
@@ -61,7 +48,7 @@ public class WeatherObservable {
         if (weatherJson == null) {
             // 没有缓存  先定位
             if (TextUtils.isEmpty(locationCode)) {
-                return getAuthorWeather();
+                return Observable.error(new NullPointerException("locationCode不能为空"));
             } else {
                 return getWeatherData();
             }
@@ -96,6 +83,7 @@ public class WeatherObservable {
      * @return
      */
     private Observable<Weather> getWeatherData() {
+        Logger.d(TAG,"开始获取天气");
         if (currentIndex < keylist.size()) {
             String key = keylist.get(currentIndex);
             return weatherAPI.getWeatherData(locationCode, key)
@@ -107,6 +95,7 @@ public class WeatherObservable {
                             if ("ok".equals(status)) {
                                 // 说明能获取到
                                 // 存储下来  存三小时
+                                Logger.d(TAG,"获取天气数据成功");
                                 aCache.put(WEATHER_CACHE, HttpClient.gson.toJson(weather), ACache.TIME_HOUR * 3);
                                 return RxUtils.createData(weather);
                             } else {
@@ -144,40 +133,4 @@ public class WeatherObservable {
                 });
     }
 
-    /**
-     * 根据activity 、fragment 来进行授权定位
-     *
-     * @return
-     */
-    private Observable<Weather> getAuthorWeather() {
-        Observable<Location> locationObservable = null;
-        if (activity != null) {
-            locationObservable = CommonUtil.getRxLocation(activity);
-        } else {
-            locationObservable = CommonUtil.getRxLocation(fragment);
-        }
-        return locationObservable
-                .flatMap(new Function<Location, ObservableSource<String>>() {
-                    @Override
-                    public ObservableSource<String> apply(Location location) throws Exception {
-                        String longitude = location.getLongitude() + "";
-                        String latitude = location.getLatitude() + "";
-                        if (TextUtils.isEmpty(longitude) || TextUtils.isEmpty(latitude)) {
-                            return RxUtils.createData("");
-                        }
-                        return RxUtils.createData(longitude + "," + latitude);
-                    }
-                })
-                .flatMap(new Function<String, ObservableSource<Weather>>() {
-                    @Override
-                    public ObservableSource<Weather> apply(String s) throws Exception {
-                        if (TextUtils.isEmpty(s)) {
-                            locationCode = "CN101010100";
-                        } else {
-                            locationCode = s;
-                        }
-                        return getWeatherData();
-                    }
-                });
-    }
 }
