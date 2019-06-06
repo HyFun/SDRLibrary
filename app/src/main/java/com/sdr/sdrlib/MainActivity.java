@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.rx.RxObserver;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
@@ -16,9 +17,12 @@ import com.sdr.lib.util.CommonUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.common.AppItemRecyclerAdapter;
 import com.sdr.sdrlib.common.MainItem;
+import com.sdr.sdrlib.http.API;
 import com.sdr.sdrlib.ui.SDRDeviceIdentificationActivity;
 import com.sdr.sdrlib.ui.SDRLibraryActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -26,6 +30,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.ResourceObserver;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends BaseActivity {
 
@@ -74,28 +79,35 @@ public class MainActivity extends BaseActivity {
                     }
                 })
                 //.delay(1000, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<Location, ObservableSource<Weather>>() {
+                .flatMap(new Function<Location, ObservableSource<ResponseBody>>() {
                     @Override
-                    public ObservableSource<Weather> apply(Location location) throws Exception {
+                    public ObservableSource<ResponseBody> apply(Location location) throws Exception {
                         double la = location.getLatitude();
                         double lo = location.getLongitude();
-                        Logger.d(TAG,"授权成功");
+                        Logger.d(TAG, "授权成功");
                         String loctionCode = la + "," + lo;
 
-                        return new WeatherObservable(loctionCode)
-                                .getWeather();
+                        return HttpClient.getInstance().createRetrofit("https://www.baidu.com/", HttpClient.getInstance().getOkHttpClient(), API.class).getBaidu("https://www.baidu.com/");
+//                        return new WeatherObservable(loctionCode)
+//                                .getWeather();
                     }
                 })
                 .compose(RxUtils.io_main())
-                .subscribe(new ResourceObserver<Weather>() {
+                .subscribe(new ResourceObserver<ResponseBody>() {
                     @Override
-                    public void onNext(Weather weather) {
-                        Logger.json(HttpClient.gson.toJson(weather));
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String string = responseBody.string().toString();
+                            Logger.d(string);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.e(e.getMessage(),e);
+                        // 打印出异常信息
+                        Logger.t(HttpClient.TAG).e(e, e.getMessage());
                     }
 
                     @Override
