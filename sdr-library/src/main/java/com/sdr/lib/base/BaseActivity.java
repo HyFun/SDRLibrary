@@ -432,6 +432,12 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
         return this;
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.sdr_anim_slide_close_exit);
+    }
+
     /**
      * 获取该activity对象
      *

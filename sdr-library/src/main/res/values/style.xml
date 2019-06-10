@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--仿网易云音乐 缩放-->
+    <style name="ActivityScanAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/sdr_anim_scale_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/sdr_anim_scale_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@anim/sdr_anim_scale_close_exit</item>
+    </style>
+
+    <!--仿网易云 打开界面-->
+    <style name="ActivitySlideAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/sdr_anim_slide_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/sdr_anim_slide_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@anim/sdr_anim_slide_close_exit</item>
+    </style>
+
 
     <!--自定义的Dialog-->
     <style name="SDR.Theme.Dialog" parent="Theme.AppCompat.Dialog">
