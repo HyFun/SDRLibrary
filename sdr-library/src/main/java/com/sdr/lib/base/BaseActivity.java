@@ -228,6 +228,15 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
         return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarTitleGravity();
     }
 
+    /**
+     * 关闭该activity是否有动画  默认有的
+     *
+     * @return
+     */
+    protected boolean onActivityAnimate() {
+        return true;
+    }
+
     // -----------------------------------------------设置方法--------------------------------------------
 
     /**
@@ -435,7 +444,9 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(0,R.anim.sdr_anim_slide_close_exit);
+        if (onActivityAnimate()) {
+            overridePendingTransition(0, R.anim.sdr_anim_slide_close_exit);
+        }
     }
 
     /**
