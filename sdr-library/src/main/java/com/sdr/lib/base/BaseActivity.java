@@ -229,12 +229,12 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
     }
 
     /**
-     * 关闭该activity是否有动画  默认有的
+     * 关闭该activity是否有动画  默认没有
      *
      * @return
      */
     protected boolean onActivityAnimate() {
-        return true;
+        return false;
     }
 
     // -----------------------------------------------设置方法--------------------------------------------
