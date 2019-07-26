@@ -43,6 +43,15 @@ public abstract class BaseActivityConfig {
     }
 
     /**
+     * activity的返回动画 默认不设置
+     *
+     * @return
+     */
+    public boolean onActivityAnimation() {
+        return false;
+    }
+
+    /**
      * 如果使用 headerbar 设置toolbar的资源文件
      * <p>
      * 如果不使用  return 0 即可
@@ -57,5 +66,6 @@ public abstract class BaseActivityConfig {
      * @return
      */
     public abstract Drawable onHeaderBarDrawable();
+
 
 }

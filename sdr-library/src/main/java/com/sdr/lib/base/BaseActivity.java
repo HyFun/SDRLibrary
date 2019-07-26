@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -234,7 +236,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      * @return
      */
     protected boolean onActivityAnimate() {
-        return false;
+        return SDR_LIBRARY.getInstance().getActivityConfig().onActivityAnimation();
     }
 
     // -----------------------------------------------设置方法--------------------------------------------
@@ -457,5 +459,23 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
     public AppCompatActivity getActivity() {
         return this;
     }
+
+    /**
+     * 获取空数据的view
+     */
+
+    protected View getEmptyView() {
+        return getEmptyView(null);
+    }
+
+    protected View getEmptyView(String message) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.sdr_layout_public_empty_view, null);
+        if (!TextUtils.isEmpty(message)) {
+            TextView textView = view.findViewById(R.id.text);
+            textView.setText(message);
+        }
+        return view;
+    }
+
 
 }
