@@ -21,40 +21,47 @@ implementation 'com.github.HyfSunshine:SDRLibrary:last-release'
 ```
 ### 已依赖
 ```
-// 必须依赖的库
-// rx java     rx android
-compile 'io.reactivex.rxjava2:rxandroid:2.1.0'
-compile 'io.reactivex.rxjava2:rxjava:2.2.2'
-// retrofit2  已依赖OKHttp3
-compile 'com.squareup.retrofit2:retrofit:2.4.0'
-compile 'com.squareup.retrofit2:converter-gson:2.4.0'
-compile 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'  // 打印log的interceptor
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // base
+    implementation 'com.android.support:design:27.1.1'
+    // 必须依赖的库
+    // rx java     rx android
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    // retrofit2  已依赖OKHttp3
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.9.1'  // 打印log的interceptor
 
-// other
-// glide 变换
-compile('jp.wasabeef:glide-transformations:3.3.0') {
-    exclude group: 'com.android.support'
+    // other
+    // glide 变换
+    api 'jp.wasabeef:glide-transformations:4.0.0'
+    api "com.github.bumptech.glide:glide:4.8.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+
+    // material dialog
+    api('com.afollestad.material-dialogs:core:0.9.6.0')
+    // okdownload  下载文件时候使用
+    // core
+    api 'com.liulishuo.okdownload:okdownload:1.0.4'
+    // provide sqlite to store breakpoints
+    api 'com.liulishuo.okdownload:sqlite:1.0.4'
+    // provide okhttp to connect to backend
+    // and then please import okhttp dependencies by yourself
+    api 'com.liulishuo.okdownload:okhttp:1.0.4'
+    // logger
+    api 'com.orhanobut:logger:2.2.0'
+    // 图片查看 缩放
+    api 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    // Android 6.0授权
+    api 'com.github.HyFun:RxPermissions:0.10.4'
+    //BaseRecyclerViewAdapterHelper
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    // RxActivityResult
+    api 'com.github.VictorAlbertos:RxActivityResult:0.4.5-2.x'
 }
-// material dialog
-compile('com.afollestad.material-dialogs:core:0.9.6.0')
-// okdownload
-// core
-compile 'com.liulishuo.okdownload:okdownload:1.0.4'
-// provide sqlite to store breakpoints
-compile 'com.liulishuo.okdownload:sqlite:1.0.4'
-// provide okhttp to connect to backend
-// and then please import okhttp dependencies by yourself
-compile 'com.liulishuo.okdownload:okhttp:1.0.4'
-
-// logger
-compile 'com.orhanobut:logger:2.2.0'
-
-// 图片查看 缩放
-compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
-
-// Android 6.0授权
-compile 'com.github.tbruyelle:rxpermissions:0.10.2'
 ```
 
 ## 使用
@@ -62,7 +69,7 @@ compile 'com.github.tbruyelle:rxpermissions:0.10.2'
 ### 初始化
 在application中
 ```java
-SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
+SDR_LIBRARY.register(application, new ActivityConfig(application));
 ```
 
 ### Base
@@ -125,6 +132,8 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
 - AbstractPresenter
 
 - AbstractView
+
+- BasePresenter
 
 ### Support
 
@@ -192,3 +201,21 @@ SDRLibrary.getInstance().init(application, BuildConfig.DEBUG);
 
 - ToastTopUtil
 - ToastUtil
+- AlertUtil
+
+
+### Activity 转场动画需满足以下条件
+
+1. activity主题需要有动画主题
+
+    `<item name="android:windowAnimationStyle">@style/ActivitySlideAnimation</item>`
+    
+2. BaseActivityConfig中的`onActivityAnimation()`方法返回true，或者在baseactivity中重写`onActivityAnimation()`方法
+
+    ```
+    @Override
+    public boolean onActivityAnimation() {
+        return true;
+    }
+    ```
+    

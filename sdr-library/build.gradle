@@ -21,7 +21,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     // base
     implementation 'com.android.support:design:27.1.1'
     // 必须依赖的库

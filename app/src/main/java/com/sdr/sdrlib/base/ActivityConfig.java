@@ -44,4 +44,9 @@ public class ActivityConfig extends BaseActivityConfig {
     public int onHeaderBarTitleGravity() {
         return Gravity.CENTER;
     }
+
+    @Override
+    public boolean onActivityAnimation() {
+        return true;
+    }
 }
