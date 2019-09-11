@@ -26,6 +26,7 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.util.ToastUtil;
 
@@ -63,7 +64,7 @@ public class RxSaveImage {
                         if (TextUtils.isEmpty(savePath) || TextUtils.isEmpty(url.toString())) {
                             throw new NullPointerException("请检查图片路径");
                         }
-                        File file = Glide.with(context)
+                        File file = SDR_LIBRARY.getInstance().getGlide().with(context)
                                 .download(url)
                                 .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                                 .get();

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdr.lib.R;
+import com.sdr.lib.SDR_LIBRARY;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class AppMenuRecyclerAdapter extends BaseQuickAdapter<MenuItem, BaseViewH
         TextView tvMark = helper.getView(R.id.sdr_public_recycler_item_menu_tv_marks);
 
         // 菜单图标
-        Glide.with(mContext).load(item.getImageRes()).into(imageView);
+        SDR_LIBRARY.getInstance().getGlide().with(mContext).load(item.getImageRes()).into(imageView);
         imageView.setColorFilter(item.getImgColor(), PorterDuff.Mode.SRC_IN);
 
         if (background) {

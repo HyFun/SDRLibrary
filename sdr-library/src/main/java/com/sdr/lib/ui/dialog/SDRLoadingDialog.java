@@ -78,7 +78,7 @@ public class SDRLoadingDialog extends AlertDialog {
 
         public SDRLoadingDialog build() {
             dialog = new SDRLoadingDialog(context, blur ? R.style.SDR_Theme_Dialog : R.style.SDR_Theme_Dialog_NoBlur, this);
-            View view = layoutInflater.inflate(R.layout.sdr_layout_public_loading_dialog, null, false);
+            View view = layoutInflater.inflate(R.layout.sdr_layout_public_dialog_loading, null, false);
             LinearLayout container = view.findViewById(R.id.hyf_loading_progress_container);
             progressBar = view.findViewById(R.id.hyf_loading_progress);
             textView = view.findViewById(R.id.hyf_loading_progress_tv_content);
@@ -188,7 +188,7 @@ public class SDRLoadingDialog extends AlertDialog {
 //
 //        public SDRLoadingDialog build() {
 //            dialog = new SDRLoadingDialog(mContext, isBlur ? R.style.SDR_Theme_Dialog : R.style.SDR_Theme_Dialog_NoBlur, this);
-//            View view = mLayoutInflater.inflate(R.layout.sdr_layout_public_loading_dialog, null, false);
+//            View view = mLayoutInflater.inflate(R.layout.sdr_layout_public_dialog_loading, null, false);
 //            contentView = view.findViewById(R.id.hyf_loading_progress_container);
 //            progressView = findViewById(view);
 //            progressView.setVisibility(View.VISIBLE);

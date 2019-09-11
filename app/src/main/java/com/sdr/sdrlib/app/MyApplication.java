@@ -3,6 +3,7 @@ package com.sdr.sdrlib.app;
 import android.app.Application;
 
 import com.sdr.lib.SDR_LIBRARY;
+import com.sdr.sdrlib.GlideApp;
 import com.sdr.sdrlib.base.ActivityConfig;
 
 /**
@@ -18,6 +19,7 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         SDR_LIBRARY.register(application, new ActivityConfig(application));
+        SDR_LIBRARY.getInstance().setGlide(GlideApp.get(application));
     }
 
 

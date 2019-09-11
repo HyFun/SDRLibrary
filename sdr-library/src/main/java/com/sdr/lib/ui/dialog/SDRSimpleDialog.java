@@ -83,7 +83,7 @@ public final class SDRSimpleDialog extends AlertDialog {
         }
 
         public SDRSimpleDialog build() {
-            View view = mLayoutInflater.inflate(R.layout.sdr_layout_public_simple_dialog, null);
+            View view = mLayoutInflater.inflate(R.layout.sdr_layout_public_dialog_simple, null);
             progressBar = view.findViewById(R.id.hyf_progress);
             progressBar.setIndeterminate(true);
             textView = view.findViewById(R.id.hyf_textView);

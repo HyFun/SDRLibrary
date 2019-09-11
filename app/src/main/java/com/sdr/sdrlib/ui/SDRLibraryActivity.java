@@ -16,7 +16,6 @@ import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
 import com.sdr.lib.rx.RxUtils;
-import com.sdr.lib.support.fingerprint.BiometricPromptManager;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.ui.tree.TreeNode;
@@ -253,47 +252,6 @@ public class SDRLibraryActivity extends BaseActivity {
             }
         }));
 
-        BiometricPromptManager manager = BiometricPromptManager.from(getActivity());
-
-        adapter.addData(new MainItem("验证指纹", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (manager.isHardwareDetected()) {
-                    if (manager.hasEnrolledFingerprints()) {
-                        manager.authenticate(new BiometricPromptManager.OnBiometricIdentifyCallback() {
-                            @Override
-                            public void onUsePassword() {
-
-                            }
-
-                            @Override
-                            public void onSucceeded() {
-                                ToastUtil.showPositiveToast("验证通过");
-                            }
-
-                            @Override
-                            public void onFailed() {
-
-                            }
-
-                            @Override
-                            public void onError(int code, String reason) {
-
-                            }
-
-                            @Override
-                            public void onCancel() {
-
-                            }
-                        });
-                    } else {
-                        ToastUtil.showNegativeToast("您的设备没有设置指纹，请先设置指纹");
-                    }
-                } else {
-                    ToastUtil.showNegativeToast("您的设备不支持指纹");
-                }
-            }
-        }));
 
         adapter.addData(new MainItem("获取天气数据", new View.OnClickListener() {
             @Override

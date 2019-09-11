@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sdr.lib.R;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.util.DateUtil;
 
 import java.text.DateFormat;
@@ -36,7 +37,7 @@ public class WeatherRecyclerAdapter extends BaseQuickAdapter<Weather.HeWeather6B
         TextView status = helper.getView(R.id.tv_item_weather_status);
         day.setText(helper.getLayoutPosition() == 0 ? "今天" : formatDate(item.getDate()));
         imageView.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        Glide.with(mContext).load("https://cdn.heweather.com/cond_icon/" + item.getCond_code_d() + ".png").into(imageView);
+        SDR_LIBRARY.getInstance().getGlide().with(mContext).load("https://cdn.heweather.com/cond_icon/" + item.getCond_code_d() + ".png").into(imageView);
         tem.setText(item.getTmp_min() + "°C~" + item.getTmp_max() + "°C");
         status.setText(item.getCond_txt_d());
     }

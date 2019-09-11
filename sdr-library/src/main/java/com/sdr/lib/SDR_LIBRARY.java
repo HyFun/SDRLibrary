@@ -3,14 +3,13 @@ package com.sdr.lib;
 import android.app.Application;
 import android.support.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.sdr.lib.base.BaseActivityConfig;
 import com.sdr.lib.util.CommonUtil;
-
-import rx_activity_result2.RxActivityResult;
 
 /**
  * Created by HYF on 2018/10/13.
@@ -39,6 +38,7 @@ public class SDR_LIBRARY {
     private Application application;
     private boolean debug;
     private BaseActivityConfig activityConfig;
+    private Glide glide;
 
 
     /**
@@ -67,7 +67,6 @@ public class SDR_LIBRARY {
             }
         });
 
-        RxActivityResult.register(application);
     }
 
 
@@ -93,5 +92,16 @@ public class SDR_LIBRARY {
 
     private void setActivityConfig(BaseActivityConfig activityConfig) {
         this.activityConfig = activityConfig;
+    }
+
+    public Glide getGlide() {
+        if (glide == null) {
+            glide = Glide.get(application);
+        }
+        return glide;
+    }
+
+    public void setGlide(Glide glide) {
+        this.glide = glide;
     }
 }

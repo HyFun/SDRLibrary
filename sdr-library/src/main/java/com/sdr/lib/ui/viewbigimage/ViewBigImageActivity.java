@@ -25,6 +25,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.sdr.lib.R;
+import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.base.BaseActivity;
 import com.sdr.lib.util.AlertUtil;
 import com.sdr.lib.util.HttpUtil;
@@ -59,7 +60,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_big_image);
+        setContentView(R.layout.sdr_activity_view_big_image);
         initIntent();
         initView();
         initData();
@@ -177,14 +178,14 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.sdr_layout_view_big_image_item, container, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.sdr_layout_item_vp_view_big_image, container, false);
             final SubsamplingScaleImageView imageView = view.findViewById(R.id.sdr_view_big_image_item_photoview);
             final ProgressBar progressBar = view.findViewById(R.id.sdr_view_big_image_item_progress);
             progressBar.setVisibility(View.VISIBLE);
             imageView.setOnClickListener(ViewBigImageActivity.this);
             imageView.setMinimumDpi(50);
             imageView.setDoubleTapZoomStyle(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER);
-            Glide.with(getContext())
+            SDR_LIBRARY.getInstance().getGlide().with(getContext())
                     .download(images.get(position))
                     .into(new SimpleTarget<File>(SimpleTarget.SIZE_ORIGINAL, SimpleTarget.SIZE_ORIGINAL) {
                         @Override

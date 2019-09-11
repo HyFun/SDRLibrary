@@ -252,7 +252,7 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
         RequestOptions options = new RequestOptions();
         options.transforms(new BlurTransformation(23, 4), new CropTransformation(0, headerImage.getLayoutParams().height, CropTransformation.CropType.BOTTOM));
         options.error(onHeaderBarDrawable()).placeholder(onHeaderBarDrawable());
-        Glide.with(this)
+        SDR_LIBRARY.getInstance().getGlide().with(this)
                 .load(image)
                 .apply(options)
                 .into(headerImage);

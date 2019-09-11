@@ -15,14 +15,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sdr.lib.R;
-import com.sdr.lib.util.CommonUtil;
 
 
 /**
@@ -88,7 +86,7 @@ public class ToastTop {
         mParams.windowAnimations = android.R.style.Animation_Toast;
 
         // 初始化吐司窗口布局
-        mView = mLayoutInflater.inflate(R.layout.sdr_layout_snack_top_bar, null, false);
+        mView = mLayoutInflater.inflate(R.layout.sdr_layout_public_snack_top_bar, null, false);
         contentView = (LinearLayout) mView.findViewById(R.id.hyf_snackbar_view);
         mImageView = (ImageView) mView.findViewById(R.id.hyf_iv_sanckbar);
         mTextView = (TextView) mView.findViewById(R.id.hyf_tv_sanckbar);

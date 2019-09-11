@@ -10,17 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.menu.MenuItem;
 import com.sdr.lib.support.weather.Weather;
-import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.support.weather.WeatherRecyclerAdapter;
 import com.sdr.lib.support.weather.WeatherUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.widget.InnerViewPagerNestedScrollView;
 import com.sdr.lib.widget.VPSwipeRefreshLayout;
+import com.sdr.sdrlib.GlideApp;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.ui.main.adapter.MainSecondMenuBackgroundPagerAdapter;
@@ -190,7 +188,7 @@ public class MainModeTwoActivity extends BaseActivity {
                 // 背景
                 int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
                 int res = WeatherUtil.getWeatherImage(code);
-                Glide.with(getContext())
+                GlideApp.with(getContext())
                         .load(res)
                         .apply(RequestOptions.fitCenterTransform())
                         .into(viewImageWeatherBg);

@@ -13,17 +13,21 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/sdr_public_recycler_item_menu_iv_icon"
+        <com.sdr.lib.widget.SquareFramLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/sdr_shape_circle"
-            android:backgroundTint="@color/colorBackground"
-            android:padding="15dp"
-            tools:src="@mipmap/weather_fog" />
+            android:layout_marginBottom="5dp">
+            <ImageView
+                android:id="@+id/sdr_public_recycler_item_menu_iv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/sdr_shape_circle"
+                android:backgroundTint="@color/colorBackground"
+                android:padding="15dp"
+                tools:src="@mipmap/weather_fog" />
+        </com.sdr.lib.widget.SquareFramLayout>
 
         <TextView
             android:id="@+id/sdr_public_recycler_item_menu_tv_title"

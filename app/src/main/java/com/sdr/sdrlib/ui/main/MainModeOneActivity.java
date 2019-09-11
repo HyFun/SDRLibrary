@@ -15,6 +15,7 @@ import com.sdr.lib.support.weather.WeatherRecyclerAdapter;
 import com.sdr.lib.support.weather.WeatherUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.widget.InnerViewPagerNestedScrollView;
+import com.sdr.sdrlib.GlideApp;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.util.AppUtil;
@@ -66,7 +67,7 @@ public class MainModeOneActivity extends BaseActivity {
                 // 背景
                 int code = Integer.parseInt(weather.getHeWeather6().get(0).getDaily_forecast().get(0).getCond_code_d());
                 int res = WeatherUtil.getWeatherImage(code);
-                Glide.with(getContext())
+                GlideApp.with(getContext())
                         .load(res)
                         .apply(RequestOptions.fitCenterTransform())
                         .into(viewWeatherBg);
