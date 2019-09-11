@@ -3,7 +3,6 @@ package com.sdr.lib.support.weather;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
-import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.rx.WeatherException;
@@ -26,7 +25,6 @@ import io.reactivex.functions.Function;
  */
 
 public class WeatherObservable {
-    private static final String TAG = WeatherObservable.class.getSimpleName();
 
     private static final String WEATHER_CACHE = "WEATHER_CACHE";
 
@@ -83,7 +81,6 @@ public class WeatherObservable {
      * @return
      */
     private Observable<Weather> getWeatherData() {
-        Logger.d(TAG,"开始获取天气");
         if (currentIndex < keylist.size()) {
             String key = keylist.get(currentIndex);
             return weatherAPI.getWeatherData(locationCode, key)
@@ -95,7 +92,6 @@ public class WeatherObservable {
                             if ("ok".equals(status)) {
                                 // 说明能获取到
                                 // 存储下来  存三小时
-                                Logger.d(TAG,"获取天气数据成功");
                                 aCache.put(WEATHER_CACHE, HttpClient.gson.toJson(weather), ACache.TIME_HOUR * 3);
                                 return RxUtils.createData(weather);
                             } else {
