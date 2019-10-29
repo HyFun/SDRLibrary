@@ -230,14 +230,6 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
         return SDR_LIBRARY.getInstance().getActivityConfig().onHeaderBarTitleGravity();
     }
 
-    /**
-     * 关闭该activity是否有动画  默认没有
-     *
-     * @return
-     */
-    protected boolean onActivityAnimate() {
-        return SDR_LIBRARY.getInstance().getActivityConfig().onActivityAnimation();
-    }
 
     // -----------------------------------------------设置方法--------------------------------------------
 
@@ -441,14 +433,6 @@ public class BaseActivity extends AppCompatActivity implements OnScrollListener 
      */
     public Context getContext() {
         return this;
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        if (onActivityAnimate()) {
-            overridePendingTransition(0, R.anim.sdr_anim_slide_close_exit);
-        }
     }
 
     /**

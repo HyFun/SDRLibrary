@@ -1,30 +1,34 @@
-# SDRLibrary
+# SDR-LIBRARY
 用于sdr开发APP集成的library，封装了一些基础的UI组件以供APP使用
 ## gradle
+
 project
+
 ```
-allprojects {
-    repositories {
-        ...
-        ...
-        ...
-        maven {
-            url "https://jitpack.io"
+    allprojects {
+        repositories {
+            ...
+            ...
+            ...
+            maven {
+                url "https://jitpack.io"
+            }
         }
     }
-}
 ```
 
 module
-```
-implementation 'com.github.HyfSunshine:SDRLibrary:last-release'
-```
+
+
+>implementation 'com.github.sz-sdr:SDR-LIBRARY:`last-release`
+
+
 ### 已依赖
 ```
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // base
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:design:28.0.0'
     // 必须依赖的库
     // rx java     rx android
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
@@ -38,11 +42,14 @@ dependencies {
     // other
     // glide 变换
     api 'jp.wasabeef:glide-transformations:4.0.0'
-    api "com.github.bumptech.glide:glide:4.8.0"
-    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+    api ("com.github.bumptech.glide:glide:4.8.0"){
+        exclude group: 'com.android.support'
+    }
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    api 'com.github.bumptech.glide:okhttp3-integration:4.8.0'
 
     // material dialog
-    api('com.afollestad.material-dialogs:core:0.9.6.0')
+    api 'com.afollestad.material-dialogs:core:0.9.6.0'
     // okdownload  下载文件时候使用
     // core
     api 'com.liulishuo.okdownload:okdownload:1.0.4'
@@ -63,13 +70,19 @@ dependencies {
     api 'com.github.VictorAlbertos:RxActivityResult:0.4.5-2.x'
 }
 ```
+以上api依赖的库将会一直在app中
+
 
 ## 使用
 
 ### 初始化
 在application中
+
 ```java
+// 初始化
 SDR_LIBRARY.register(application, new ActivityConfig(application));
+// 传入统一的glide app
+SDR_LIBRARY.getInstance().setGlide(GlideApp.get(application));
 ```
 
 ### Base
@@ -85,7 +98,7 @@ SDR_LIBRARY.register(application, new ActivityConfig(application));
     ```
     第一次加载的时候可以在该方法中获取数据。
 
-    推荐在PagerAdapter中的
+    fragment数量比较少的时候推荐在PagerAdapter中的
     ``` java
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
@@ -204,18 +217,38 @@ SDR_LIBRARY.register(application, new ActivityConfig(application));
 - AlertUtil
 
 
-### Activity 转场动画需满足以下条件
+### 仿网易云音乐Activity动画
 
-1. activity主题需要有动画主题
+#### 启动动画。
 
-    `<item name="android:windowAnimationStyle">@style/ActivitySlideAnimation</item>`
-    
-2. BaseActivityConfig中的`onActivityAnimation()`方法返回true，或者在baseactivity中重写`onActivityAnimation()`方法
+Splash页面主题
+```xml
+<!--Splash界面主题-->
+<style name="AppTheme.SplashTheme">
+    <item name="android:windowFullscreen">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+</style>
+```
+跳转下一个界面代码
 
-    ```
+```java
+new Handler().postDelayed(new Runnable() {
     @Override
-    public boolean onActivityAnimation() {
-        return true;
+    public void run() {
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.sdr_activity_zoom_in, R.anim.sdr_activity_zoom_out);
+        finish();
     }
-    ```
-    
+}, 1000);
+```
+
+
+#### 通用页面动画
+
+在主题中添加以下即可
+
+```xml
+<item name="android:windowAnimationStyle">@style/default_animation</item>
+```
+

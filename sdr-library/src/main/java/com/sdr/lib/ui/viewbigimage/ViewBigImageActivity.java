@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
@@ -127,12 +124,6 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         return 0;
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(0, R.anim.sdr_activity_up_out);
-    }
-
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -226,7 +217,6 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         intent.putExtra("isLocal", isLocal);
         intent.putExtra("position", position);
         intent.putExtra("imageList", (Serializable) imageList);
-        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(context, R.anim.sdr_activity_up_in, 0);
-        ActivityCompat.startActivity(context, intent, compat.toBundle());
+        context.startActivity(intent);
     }
 }

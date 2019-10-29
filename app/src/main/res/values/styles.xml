@@ -1,19 +1,22 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="buttonStyle">@style/ButtonStyle</item>
-
-        <item name="android:windowAnimationStyle">@style/ActivitySlideAnimation</item>
     </style>
 
-    <style name="AppTheme.ScaleTheme">
-        <item name="android:windowAnimationStyle">@style/ActivityScanAnimation</item>
+<!--    通用主题-->
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="android:windowAnimationStyle">@style/default_animation</item>
+    </style>
+
+<!--    Splash主题-->
+    <style name="SplashTheme" parent="BaseTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 

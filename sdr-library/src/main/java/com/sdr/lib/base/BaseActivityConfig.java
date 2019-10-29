@@ -49,14 +49,6 @@ public abstract class BaseActivityConfig {
         return Color.WHITE;
     }
 
-    /**
-     * activity的返回动画 默认不设置
-     *
-     * @return
-     */
-    public boolean onActivityAnimation() {
-        return false;
-    }
 
     /**
      * 如果使用 headerbar 设置toolbar的资源文件

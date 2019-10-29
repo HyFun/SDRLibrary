@@ -16,12 +16,9 @@ import com.sdr.sdrlib.R;
 
 public class ActivityConfig extends BaseActivityConfig {
 
-    private Context context;
-
     public ActivityConfig(Context context) {
-        this.context = context;
+        super(context);
     }
-
 
     @Override
     public int onHeaderBarStatusViewAlpha() {
@@ -45,8 +42,4 @@ public class ActivityConfig extends BaseActivityConfig {
         return Gravity.CENTER;
     }
 
-    @Override
-    public boolean onActivityAnimation() {
-        return true;
-    }
 }

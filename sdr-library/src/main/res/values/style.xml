@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--仿网易云音乐 缩放-->
-    <style name="ActivityScanAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/sdr_anim_scale_open_enter</item>
-        <item name="android:activityOpenExitAnimation">@anim/sdr_anim_scale_open_exit</item>
-        <item name="android:activityCloseEnterAnimation">@null</item>
-        <item name="android:activityCloseExitAnimation">@anim/sdr_anim_scale_close_exit</item>
+
+
+    <!--转场动画-->
+    <!-- 默认Activity跳转动画 -->
+    <style name="default_animation" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/sdr_activity_up_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/sdr_activity_up_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/sdr_activity_down_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/sdr_activity_down_out</item>
     </style>
 
-    <!--仿网易云 打开界面-->
-    <style name="ActivitySlideAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/sdr_anim_slide_open_enter</item>
-        <item name="android:activityOpenExitAnimation">@anim/sdr_anim_slide_open_exit</item>
-        <item name="android:activityCloseEnterAnimation">@null</item>
-        <item name="android:activityCloseExitAnimation">@anim/sdr_anim_slide_close_exit</item>
-    </style>
 
 
     <!--自定义的Dialog-->

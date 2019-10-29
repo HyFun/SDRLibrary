@@ -8,7 +8,6 @@ import android.view.View;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.common.AppItemRecyclerAdapter;
 import com.sdr.sdrlib.common.MainItem;
-import com.sdr.sdrlib.ui.SDRDeviceIdentificationActivity;
 import com.sdr.sdrlib.ui.SDRLibraryActivity;
 
 import butterknife.BindView;
@@ -33,21 +32,6 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(getContext(), SDRLibraryActivity.class));
             }
         }));
-
-        // SDR-DEVICE-IDENTIFICATION
-        adapter.addData(new MainItem("sdr-device-identification", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), SDRDeviceIdentificationActivity.class));
-            }
-        }));
-
-
     }
 
-
-    @Override
-    protected boolean onActivityAnimate() {
-        return false;
-    }
 }
