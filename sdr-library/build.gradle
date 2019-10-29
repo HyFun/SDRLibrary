@@ -61,4 +61,6 @@ dependencies {
     api 'com.github.HyFun:RxPermissions:0.10.4'
     //BaseRecyclerViewAdapterHelper
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    // RxActivityResult
+    api 'com.github.VictorAlbertos:RxActivityResult:0.4.5-2.x'
 }

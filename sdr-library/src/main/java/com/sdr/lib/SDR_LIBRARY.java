@@ -11,6 +11,8 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import com.sdr.lib.base.BaseActivityConfig;
 import com.sdr.lib.util.CommonUtil;
 
+import rx_activity_result2.RxActivityResult;
+
 /**
  * Created by HYF on 2018/10/13.
  * Email：775183940@qq.com
@@ -43,7 +45,7 @@ public class SDR_LIBRARY {
 
     /**
      * 注册
-     * 需要在 application中注册
+     * 需要在 application中注册 并做一些初始化操作
      *
      * @param application
      */
@@ -66,7 +68,8 @@ public class SDR_LIBRARY {
                 return getInstance().isDebug();
             }
         });
-
+        // RxActivityResult初始化操作
+        RxActivityResult.register(application);
     }
 
 

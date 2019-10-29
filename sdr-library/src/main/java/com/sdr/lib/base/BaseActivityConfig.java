@@ -1,5 +1,6 @@
 package com.sdr.lib.base;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntRange;
@@ -12,6 +13,12 @@ import android.view.Gravity;
  */
 
 public abstract class BaseActivityConfig {
+
+    protected Context context;
+
+    public BaseActivityConfig(Context context) {
+        this.context = context;
+    }
 
     /**
      * 配置状态栏透明度
