@@ -29,7 +29,7 @@ public abstract class RxObserver<T> extends ResourceObserver<T> {
             @Override
             public boolean parseException(Throwable throwable) {
                 if (throwable instanceof ServerException) {
-                    mView.showErrorMsg(throwable.getMessage());
+                    mView.showErrorMsg("出错啦~", throwable.getMessage());
                     return true;
                 } else if (throwable instanceof IgnoreException) {
                     // 忽略此Exception
@@ -40,7 +40,7 @@ public abstract class RxObserver<T> extends ResourceObserver<T> {
 
             @Override
             public void commonException(Exception exception) {
-                mView.showErrorMsg(exception.getMessage());
+                mView.showErrorMsg("请求错误", exception.getMessage());
             }
         });
         // 打印出异常信息

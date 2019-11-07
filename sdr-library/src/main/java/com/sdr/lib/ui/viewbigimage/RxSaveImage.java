@@ -24,11 +24,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.sdr.lib.SDR_LIBRARY;
 import com.sdr.lib.rx.RxUtils;
-import com.sdr.lib.util.ToastUtil;
+import com.sdr.lib.util.AlertUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,12 +91,12 @@ public class RxSaveImage {
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        ToastUtil.showPositiveToast("图片已保存至" + savePath);
+                        AlertUtil.showPositiveToastTop("保存成功", savePath);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ToastUtil.showNegativeToast(throwable.getMessage());
+                        AlertUtil.showNegativeToastTop("保存失败", throwable.getMessage());
                     }
                 });
 

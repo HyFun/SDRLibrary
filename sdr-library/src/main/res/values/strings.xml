@@ -5,9 +5,10 @@
     <color name="colorBlack">#333333</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorNormal">#737373</color>
+    <color name="colorError">#F8534F</color>
 
 
-    <color name="colorPositive">#21D4B0</color>
-    <color name="colorNegative">#F6455A</color>
-    <color name="colorWarning">#D3B121</color>
+    <color name="colorToastSuccess">#47D764</color>
+    <color name="colorToastInfo">#2F86EB</color>
+    <color name="colorToastWarning">#BA2525</color>
 </resources>

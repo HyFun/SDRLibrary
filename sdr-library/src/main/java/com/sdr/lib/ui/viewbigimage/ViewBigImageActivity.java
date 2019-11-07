@@ -77,7 +77,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
         position = intent.getIntExtra("position", 0);
         imageList = (List) intent.getSerializableExtra("imageList");
         if (imageList == null || imageList.isEmpty()) {
-            AlertUtil.showNegativeToastTop("图片集合不能为空");
+            AlertUtil.showNegativeToastTop("错误", "图片集合不能为空");
             finish();
         }
     }
@@ -100,7 +100,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
             @Override
             public void onClick(View v) {
                 if (!HttpUtil.isNetworkConnected()) {
-                    AlertUtil.showNegativeToastTop("当前网络不可用，请检查你的网络设置");
+                    AlertUtil.showNegativeToastTop("网络异常", "当前网络不可用，请检查你的网络设置");
                     return;
                 }
                 // 授权
@@ -110,7 +110,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
                                 if (aBoolean) {
-                                    AlertUtil.showNormalToastTop("开始下载图片");
+                                    AlertUtil.showNormalToastTop("开始下载图片", "");
                                     RxSaveImage.saveImageToGallery(getContext(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), imageList.get(position));
                                 }
                             }
@@ -189,7 +189,7 @@ public class ViewBigImageActivity extends BaseActivity implements ViewPager.OnPa
                         @Override
                         public void onLoadFailed(@Nullable Drawable errorDrawable) {
                             super.onLoadFailed(errorDrawable);
-                            AlertUtil.showNegativeToastTop("资源加载失败");
+                            AlertUtil.showNegativeToastTop("资源加载失败", "");
                             progressBar.setVisibility(View.GONE);
                         }
                     });

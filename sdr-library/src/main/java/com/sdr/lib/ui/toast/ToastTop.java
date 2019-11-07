@@ -11,12 +11,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,16 +42,16 @@ public class ToastTop {
 
     // 视图
     private View contentView;
-    private ImageView mImageView;
-    private TextView mTextView;
+    private ImageView viewImageIcon;
+    private TextView viewTextTitle, viewTextContent;
 
     /**
      * 逻辑
      */
-    private int iconRes;
-    private int iconColor = Color.BLACK;
+    private int iconRes = -999;
+    private int iconColor = Color.BLUE;
     private String title = "";
-    private int titleColor = Color.BLACK;
+    private String content = "";
     // 显示时间
     private long showTime = 2000;
 
@@ -80,24 +80,18 @@ public class ToastTop {
         // 透明，不透明会出现重叠效果
         mParams.format = PixelFormat.TRANSLUCENT;
         // 位置属性
-        mParams.gravity = Gravity.TOP ;  // 左上
+        mParams.gravity = Gravity.TOP;  // 左上
         //出现动画
         //mParams.windowAnimations = R.style.Animation_Snack_Toast;
-        mParams.windowAnimations = android.R.style.Animation_Toast;
+        //mParams.windowAnimations = android.R.style.Animation_Toast;
+        mParams.windowAnimations = R.style.Animation_ToastTop;
 
         // 初始化吐司窗口布局
         mView = mLayoutInflater.inflate(R.layout.sdr_layout_public_snack_top_bar, null, false);
-        contentView = (LinearLayout) mView.findViewById(R.id.hyf_snackbar_view);
-        mImageView = (ImageView) mView.findViewById(R.id.hyf_iv_sanckbar);
-        mTextView = (TextView) mView.findViewById(R.id.hyf_tv_sanckbar);
-//        // 设置margintop
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            LinearLayout parent = (LinearLayout) contentView.getChildAt(0);
-//            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) parent.getLayoutParams();
-//            params.topMargin = getStatusBarHeight(mContext);
-//            parent.setLayoutParams(params);
-//            mView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//        }
+        contentView = mView.findViewById(R.id.sdr_toast_top_container);
+        viewImageIcon = mView.findViewById(R.id.sdr_toast_top_iv_icon);
+        viewTextTitle = mView.findViewById(R.id.sdr_toast_top_tv_title);
+        viewTextContent = mView.findViewById(R.id.sdr_toast_top_tv_content);
     }
 
     private Handler mHandler;
@@ -107,13 +101,18 @@ public class ToastTop {
         return this;
     }
 
+    public ToastTop setIconColor(int iconColor) {
+        this.iconColor = iconColor;
+        return this;
+    }
+
     public ToastTop setTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public ToastTop setTitleColor(int titleColor) {
-        this.titleColor = titleColor;
+    public ToastTop setContent(String content) {
+        this.content = content;
         return this;
     }
 
@@ -122,10 +121,6 @@ public class ToastTop {
         return this;
     }
 
-    public ToastTop setIconColor(int iconColor) {
-        this.iconColor = iconColor;
-        return this;
-    }
 
     // show之前需要授权
     public void show() {
@@ -145,14 +140,18 @@ public class ToastTop {
     }
 
     private void create() {
-        if (iconRes != 0) {
+        if (iconRes != -999) {
             Drawable drawable = mContext.getResources().getDrawable(iconRes);
             drawable.setColorFilter(iconColor, PorterDuff.Mode.SRC_IN);
-            mImageView.setImageDrawable(drawable);
+            viewImageIcon.setImageDrawable(drawable);
         }
-        mImageView.setVisibility(iconRes == 0 ? View.GONE : View.VISIBLE);
-        mTextView.setText(title);
-        mTextView.setTextColor(titleColor);
+        viewTextTitle.setText(title);
+        if (TextUtils.isEmpty(content)) {
+            viewTextContent.setVisibility(View.GONE);
+        } else {
+            viewTextContent.setVisibility(View.VISIBLE);
+            viewTextContent.setText(content);
+        }
 
         if (mHandler == null) {
             mHandler = new Handler() {

@@ -42,28 +42,28 @@ public class AppMenu {
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#E1B183"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#CCCA22"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#22CD29"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#22CDA7"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
@@ -71,7 +71,7 @@ public class AppMenu {
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#22AACD"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
@@ -79,21 +79,21 @@ public class AppMenu {
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#2247CD"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#6522CD"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#9D22CD"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
@@ -101,14 +101,14 @@ public class AppMenu {
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#CD2299"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#CD2261"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
@@ -116,42 +116,42 @@ public class AppMenu {
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#EE9D71"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#BEA654"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#94BE54"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#4CB445"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#45B49B"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 
         secondMenus.add(new MenuItem(R.mipmap.main_home_second_menu_qjt, Color.parseColor("#4E6E96"), "全景显示", titleColor, new OnClickMenuItemListener() {
             @Override
             public void onClick(View view, MenuItem menuItem) {
-                AlertUtil.showPositiveToastTop(menuItem.getTitle());
+                AlertUtil.showPositiveToastTop(menuItem.getTitle(), "");
             }
         }));
 

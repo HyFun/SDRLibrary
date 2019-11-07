@@ -6,7 +6,6 @@ import android.content.Context;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sdr.lib.R;
 import com.sdr.lib.SDR_LIBRARY;
-import com.sdr.lib.ui.toast.ToastSimple;
 import com.sdr.lib.ui.toast.ToastTop;
 
 /**
@@ -20,41 +19,6 @@ public class AlertUtil {
     }
 
     // ————————————————————————————————————————————————————
-    /**
-     * ——————————————————————Toast——————————————————————
-     */
-    private static ToastSimple toastSimple;
-
-    private static final ToastSimple getToastSimple() {
-        if (toastSimple == null)
-            synchronized (AlertUtil.class) {
-                if (toastSimple == null)
-                    toastSimple = new ToastSimple(getContext()).radius(CommonUtil.dip2px(getContext(), 10));
-            }
-        return toastSimple;
-    }
-
-    public static final void showPositiveToast(String msg) {
-        getToastSimple()
-                .background(getContext().getResources().getColor(R.color.colorPositive))
-                .text(msg)
-                .show();
-    }
-
-    public static final void showNegativeToast(String msg) {
-        getToastSimple()
-                .background(getContext().getResources().getColor(R.color.colorNegative))
-                .text(msg)
-                .show();
-    }
-
-    public static final void showNormalToast(String msg) {
-        getToastSimple()
-                .background(getContext().getResources().getColor(R.color.colorPrimary))
-                .text(msg)
-                .show();
-    }
-
     /**
      * ——————————————————————Toast Top——————————————————————
      */
@@ -71,32 +35,32 @@ public class AlertUtil {
         return toastTop;
     }
 
-    public static void showPositiveToastTop(String title) {
+    public static void showPositiveToastTop(String title, String content) {
         getToastTop()
-                .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_success_24dp)
-                .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
-                .setIconColor(getContext().getResources().getColor(R.color.colorPositive))
+                .setIconColor(getContext().getResources().getColor(R.color.colorToastSuccess))
+                .setTitle(title)
+                .setContent(content)
                 .setShowTime(3000)
                 .show();
     }
 
-    public static void showNegativeToastTop(String title) {
+    public static void showNormalToastTop(String title, String content) {
         getToastTop()
-                .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
-                .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
-                .setIconColor(getContext().getResources().getColor(R.color.colorNegative))
+                .setIconColor(getContext().getResources().getColor(R.color.colorToastInfo))
+                .setTitle(title)
+                .setContent(content)
                 .setShowTime(3000)
                 .show();
     }
 
-    public static void showNormalToastTop(String title) {
+    public static void showNegativeToastTop(String title, String content) {
         getToastTop()
-                .setTitle(title)
                 .setIconRes(R.drawable.sdr_ic_toast_warn_24dp)
-                .setTitleColor(getContext().getResources().getColor(R.color.colorBlack))
-                .setIconColor(getContext().getResources().getColor(R.color.colorPrimary))
+                .setIconColor(getContext().getResources().getColor(R.color.colorToastWarning))
+                .setTitle(title)
+                .setContent(content)
                 .setShowTime(3000)
                 .show();
     }

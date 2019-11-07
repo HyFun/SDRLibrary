@@ -11,16 +11,10 @@ public interface AbstractView {
 
     void hideLoadingDialog();
 
-    void showSuccessMsg(String msg);
+    void showSuccessMsg(String msg, String content);
 
-    void showErrorMsg(String msg);
+    void showErrorMsg(String msg, String content);
 
-    void showNormalMsg(String msg);
-
-    void showSuccessToast(String msg);
-
-    void showErrorToast(String msg);
-
-    void showNormalToast(String msg);
+    void showNormalMsg(String msg, String content);
 
 }

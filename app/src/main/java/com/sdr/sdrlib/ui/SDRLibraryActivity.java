@@ -23,8 +23,6 @@ import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.AlertUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.sdr.lib.util.NotificationUtils;
-import com.sdr.lib.util.ToastTopUtil;
-import com.sdr.lib.util.ToastUtil;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.common.AppItemRecyclerAdapter;
@@ -94,7 +92,7 @@ public class SDRLibraryActivity extends BaseActivity {
                     @Override
                     public void onSigleClick(TreeNode treeNode, int visablePositon, int realDatasPositon, boolean isLeaf) {
                         if (!isLeaf) return;
-                        ToastUtil.showNormalToast(treeNode.getLabel());
+                        AlertUtil.showPositiveToastTop(treeNode.getLabel(), "");
                     }
                 });
                 RecyclerView recyclerView = new RecyclerView(getContext());
@@ -130,7 +128,7 @@ public class SDRLibraryActivity extends BaseActivity {
                                 sb.append(",");
                             }
                         }
-                        ToastUtil.showNormalToast(sb.toString());
+                        AlertUtil.showPositiveToastTop("人员", sb.toString());
                     }
                 });
                 RecyclerView recyclerView = new RecyclerView(getContext());
@@ -172,34 +170,6 @@ public class SDRLibraryActivity extends BaseActivity {
             }
         }));
 
-        adapter.addData(new MainItem("Toast 正常", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showNormalToast("正常的toast");
-            }
-        }));
-
-        adapter.addData(new MainItem("Toast 正确", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showPositiveToast("Toast 正确");
-            }
-        }));
-
-        adapter.addData(new MainItem("Toast 错误", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showNegativeToast("Toast 错误");
-            }
-        }));
-
-        adapter.addData(new MainItem("Toast 长内容", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showNegativeToast(getResources().getString(R.string.long_string));
-            }
-        }));
-
         adapter.addData(new MainItem("Alert 简单Dialog", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,21 +188,21 @@ public class SDRLibraryActivity extends BaseActivity {
         adapter.addData(new MainItem("TopToast 正常", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastTopUtil.showNormalTopToast("正常的TopToast");
+                AlertUtil.showNormalToastTop("Normal", "表示一个App组的唯一Key。例如，名称为'微信'的App上传了三个版本，那么这三个版本为一个App组，该参数表示这个组的Key。这个值显示在应用详情--应用概述--App Key。");
             }
         }));
 
         adapter.addData(new MainItem("TopToast 成功", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastTopUtil.showPositiveTopToast("成功的TopToast");
+                AlertUtil.showPositiveToastTop("Success", "表示一个App组的唯一Key。例如，名称为'微信'的App上传了三个版本，那么这三个版本为一个App组，该参数表示这个组的Key。这个值显示在应用详情--应用概述--App Key。");
             }
         }));
 
         adapter.addData(new MainItem("TopToast 错误", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastTopUtil.showNegativeTopToast("错误的TopToast");
+                AlertUtil.showNegativeToastTop("Success", "表示一个App组的唯一Key。例如，名称为'微信'的App上传了三个版本，那么这三个版本为一个App组，该参数表示这个组的Key。这个值显示在应用详情--应用概述--App Key。");
             }
         }));
 
@@ -256,7 +226,7 @@ public class SDRLibraryActivity extends BaseActivity {
         adapter.addData(new MainItem("获取天气数据", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtil.getWeather(getActivity(),new ResourceObserver<Weather>() {
+                AppUtil.getWeather(getActivity(), new ResourceObserver<Weather>() {
                     @Override
                     public void onNext(Weather weather) {
                         AlertUtil.showDialog(getActivity(), "获取天气成功", HttpClient.gson.toJson(weather));
@@ -315,12 +285,12 @@ public class SDRLibraryActivity extends BaseActivity {
                             public void accept(Location location) throws Exception {
                                 String json = HttpClient.gson.toJson(location);
                                 Logger.json(json);
-                                AlertUtil.showPositiveToast(json);
+                                AlertUtil.showDialog(getActivity(), "内容", json);
                             }
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                AlertUtil.showNegativeToastTop(throwable.getMessage());
+                                AlertUtil.showPositiveToastTop("请求错误",throwable.getMessage());
                             }
                         });
             }
