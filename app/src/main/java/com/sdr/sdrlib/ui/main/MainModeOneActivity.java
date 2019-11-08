@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherRecyclerAdapter;
 import com.sdr.lib.support.weather.WeatherUtil;

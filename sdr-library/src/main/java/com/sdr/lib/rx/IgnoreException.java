@@ -5,6 +5,7 @@ package com.sdr.lib.rx;
  * Email: 775183940@qq.com
  * Description:
  */
+@Deprecated
 public class IgnoreException extends Exception {
     public IgnoreException(String message) {
         super(message);

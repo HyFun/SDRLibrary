@@ -16,7 +16,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
-import com.sdr.lib.rx.RxUtils;
+import com.sdr.lib.mvp.AbstractView;
+import com.sdr.lib.rx.RxUtil;
+import com.sdr.lib.rx.observer.RxObserver;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.ui.paint.SDRPaintActivity;
@@ -278,7 +280,7 @@ public class SDRLibraryActivity extends BaseActivity {
                             @Override
                             public ObservableSource<Location> apply(Boolean aBoolean) throws Exception {
                                 if (aBoolean) {
-                                    return RxUtils.createData(CommonUtil.getLocation(getActivity()));
+                                    return RxUtil.createData(CommonUtil.getLocation(getActivity()));
                                 } else {
                                     return Observable.error(new Exception("获取定位权限失败"));
                                 }

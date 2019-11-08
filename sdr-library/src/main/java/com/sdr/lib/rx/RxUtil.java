@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author quchao
  */
 
-public class RxUtils {
+public class RxUtil {
     /**
      * 统一线程处理
      *
@@ -33,26 +33,21 @@ public class RxUtils {
 
 
     /**
-     * 处理异常
-     *
-     * @param handle
-     */
-    public final static void handleException(HandleException handle) {
-    }
-
-
-    /**
      * 得到 Observable
      *
      * @param <T> 指定的泛型类型
      * @return Observable
      */
-    public static  <T> Observable<T> createData(final T t) {
+    public static <T> Observable<T> createData(final T t) {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(ObservableEmitter<T> emitter) throws Exception {
-                emitter.onNext(t);
-                emitter.onComplete();
+                try {
+                    emitter.onNext(t);
+                    emitter.onComplete();
+                } catch (Exception e) {
+                    emitter.onError(e);
+                }
             }
         });
     }
