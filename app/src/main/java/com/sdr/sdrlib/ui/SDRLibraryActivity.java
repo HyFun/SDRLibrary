@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import com.sdr.lib.http.HttpClient;
 import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.weather.Weather;
+import com.sdr.lib.ui.paint.SDRPaintActivity;
 import com.sdr.lib.ui.tree.TreeNode;
 import com.sdr.lib.ui.tree.TreeNodeRecyclerAdapter;
 import com.sdr.lib.util.AlertUtil;
@@ -47,6 +49,8 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.ResourceObserver;
+import rx_activity_result2.Result;
+import rx_activity_result2.RxActivityResult;
 
 /**
  * Created by HyFun on 2019/05/16.
@@ -290,7 +294,7 @@ public class SDRLibraryActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-                                AlertUtil.showPositiveToastTop("请求错误",throwable.getMessage());
+                                AlertUtil.showPositiveToastTop("请求错误", throwable.getMessage());
                             }
                         });
             }
@@ -300,6 +304,24 @@ public class SDRLibraryActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(SDRLibraryActivity.this, "这是系统自带的toast", Toast.LENGTH_SHORT).show();
+            }
+        }));
+
+        adapter.addData(new MainItem("画图", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SDRPaintActivity.class);
+                RxActivityResult.on(getActivity())
+                        .startIntent(intent)
+                        .subscribe(new Consumer<Result<AppCompatActivity>>() {
+                            @Override
+                            public void accept(Result<AppCompatActivity> appCompatActivityResult) throws Exception {
+                                if (appCompatActivityResult.resultCode() == RESULT_OK) {
+                                    String path = appCompatActivityResult.data().getStringExtra(SDRPaintActivity.RESULT);
+                                    AlertUtil.showPositiveToastTop("保存成功", path);
+                                }
+                            }
+                        });
             }
         }));
 

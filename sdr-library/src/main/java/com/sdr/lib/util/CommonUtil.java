@@ -22,6 +22,7 @@ import com.sdr.lib.ui.viewbigimage.ViewBigImageActivity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by HyFun on 2018/10/11.
@@ -220,5 +221,15 @@ public class CommonUtil {
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
         return location;
+    }
+
+
+    /**
+     * 生成uuid
+     */
+
+    public static final String uuid() {
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        return uuid;
     }
 }

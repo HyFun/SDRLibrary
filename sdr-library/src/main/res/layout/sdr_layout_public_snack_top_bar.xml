@@ -14,7 +14,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         app:cardBackgroundColor="#ffffff"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="5dp"
         app:cardElevation="4dp">
 
         <LinearLayout
@@ -31,8 +31,8 @@
 
                 <ImageView
                     android:id="@+id/sdr_toast_top_iv_icon"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginRight="10dp"
                     tools:src="@drawable/sdr_ic_toast_success_24dp"
                     tools:tint="@color/colorToastSuccess" />
@@ -42,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="18sp"
+                    android:textColor="#000"
+                    android:textSize="16sp"
                     tools:text="Success" />
             </LinearLayout>
 
@@ -54,8 +54,8 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:textColor="@color/colorNormal"
-                android:textSize="16sp"
+                android:textColor="#737373"
+                android:textSize="14sp"
                 tools:text="表示一个App组的唯一Key。例如，名称为'微信'的App上传了三个版本，那么这三个版本为一个App组，该参数表示这个组的Key。这个值显示在应用详情--应用概述--App Key。" />
 
         </LinearLayout>
