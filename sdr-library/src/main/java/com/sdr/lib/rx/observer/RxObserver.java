@@ -32,7 +32,7 @@ public abstract class RxObserver<T, V extends AbstractView> extends ResourceObse
      */
     public RxObserver(V mView) {
         this.mView = mView;
-        onExceptionSolve();
+        onExceptionSolve(transformerList);
     }
 
 
@@ -60,7 +60,7 @@ public abstract class RxObserver<T, V extends AbstractView> extends ResourceObse
     /**
      * 处理异常
      */
-    public void onExceptionSolve() {
+    public void onExceptionSolve(List<ExceptionTransformer> transformerList) {
         transformerList.add(new ExceptionTransformer(ConnectException.class, new ExceptionSolver() {
             @Override
             public void solve(Throwable throwable) {
