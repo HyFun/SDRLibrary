@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 import com.sdr.lib.http.HttpClient;
-import com.sdr.lib.rx.RxUtils;
-import com.sdr.lib.rx.WeatherException;
+import com.sdr.lib.rx.RxUtil;
+import com.sdr.lib.rx.ServerException;
 import com.sdr.lib.support.ACache;
 import com.sdr.lib.support.SDRAPI;
 import com.sdr.lib.support.path.AppPath;
@@ -93,7 +93,7 @@ public class WeatherObservable {
                                 // 说明能获取到
                                 // 存储下来  存三小时
                                 aCache.put(WEATHER_CACHE, HttpClient.gson.toJson(weather), ACache.TIME_HOUR * 3);
-                                return RxUtils.createData(weather);
+                                return RxUtil.createData(weather);
                             } else {
                                 // 没有获取到
                                 currentIndex++;
@@ -103,7 +103,7 @@ public class WeatherObservable {
                     });
         } else {
             // 没有
-            return Observable.error(new WeatherException("没有可用的key"));
+            return Observable.error(new ServerException("没有可用的key", -1));
         }
     }
 
@@ -119,11 +119,11 @@ public class WeatherObservable {
                     @Override
                     public ObservableSource<Weather> apply(Integer integer) throws Exception {
                         if (weatherJson == null) {
-                            return Observable.error(new WeatherException("天气获取异常"));
+                            return Observable.error(new ServerException("天气获取异常", -1));
                         } else {
                             Weather weather = HttpClient.gson.fromJson(weatherJson, new TypeToken<Weather>() {
                             }.getType());
-                            return RxUtils.createData(weather);
+                            return RxUtil.createData(weather);
                         }
                     }
                 });

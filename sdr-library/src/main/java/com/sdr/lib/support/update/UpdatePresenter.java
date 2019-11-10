@@ -12,7 +12,6 @@ import com.liulishuo.okdownload.core.cause.EndCause;
 import com.liulishuo.okdownload.core.listener.DownloadListener4WithSpeed;
 import com.liulishuo.okdownload.core.listener.assist.Listener4SpeedAssistExtend;
 import com.sdr.lib.http.HttpClient;
-import com.sdr.lib.rx.RxUtils;
 import com.sdr.lib.support.SDRAPI;
 
 import java.util.List;
