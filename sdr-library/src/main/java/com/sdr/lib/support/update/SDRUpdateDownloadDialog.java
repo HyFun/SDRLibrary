@@ -1,4 +1,4 @@
-package com.sdr.lib.ui.dialog;
+package com.sdr.lib.support.update;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,7 +17,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
  *  下载APP显示下载进度的dialog
  */
 
-public class SDRUpdateDownloadDialog extends AlertDialog {
+class SDRUpdateDownloadDialog extends AlertDialog {
     private Builder mBuilder;
 
     private SDRUpdateDownloadDialog(@NonNull Context context, Builder builder) {

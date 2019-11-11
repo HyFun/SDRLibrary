@@ -1,4 +1,4 @@
-package com.sdr.lib.ui.dialog;
+package com.sdr.lib.support.update;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -18,7 +18,7 @@ import com.sdr.lib.util.CommonUtil;
  * Created by Administrator on 2018/5/22.
  */
 
-public class SDRUpdateDialog extends AlertDialog {
+class SDRUpdateDialog extends AlertDialog {
     private static final int COLOR_DEFAULT = -2;
 
     private SDRUpdateDialog(@NonNull Context context) {

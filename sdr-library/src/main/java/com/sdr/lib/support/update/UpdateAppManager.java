@@ -10,8 +10,6 @@ import android.text.TextUtils;
 
 import com.sdr.lib.R;
 import com.sdr.lib.ui.dialog.SDRSimpleDialog;
-import com.sdr.lib.ui.dialog.SDRUpdateDialog;
-import com.sdr.lib.ui.dialog.SDRUpdateDownloadDialog;
 import com.sdr.lib.util.CommonUtil;
 
 import java.io.File;
