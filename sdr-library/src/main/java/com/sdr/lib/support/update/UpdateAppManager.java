@@ -32,8 +32,8 @@ public class UpdateAppManager {
         if (info.metaData == null) {
             return;
         }
-        String apiKey = info.metaData.getString("ApiKey");
-        String appKey = info.metaData.getString("AppKey");
+        String apiKey = info.metaData.getString("pgyer_ApiKey");
+        String appKey = info.metaData.getString("pgyer_AppKey");
         if (TextUtils.isEmpty(apiKey) || TextUtils.isEmpty(appKey)) {
             return;
         }

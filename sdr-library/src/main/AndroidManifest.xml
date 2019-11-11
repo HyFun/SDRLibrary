@@ -13,14 +13,6 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
 
-        <meta-data
-            android:name="ApiKey"
-            android:value="${ApiKey}" />
-        <meta-data
-            android:name="AppKey"
-            android:value="${AppKey}" />
-
-
         <provider
             android:name=".support.SDRFileProvider"
             android:authorities="${applicationId}.fileProvider"
