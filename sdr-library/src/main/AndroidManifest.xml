@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.sdr.lib">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -13,13 +12,14 @@
         android:allowBackup="true"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
-        <meta-data android:name="AppName" android:value="${AppName}"/>
-        <meta-data android:name="ApiKey" android:value="${ApiKey}"/>
-        <meta-data android:name="AppKey" android:value="${AppKey}"/>
 
+        <meta-data
+            android:name="ApiKey"
+            android:value="${ApiKey}" />
+        <meta-data
+            android:name="AppKey"
+            android:value="${AppKey}" />
 
-
-        <activity android:name=".ui.paint.SDRPaintActivity"></activity>
 
         <provider
             android:name=".support.SDRFileProvider"
@@ -29,9 +29,15 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/sdr_file_paths" />
-        </provider> <!-- 查看图片 的 activity -->
+        </provider>
+        <!-- 查看图片 的 activity -->
         <activity
             android:name=".ui.viewbigimage.ViewBigImageActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".ui.paint.SDRPaintActivity"
             android:screenOrientation="portrait" />
     </application>
 

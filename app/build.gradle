@@ -10,7 +10,7 @@ android {
         versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        manifestPlaceholders = [AppName: "丽水", ApiKey: "de4735732955ec956047a908577241f1", AppKey: "1ec80e7b6351d72f02aa9a7cdd6630c5"]
+        manifestPlaceholders = [ApiKey: "de4735732955ec956047a908577241f1", AppKey: "1ec80e7b6351d72f02aa9a7cdd6630c5"]
     }
     buildTypes {
         release {
