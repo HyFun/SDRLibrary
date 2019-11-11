@@ -26,7 +26,7 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.request.target.Target;
 import com.sdr.lib.SDR_LIBRARY;
-import com.sdr.lib.rx.RxUtils;
+import com.sdr.lib.rx.RxUtil;
 import com.sdr.lib.util.AlertUtil;
 
 import java.io.File;
@@ -70,7 +70,7 @@ public class RxSaveImage {
                         if (file == null) {
                             throw new Exception("无法下载到图片");
                         }
-                        return RxUtils.createData(file);
+                        return RxUtil.createData(file);
                     }
                 })
                 .flatMap(new Function<File, ObservableSource<Uri>>() {
@@ -87,7 +87,7 @@ public class RxSaveImage {
                         return Observable.just(uri);
                     }
                 })
-                .compose(RxUtils.io_main())
+                .compose(RxUtil.io_main())
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {

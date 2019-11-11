@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sdr.lib.R;
+import com.sdr.lib.util.PermissionUtil;
 
 
 /**
@@ -124,16 +125,8 @@ public class ToastTop {
 
     // show之前需要授权
     public void show() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(mContext)) {
-                Toast.makeText(mContext, "请授权允许出现在其他应用上", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                intent.setData(Uri.parse("package:" + mContext.getPackageName()));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            } else {
-                create();
-            }
+        if (!PermissionUtil.Check.haveFloatPermission(mContext)) {
+            mContext.startActivity(PermissionUtil.Navigate.requestFloatPermission());
         } else {
             create();
         }

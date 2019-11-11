@@ -16,10 +16,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
-import com.sdr.lib.mvp.AbstractView;
 import com.sdr.lib.rx.RxUtil;
-import com.sdr.lib.rx.observer.RxObserver;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
+import com.sdr.lib.support.update.UpdateAppManager;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.ui.paint.SDRPaintActivity;
 import com.sdr.lib.ui.tree.TreeNode;
@@ -76,7 +75,7 @@ public class SDRLibraryActivity extends BaseActivity {
 
         // 检查更新
         adapter.addData(new MainItem("检查APP更新(bpm)", v -> {
-            AppUtil.checkUpdate(getActivity(), true, new AppNeedUpdateListener() {
+            UpdateAppManager.checkUpdate(getContext(), true, new AppNeedUpdateListener() {
                 @Override
                 public void isNeedUpdate(boolean need) {
                     Logger.d("APP是否需要更新>>>>>>>>>" + need);

@@ -10,7 +10,7 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.sdr.lib.rx.RxUtils;
+import com.sdr.lib.rx.RxUtil;
 import com.sdr.lib.support.path.AppPath;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.update.UpdateAppManager;
@@ -23,10 +23,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.observers.ResourceObserver;
 
 /**
@@ -55,7 +52,7 @@ public class AppUtil {
                             String loctionCode = la + "," + lo;
                             new WeatherObservable(loctionCode)
                                     .getWeather()
-                                    .compose(RxUtils.io_main())
+                                    .compose(RxUtil.io_main())
                                     .subscribeWith(weatherResourceObserver);
                         } else {
                             AlertUtil.showNegativeToastTop("授权失败", "请在设置中开启定位权限");
@@ -82,7 +79,7 @@ public class AppUtil {
                             String loctionCode = la + "," + lo;
                             new WeatherObservable(loctionCode)
                                     .getWeather()
-                                    .compose(RxUtils.io_main())
+                                    .compose(RxUtil.io_main())
                                     .subscribeWith(weatherResourceObserver);
                         } else {
                             AlertUtil.showNegativeToastTop("授权失败", "请在设置中开启定位权限");
@@ -91,26 +88,6 @@ public class AppUtil {
                 });
     }
 
-
-    /**
-     * 检测app更新
-     *
-     * @param activity
-     * @param showDialog
-     * @param needUpdateListener
-     */
-    public static void checkUpdate(FragmentActivity activity, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
-        //if (BuildConfig.DEBUG) return;
-        new RxPermissions(activity)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-                .subscribe(granted -> {
-                    if (granted) {
-                        UpdateAppManager.checkUpdate(activity, "bpm", 1, AppPath.getFilePath(), showDialog, needUpdateListener);
-                    } else {
-
-                    }
-                });
-    }
 
 
     /**

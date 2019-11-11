@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.sdr.lib.rx.RxUtils;
+import com.orhanobut.logger.Logger;
+import com.sdr.lib.rx.RxUtil;
 import com.sdr.lib.support.ActivityCollector;
+import com.sdr.lib.util.PermissionUtil;
 import com.sdr.sdrlib.base.BaseActivity;
 import com.sdr.sdrlib.util.AppUtil;
 
@@ -31,7 +33,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        Logger.d("悬浮窗权限：" + PermissionUtil.Check.haveFloatPermission(getContext()));
         // 判断是否获取了权限
         if (AppUtil.checkFloatPermission(getContext())) {
             start();
@@ -45,10 +47,8 @@ public class SplashActivity extends BaseActivity {
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                            intent.setData(Uri.parse("package:" + getContext().getPackageName()));
                             RxActivityResult.on(getActivity())
-                                    .startIntent(intent)
+                                    .startIntent(PermissionUtil.Navigate.requestFloatPermission())
                                     .subscribe(new Consumer<Result<AppCompatActivity>>() {
                                         @Override
                                         public void accept(Result<AppCompatActivity> appCompatActivityResult) throws Exception {
@@ -72,7 +72,7 @@ public class SplashActivity extends BaseActivity {
 
     private void start() {
         disposable = Observable.timer(2500, TimeUnit.MILLISECONDS)
-                .compose(RxUtils.io_main())
+                .compose(RxUtil.io_main())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {

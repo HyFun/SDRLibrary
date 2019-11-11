@@ -2,8 +2,13 @@ package com.sdr.lib.support.update;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Environment;
+import android.text.TextUtils;
 
+import com.sdr.lib.R;
 import com.sdr.lib.ui.dialog.SDRSimpleDialog;
 import com.sdr.lib.ui.dialog.SDRUpdateDialog;
 import com.sdr.lib.ui.dialog.SDRUpdateDownloadDialog;
@@ -18,23 +23,39 @@ import java.io.File;
 
 public class UpdateAppManager {
 
-    public static final void checkUpdate(Context context, String appName, int versionCode, String savePath, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
-        UpdatePresenter presenter = new UpdatePresenter(new UpdateImp(context, savePath, showDialog, needUpdateListener));
-        presenter.check(appName, versionCode);
+    public static final void checkUpdate(Context context, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
+        ApplicationInfo info = null;
+        try {
+            info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            return;
+        }
+
+        if (info.metaData == null) {
+            return;
+        }
+        String apiKey = info.metaData.getString("ApiKey");
+        String appKey = info.metaData.getString("AppKey");
+        if (TextUtils.isEmpty(apiKey) || TextUtils.isEmpty(appKey)) {
+            return;
+        }
+        UpdatePresenter presenter = new UpdatePresenter(new UpdateImp(context, showDialog, needUpdateListener));
+        presenter.check(apiKey, appKey, CommonUtil.getPackageInfo(context).versionName);
     }
 
 
     private static class UpdateImp implements UpdateView {
         private Context context;
-        private String savePath;
         private boolean showDialog;
         private AppNeedUpdateListener needUpdateListener;
 
-        public UpdateImp(Context context, String savePath, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
+        private String appName;
+
+        public UpdateImp(Context context, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
             this.context = context;
-            this.savePath = savePath;
             this.showDialog = showDialog;
             this.needUpdateListener = needUpdateListener;
+            appName = context.getResources().getString(R.string.app_name);
         }
 
         private SDRSimpleDialog simpleDialog;
@@ -78,21 +99,22 @@ public class UpdateAppManager {
         }
 
         @Override
-        public void showUpdateDialog(final UpdatePresenter presenter, String versionName, final String downLoadUrl, String updateDetail) {
+        public void showUpdateDialog(final UpdatePresenter presenter, final UpdateInfo.DataBean data) {
             // 显示更新提示框
             // 首先判断该activity是否已经下载了
-            final String apkName = getFileNameByUrl(downLoadUrl);
+            final String apkName = appName + "_" + data.getBuildVersion() + ".apk";
+            final String savePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
             final File localFile = getLocalExistFile(apkName, savePath);
 
             new SDRUpdateDialog.Builder(context)
-                    .title(localFile == null ? "是否更新到" + versionName + "版本？" : "已下载好" + versionName + "版本，是否安装？")
-                    .content(updateDetail)
+                    .title(localFile == null ? "是否更新到" + appName + data.getBuildVersion() + "(" + data.getBuildVersionNo() + ")版本？" : "已下载好" + appName + data.getBuildVersion() + "(" + data.getBuildVersionNo() + ")版本，是否安装？")
+                    .content(data.getBuildUpdateDescription())
                     .positiveText(localFile == null ? "立即更新" : "立即安装")
                     .listener(new SDRUpdateDialog.OnclickUpdateListener() {
                         @Override
                         public void clickUpdate(SDRUpdateDialog dialog) {
                             if (localFile == null) {
-                                presenter.downLoadApk(downLoadUrl, apkName, savePath);
+                                presenter.downLoadApk(data.getDownloadURL(), apkName, savePath);
                             } else {
                                 CommonUtil.installApk(context, localFile);
                             }
@@ -104,7 +126,7 @@ public class UpdateAppManager {
                             // 跳转到浏览器去下载
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_VIEW);
-                            Uri content_url = Uri.parse(downLoadUrl);
+                            Uri content_url = Uri.parse(data.getBuildShortcutUrl());
                             intent.setData(content_url);
                             context.startActivity(intent);
                             dialog.dismiss();

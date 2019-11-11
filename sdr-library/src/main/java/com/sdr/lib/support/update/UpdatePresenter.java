@@ -2,7 +2,6 @@ package com.sdr.lib.support.update;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.SpeedCalculator;
@@ -12,6 +11,10 @@ import com.liulishuo.okdownload.core.cause.EndCause;
 import com.liulishuo.okdownload.core.listener.DownloadListener4WithSpeed;
 import com.liulishuo.okdownload.core.listener.assist.Listener4SpeedAssistExtend;
 import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.mvp.AbstractView;
+import com.sdr.lib.rx.RxUtil;
+import com.sdr.lib.rx.ServerException;
+import com.sdr.lib.rx.observer.RxObserver;
 import com.sdr.lib.support.SDRAPI;
 
 import java.util.List;
@@ -19,10 +22,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.ResourceObserver;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.functions.Function;
 
 /**
  * Created by HyFun on 2018/10/30.
@@ -45,46 +45,48 @@ class UpdatePresenter {
     }
 
     /**
-     * 检测更新
-     *
-     * @param appName
-     * @param versionCode
+     * @param apiKey
+     * @param appKey
+     * @param versionName
      */
-    public void check(String appName, int versionCode) {
+    public void check(String apiKey, String appKey, String versionName) {
         // 开始检测更新
         view.showCheckDialog("正在检测更新");
 
-        sdrapi.checkUpdate(appName, versionCode)
-                .compose(new ObservableTransformer<UpdateInfo, UpdateInfo>() {
+        sdrapi.checkUpdate(apiKey, appKey, versionName)
+                .flatMap(new Function<UpdateInfo, ObservableSource<UpdateInfo.DataBean>>() {
                     @Override
-                    public ObservableSource<UpdateInfo> apply(Observable<UpdateInfo> upstream) {
-                        return upstream.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread());
+                    public ObservableSource<UpdateInfo.DataBean> apply(UpdateInfo updateInfo) throws Exception {
+                        if (updateInfo.getCode() == 0) {
+                            return RxUtil.createData(updateInfo.getData());
+                        } else {
+                            return Observable.error(new ServerException(updateInfo.getMessage(), updateInfo.getCode()));
+                        }
                     }
                 })
-                .subscribeWith(new ResourceObserver<UpdateInfo>() {
+                .compose(RxUtil.<UpdateInfo.DataBean>io_main())
+                .subscribeWith(new RxObserver<UpdateInfo.DataBean, AbstractView>() {
                     @Override
-                    public void onNext(UpdateInfo updateInfo) {
-                        String downLoadUrl = updateInfo.getAppAddr();
-                        view.isNeedUpdate(!TextUtils.isEmpty(downLoadUrl));
-                        if (TextUtils.isEmpty(downLoadUrl)) {
-                            // 说明是最新版本的app
-                            view.showCheckDialogResult("当前应用已是最新版本");
-                        } else {
+                    public void onNext(UpdateInfo.DataBean dataBean) {
+                        boolean isNeedUpdate = dataBean.isBuildHaveNewVersion();
+                        if (isNeedUpdate) {
                             // 说明需要更新app
                             view.hideCheckDialog();
-                            view.showUpdateDialog(UpdatePresenter.this, updateInfo.getVersionName(), updateInfo.getAppAddr(), updateInfo.getUpdateDetail());
+                            view.showUpdateDialog(UpdatePresenter.this, dataBean);
+                        } else {
+                            // 说明是最新版本
+                            view.showCheckDialogResult("当前应用已是最新版本");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        super.onError(e);
                         view.hideCheckDialog();
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
     }

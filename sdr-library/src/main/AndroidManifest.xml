@@ -13,6 +13,12 @@
         android:allowBackup="true"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
+        <meta-data android:name="AppName" android:value="${AppName}"/>
+        <meta-data android:name="ApiKey" android:value="${ApiKey}"/>
+        <meta-data android:name="AppKey" android:value="${AppKey}"/>
+
+
+
         <activity android:name=".ui.paint.SDRPaintActivity"></activity>
 
         <provider

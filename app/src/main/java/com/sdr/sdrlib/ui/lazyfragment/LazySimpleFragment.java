@@ -16,12 +16,11 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
-import com.sdr.lib.rx.RxUtils;
+import com.sdr.lib.rx.RxUtil;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
 import com.sdr.lib.util.AlertUtil;
 import com.sdr.lib.util.CommonUtil;
-import com.sdr.sdrlib.MainActivity;
 import com.sdr.sdrlib.R;
 import com.sdr.sdrlib.base.BaseFragment;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -92,7 +91,7 @@ public class LazySimpleFragment extends BaseFragment {
                                     String loctionCode = la + "," + lo;
                                     new WeatherObservable(loctionCode).
                                             getWeather()
-                                            .compose(RxUtils.io_main())
+                                            .compose(RxUtil.io_main())
                                             .subscribeWith(new ResourceObserver<Weather>() {
                                                 @Override
                                                 public void onNext(Weather weather) {
