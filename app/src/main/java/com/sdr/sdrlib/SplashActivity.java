@@ -35,7 +35,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         Logger.d("悬浮窗权限：" + PermissionUtil.Check.haveFloatPermission(getContext()));
         // 判断是否获取了权限
-        if (AppUtil.checkFloatPermission(getContext())) {
+        if (PermissionUtil.Check.haveFloatPermission(getContext())) {
             start();
         } else {
             MaterialDialog dialog = new MaterialDialog.Builder(getContext())
@@ -52,7 +52,7 @@ public class SplashActivity extends BaseActivity {
                                     .subscribe(new Consumer<Result<AppCompatActivity>>() {
                                         @Override
                                         public void accept(Result<AppCompatActivity> appCompatActivityResult) throws Exception {
-                                            if (AppUtil.checkFloatPermission(getContext())) {
+                                            if (PermissionUtil.Check.haveFloatPermission(getContext())) {
                                                 dialog.dismiss();
                                                 start();
                                             }
