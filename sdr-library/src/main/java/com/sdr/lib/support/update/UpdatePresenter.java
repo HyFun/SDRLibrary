@@ -60,7 +60,7 @@ class UpdatePresenter {
                         if (updateInfo.getCode() == 0) {
                             return RxUtil.createData(updateInfo.getData());
                         } else {
-                            return Observable.error(new ServerException(updateInfo.getMessage(), updateInfo.getCode()));
+                            return Observable.error(new ServerException(updateInfo.getMessage(), updateInfo.getCode()+""));
                         }
                     }
                 })

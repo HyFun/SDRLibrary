@@ -103,7 +103,7 @@ public class WeatherObservable {
                     });
         } else {
             // 没有
-            return Observable.error(new ServerException("没有可用的key", -1));
+            return Observable.error(new ServerException("没有可用的key", "-1"));
         }
     }
 
@@ -119,7 +119,7 @@ public class WeatherObservable {
                     @Override
                     public ObservableSource<Weather> apply(Integer integer) throws Exception {
                         if (weatherJson == null) {
-                            return Observable.error(new ServerException("天气获取异常", -1));
+                            return Observable.error(new ServerException("天气获取异常", "-1"));
                         } else {
                             Weather weather = HttpClient.gson.fromJson(weatherJson, new TypeToken<Weather>() {
                             }.getType());

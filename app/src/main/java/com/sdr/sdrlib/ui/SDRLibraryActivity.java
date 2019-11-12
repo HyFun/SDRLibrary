@@ -339,7 +339,7 @@ public class SDRLibraryActivity extends BaseActivity {
                         .flatMap(new Function<Integer, ObservableSource<Integer>>() {
                             @Override
                             public ObservableSource<Integer> apply(Integer integer) throws Exception {
-                                return Observable.error(new ServerException("ServerException", -111));
+                                return Observable.error(new ServerException("ServerException", "-111"));
                             }
                         })
                         .compose(RxUtil.io_main())
