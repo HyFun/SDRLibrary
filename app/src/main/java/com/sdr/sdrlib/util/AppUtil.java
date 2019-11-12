@@ -16,6 +16,7 @@ import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.update.UpdateAppManager;
 import com.sdr.lib.support.weather.Weather;
 import com.sdr.lib.support.weather.WeatherObservable;
+import com.sdr.lib.ui.dialog.SDRLoadingDialog;
 import com.sdr.lib.util.AlertUtil;
 import com.sdr.lib.util.CommonUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -34,6 +35,18 @@ import io.reactivex.observers.ResourceObserver;
 public class AppUtil {
     private AppUtil() {
     }
+
+
+    /**
+     * 显示progress dialog
+     *
+     * @param context
+     * @return
+     */
+    public static SDRLoadingDialog.Builder create(Context context) {
+        return new SDRLoadingDialog.Builder(context).content("正在加载...");
+    }
+
 
     public static void getWeather(FragmentActivity activity, ResourceObserver<Weather> weatherResourceObserver) {
         new RxPermissions(activity)

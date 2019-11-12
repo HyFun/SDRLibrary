@@ -16,7 +16,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
+import com.sdr.lib.mvp.AbstractView;
 import com.sdr.lib.rx.RxUtil;
+import com.sdr.lib.rx.ServerException;
+import com.sdr.lib.rx.observer.ExceptionSolver;
+import com.sdr.lib.rx.observer.ExceptionTransformer;
+import com.sdr.lib.rx.observer.RxObserver;
 import com.sdr.lib.support.update.AppNeedUpdateListener;
 import com.sdr.lib.support.update.UpdateAppManager;
 import com.sdr.lib.support.weather.Weather;
@@ -321,6 +326,44 @@ public class SDRLibraryActivity extends BaseActivity {
                                     String path = appCompatActivityResult.data().getStringExtra(SDRPaintActivity.RESULT);
                                     AlertUtil.showPositiveToastTop("保存成功", path);
                                 }
+                            }
+                        });
+            }
+        }));
+
+
+        adapter.addData(new MainItem("RxObserver", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Observable.just(0)
+                        .flatMap(new Function<Integer, ObservableSource<Integer>>() {
+                            @Override
+                            public ObservableSource<Integer> apply(Integer integer) throws Exception {
+                                return Observable.error(new ServerException("ServerException", -111));
+                            }
+                        })
+                        .compose(RxUtil.io_main())
+                        .subscribeWith(new RxObserver<Integer, AbstractView>(SDRLibraryActivity.this) {
+                            @Override
+                            public void onNext(Integer integer) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+
+                            @Override
+                            public void onExceptionSolve(List<ExceptionTransformer> transformerList) {
+                                super.onExceptionSolve(transformerList);
+                                transformerList.add(new ExceptionTransformer(ServerException.class, new ExceptionSolver() {
+                                    @Override
+                                    public void solve(AbstractView abstractView, Throwable throwable) {
+                                        ServerException serverException = (ServerException) throwable;
+                                        abstractView.showErrorMsg(serverException.getCode() + "", serverException.getMessage());
+                                    }
+                                }));
                             }
                         });
             }

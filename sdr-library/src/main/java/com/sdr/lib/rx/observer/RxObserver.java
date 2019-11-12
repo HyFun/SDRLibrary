@@ -11,6 +11,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import io.reactivex.observers.ResourceObserver;
 import retrofit2.HttpException;
@@ -47,18 +48,22 @@ public abstract class RxObserver<T, V extends AbstractView> extends ResourceObse
         Logger.t(HttpClient.TAG).e(e, e.getMessage());
         if (mView != null) {
             // 处理异常
+            boolean solved = false;
             for (ExceptionTransformer transformer : transformerList) {
-                if (e.getClass().isInstance(transformer.getExceptionClass())) {
+                if (transformer.getExceptionClass().isInstance(e)) {
                     ExceptionSolver solver = transformer.getSolver();
                     if (solver != null) {
                         solver.solve(mView, e);
                     }
+                    solved = true;
                     break;
-                } else {
-                    // 没有处理的类
-                    mView.showErrorMsg("未知错误", e.getMessage());
                 }
             }
+
+            if (!solved) {
+                mView.showErrorMsg("未知错误", e.getMessage());
+            }
+
         }
         onComplete();
     }

@@ -7,19 +7,19 @@ package com.sdr.lib.rx;
 
 public class ServerException extends Exception {
 
-    private int code;
+    private String code;
 
-    public ServerException(String message, int code) {
+    public ServerException(String message, String code) {
         super(message);
         this.code = code;
     }
 
-    public int getCode() {
+
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
-
 }
