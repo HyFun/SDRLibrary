@@ -4,7 +4,15 @@ import com.google.gson.Gson;
 import com.sdr.lib.SDR_LIBRARY;
 
 import java.io.File;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -71,24 +79,34 @@ public class HttpClient {
      */
 
     private OkHttpClient createOkHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        // 缓存  只会存放get缓存 存放在data/data/cache/NetCache文件夹下
-        File cacheFile = new File(HttpClientUtil.getNetCachePath(SDR_LIBRARY.getInstance().getApplication().getApplicationContext()));
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-        // 超时时间 30秒
-        builder.readTimeout(30, TimeUnit.SECONDS);
-        builder.connectTimeout(30, TimeUnit.SECONDS);
-        builder.writeTimeout(30, TimeUnit.SECONDS);
-        //设置缓存
-        AddCacheInterceptor cacheInterceptor = new AddCacheInterceptor(SDR_LIBRARY.getInstance().getApplication().getApplicationContext());
-        builder.addNetworkInterceptor(cacheInterceptor);
-        builder.addInterceptor(cacheInterceptor);
-        builder.cache(cache);
-        // interceptor  log
-        builder.addNetworkInterceptor(getLoggingInterceptor(SDR_LIBRARY.getInstance().isDebug()));
-        //错误重连
-        builder.retryOnConnectionFailure(true);
-        return builder.build();
+        try {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            // Install the all-trusting trust manager TLS
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            // Create an ssl socket factory with our all-trusting manager
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
+            // 缓存  只会存放get缓存 存放在data/data/cache/NetCache文件夹下
+            File cacheFile = new File(HttpClientUtil.getNetCachePath(SDR_LIBRARY.getInstance().getApplication().getApplicationContext()));
+            Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
+            // 超时时间 30秒
+            builder.readTimeout(30, TimeUnit.SECONDS);
+            builder.connectTimeout(30, TimeUnit.SECONDS);
+            builder.writeTimeout(30, TimeUnit.SECONDS);
+            //设置缓存
+            AddCacheInterceptor cacheInterceptor = new AddCacheInterceptor(SDR_LIBRARY.getInstance().getApplication().getApplicationContext());
+            builder.addNetworkInterceptor(cacheInterceptor);
+            builder.addInterceptor(cacheInterceptor);
+            builder.cache(cache);
+            // interceptor  log
+            builder.addNetworkInterceptor(getLoggingInterceptor(SDR_LIBRARY.getInstance().isDebug()));
+            //错误重连
+            builder.retryOnConnectionFailure(true);
+            return builder.build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -106,5 +124,21 @@ public class HttpClient {
         }
         return interceptor;
     }
+
+
+    final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[]{};
+        }
+    }};
 
 }
