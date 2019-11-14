@@ -142,6 +142,7 @@ public class PermissionUtil {
         public static Intent requestFloatPermission() {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
             intent.setData(Uri.parse("package:" + SDR_LIBRARY.getInstance().getApplication().getPackageName()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             return intent;
         }
     }
