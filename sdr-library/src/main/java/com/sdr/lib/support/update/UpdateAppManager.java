@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.sdr.lib.R;
+import com.orhanobut.logger.Logger;
 import com.sdr.lib.ui.dialog.SDRSimpleDialog;
 import com.sdr.lib.util.CommonUtil;
 
@@ -22,38 +22,37 @@ import java.io.File;
 public class UpdateAppManager {
 
     public static final void checkUpdate(Context context, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
-        ApplicationInfo info = null;
         try {
-            info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            if (info.metaData == null) {
+                Logger.e("请在application中设置meta-data AppName");
+                return;
+            }
+            String appName = info.metaData.getString("AppName");
+            if (TextUtils.isEmpty(appName)) {
+                Logger.e("请在application中设置meta-data AppName");
+                return;
+            }
+            UpdatePresenter presenter = new UpdatePresenter(new UpdateImp(context, context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), showDialog, needUpdateListener));
+            presenter.check(appName, CommonUtil.getPackageInfo(context).versionCode);
+
         } catch (PackageManager.NameNotFoundException e) {
             return;
         }
-
-        if (info.metaData == null) {
-            return;
-        }
-        String apiKey = info.metaData.getString("pgyer_ApiKey");
-        String appKey = info.metaData.getString("pgyer_AppKey");
-        if (TextUtils.isEmpty(apiKey) || TextUtils.isEmpty(appKey)) {
-            return;
-        }
-        UpdatePresenter presenter = new UpdatePresenter(new UpdateImp(context, showDialog, needUpdateListener));
-        presenter.check(apiKey, appKey, CommonUtil.getPackageInfo(context).versionName);
     }
 
 
     private static class UpdateImp implements UpdateView {
         private Context context;
+        private String savePath;
         private boolean showDialog;
         private AppNeedUpdateListener needUpdateListener;
 
-        private String appName;
-
-        public UpdateImp(Context context, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
+        public UpdateImp(Context context, String savePath, boolean showDialog, AppNeedUpdateListener needUpdateListener) {
             this.context = context;
+            this.savePath = savePath;
             this.showDialog = showDialog;
             this.needUpdateListener = needUpdateListener;
-            appName = context.getResources().getString(R.string.app_name);
         }
 
         private SDRSimpleDialog simpleDialog;
@@ -97,22 +96,21 @@ public class UpdateAppManager {
         }
 
         @Override
-        public void showUpdateDialog(final UpdatePresenter presenter, final UpdateInfo.DataBean data) {
+        public void showUpdateDialog(final UpdatePresenter presenter, String versionName, final String downLoadUrl, String updateDetail) {
             // 显示更新提示框
             // 首先判断该activity是否已经下载了
-            final String apkName = appName + "_" + data.getBuildVersion() + ".apk";
-            final String savePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+            final String apkName = getFileNameByUrl(downLoadUrl);
             final File localFile = getLocalExistFile(apkName, savePath);
 
             new SDRUpdateDialog.Builder(context)
-                    .title(localFile == null ? "是否更新到" + appName + data.getBuildVersion() + "(" + data.getBuildVersionNo() + ")版本？" : "已下载好" + appName + data.getBuildVersion() + "(" + data.getBuildVersionNo() + ")版本，是否安装？")
-                    .content(data.getBuildUpdateDescription())
+                    .title(localFile == null ? "是否更新到" + versionName + "版本？" : "已下载好" + versionName + "版本，是否安装？")
+                    .content(updateDetail)
                     .positiveText(localFile == null ? "立即更新" : "立即安装")
                     .listener(new SDRUpdateDialog.OnclickUpdateListener() {
                         @Override
                         public void clickUpdate(SDRUpdateDialog dialog) {
                             if (localFile == null) {
-                                presenter.downLoadApk(data.getDownloadURL(), apkName, savePath);
+                                presenter.downLoadApk(downLoadUrl, apkName, savePath);
                             } else {
                                 CommonUtil.installApk(context, localFile);
                             }
@@ -124,7 +122,7 @@ public class UpdateAppManager {
                             // 跳转到浏览器去下载
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_VIEW);
-                            Uri content_url = Uri.parse(data.getBuildShortcutUrl());
+                            Uri content_url = Uri.parse(downLoadUrl);
                             intent.setData(content_url);
                             context.startActivity(intent);
                             dialog.dismiss();

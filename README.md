@@ -150,17 +150,25 @@ SDR_LIBRARY.getInstance().setGlide(GlideApp.get(application));
 
 ### Support
 
-- update app 检测、更新APP
-    ```java
-    new RxPermissions(activity)
-                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    .subscribe(granted -> {
-                        if (granted) {
-                            UpdateAppManager.checkUpdate(activity, "bpm", 1, AppPath.getFilePath(), showDialog, needUpdateListener);
-                        } else {
+- update app 检测、更新APP。不需要存储权限
 
-                        }
-                    });
+    在mainfest.xml文件的application中加入
+
+    ```xml
+    <meta-data
+            android:name="AppName"
+            android:value="bpm" />
+    ```
+
+    检测并更新代码
+
+    ```java
+    UpdateAppManager.checkUpdate(getContext(), true, new AppNeedUpdateListener() {
+        @Override
+        public void isNeedUpdate(boolean need) {
+            Logger.d("APP是否需要更新>>>>>>>>>" + need);
+        }
+    });
     ```
 
 - weather 获取天气数据

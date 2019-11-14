@@ -17,6 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--检测app更新-->
+        <meta-data
+            android:name="AppName"
+            android:value="bpm" />
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

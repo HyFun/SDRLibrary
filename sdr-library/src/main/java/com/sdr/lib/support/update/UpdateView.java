@@ -16,7 +16,7 @@ interface UpdateView {
 
     void isNeedUpdate(boolean need);
 
-    void showUpdateDialog(UpdatePresenter presenter, UpdateInfo.DataBean data);
+    void showUpdateDialog(UpdatePresenter presenter, String versionName, String downLoadUrl, String updateDetail);
 
     void showDownLoadDilog(String message);
 

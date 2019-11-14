@@ -7,14 +7,58 @@ package com.sdr.lib.support.update;
 public class UpdateInfo {
 
     /**
-     * code : 0
-     * message :
-     * data : {"buildBuildVersion":"4","forceUpdateVersion":"","forceUpdateVersionNo":"","needForceUpdate":false,"downloadURL":"https://www.pgyer.com/app/installUpdate/9e73b5c817bfa4df38be166b5294bbbe?sig=ulrFqtWLJo9Atd94VifBGlCkgo6YH8oawTx5Jw8IHrn%2FOBS5Rp1t9RxsdU2I6aZf","buildHaveNewVersion":true,"buildVersionNo":"4","buildVersion":"1.0.4","buildShortcutUrl":"https://www.pgyer.com/hd6h","buildUpdateDescription":"更新实时信息定时自动刷新"}
+     * MD5 : d7dcc54b7cb7dc9c961e497b2213c9a8
+     * appAddr : http://58.240.174.254:8070/app/appVersion/downLoadAppApk/binjiang_4.apk
+     * appName : binjiang
+     * appSize : 5675722
+     * code : 200
+     * msg : success
+     * updateDetail : 01.新增工程监测<br>02.新增水质分析<br>03.修复Android 7.0 更新安装程序崩溃
+     * versionCode : 4
+     * versionName : 1.0.3
      */
 
+    private String MD5;
+    private String appAddr;
+    private String appName;
+    private String appSize;
     private int code;
-    private String message;
-    private DataBean data;
+    private String msg;
+    private String updateDetail;
+    private int versionCode;
+    private String versionName;
+
+    public String getMD5() {
+        return MD5;
+    }
+
+    public void setMD5(String MD5) {
+        this.MD5 = MD5;
+    }
+
+    public String getAppAddr() {
+        return appAddr;
+    }
+
+    public void setAppAddr(String appAddr) {
+        this.appAddr = appAddr;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+
+    public String getAppSize() {
+        return appSize;
+    }
+
+    public void setAppSize(String appSize) {
+        this.appSize = appSize;
+    }
 
     public int getCode() {
         return code;
@@ -24,125 +68,35 @@ public class UpdateInfo {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public DataBean getData() {
-        return data;
+    public String getUpdateDetail() {
+        return updateDetail;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setUpdateDetail(String updateDetail) {
+        this.updateDetail = updateDetail;
     }
 
-    public static class DataBean {
-        /**
-         * buildBuildVersion : 4
-         * forceUpdateVersion :
-         * forceUpdateVersionNo :
-         * needForceUpdate : false
-         * downloadURL : https://www.pgyer.com/app/installUpdate/9e73b5c817bfa4df38be166b5294bbbe?sig=ulrFqtWLJo9Atd94VifBGlCkgo6YH8oawTx5Jw8IHrn%2FOBS5Rp1t9RxsdU2I6aZf
-         * buildHaveNewVersion : true
-         * buildVersionNo : 4
-         * buildVersion : 1.0.4
-         * buildShortcutUrl : https://www.pgyer.com/hd6h
-         * buildUpdateDescription : 更新实时信息定时自动刷新
-         */
+    public int getVersionCode() {
+        return versionCode;
+    }
 
-        private String buildBuildVersion;
-        private String forceUpdateVersion;
-        private String forceUpdateVersionNo;
-        private boolean needForceUpdate;
-        private String downloadURL;
-        private boolean buildHaveNewVersion;
-        private String buildVersionNo;
-        private String buildVersion;
-        private String buildShortcutUrl;
-        private String buildUpdateDescription;
+    public void setVersionCode(int versionCode) {
+        this.versionCode = versionCode;
+    }
 
-        public String getBuildBuildVersion() {
-            return buildBuildVersion;
-        }
+    public String getVersionName() {
+        return versionName;
+    }
 
-        public void setBuildBuildVersion(String buildBuildVersion) {
-            this.buildBuildVersion = buildBuildVersion;
-        }
-
-        public String getForceUpdateVersion() {
-            return forceUpdateVersion;
-        }
-
-        public void setForceUpdateVersion(String forceUpdateVersion) {
-            this.forceUpdateVersion = forceUpdateVersion;
-        }
-
-        public String getForceUpdateVersionNo() {
-            return forceUpdateVersionNo;
-        }
-
-        public void setForceUpdateVersionNo(String forceUpdateVersionNo) {
-            this.forceUpdateVersionNo = forceUpdateVersionNo;
-        }
-
-        public boolean isNeedForceUpdate() {
-            return needForceUpdate;
-        }
-
-        public void setNeedForceUpdate(boolean needForceUpdate) {
-            this.needForceUpdate = needForceUpdate;
-        }
-
-        public String getDownloadURL() {
-            return downloadURL;
-        }
-
-        public void setDownloadURL(String downloadURL) {
-            this.downloadURL = downloadURL;
-        }
-
-        public boolean isBuildHaveNewVersion() {
-            return buildHaveNewVersion;
-        }
-
-        public void setBuildHaveNewVersion(boolean buildHaveNewVersion) {
-            this.buildHaveNewVersion = buildHaveNewVersion;
-        }
-
-        public String getBuildVersionNo() {
-            return buildVersionNo;
-        }
-
-        public void setBuildVersionNo(String buildVersionNo) {
-            this.buildVersionNo = buildVersionNo;
-        }
-
-        public String getBuildVersion() {
-            return buildVersion;
-        }
-
-        public void setBuildVersion(String buildVersion) {
-            this.buildVersion = buildVersion;
-        }
-
-        public String getBuildShortcutUrl() {
-            return buildShortcutUrl;
-        }
-
-        public void setBuildShortcutUrl(String buildShortcutUrl) {
-            this.buildShortcutUrl = buildShortcutUrl;
-        }
-
-        public String getBuildUpdateDescription() {
-            return buildUpdateDescription;
-        }
-
-        public void setBuildUpdateDescription(String buildUpdateDescription) {
-            this.buildUpdateDescription = buildUpdateDescription;
-        }
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
     }
 }
