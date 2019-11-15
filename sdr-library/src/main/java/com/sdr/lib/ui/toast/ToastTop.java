@@ -1,16 +1,13 @@
 package com.sdr.lib.ui.toast;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +15,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sdr.lib.R;
 import com.sdr.lib.util.PermissionUtil;
@@ -71,7 +67,7 @@ public class ToastTop {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         } else {
-            mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR | WindowManager.LayoutParams.TYPE_PHONE;
+            mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
         mParams.setTitle("Toast");
         // 设置吐司窗体的标识
@@ -83,9 +79,7 @@ public class ToastTop {
         // 位置属性
         mParams.gravity = Gravity.TOP;  // 左上
         //出现动画
-        //mParams.windowAnimations = R.style.Animation_Snack_Toast;
-        //mParams.windowAnimations = android.R.style.Animation_Toast;
-        mParams.windowAnimations = R.style.Animation_ToastTop;
+        mParams.windowAnimations = android.R.style.Animation_Toast;
 
         // 初始化吐司窗口布局
         mView = mLayoutInflater.inflate(R.layout.sdr_layout_public_snack_top_bar, null, false);
@@ -126,7 +120,7 @@ public class ToastTop {
     // show之前需要授权
     public void show() {
         if (!PermissionUtil.Check.haveFloatPermission(mContext)) {
-            mContext.startActivity(PermissionUtil.Navigate.requestFloatPermission());
+            PermissionUtil.Navigate.navigateToFloat(mContext);
         } else {
             create();
         }
