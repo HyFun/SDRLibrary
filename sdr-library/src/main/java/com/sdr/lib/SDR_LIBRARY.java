@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.CsvFormatStrategy;
+import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
@@ -54,7 +56,7 @@ public class SDR_LIBRARY {
         getInstance().setDebug(CommonUtil.isApkInDebug(application));
         getInstance().setActivityConfig(activityConfig);
 
-
+        // 初始化logger
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
 //                .methodCount(0)         // (Optional) How many method line to show. Default 2
@@ -68,6 +70,7 @@ public class SDR_LIBRARY {
                 return getInstance().isDebug();
             }
         });
+        Logger.addLogAdapter(new DiskLogAdapter(CsvFormatStrategy.newBuilder().path(application.getExternalCacheDir().getAbsolutePath()).build()));
         // RxActivityResult初始化操作
         RxActivityResult.register(application);
     }
