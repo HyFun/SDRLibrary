@@ -116,7 +116,8 @@ public class HttpClient {
      * @return
      */
     private HttpLoggingInterceptor getLoggingInterceptor(boolean debug) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLogger());
+         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLogger());
+//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         if (debug) {
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY); // 测试
         } else {

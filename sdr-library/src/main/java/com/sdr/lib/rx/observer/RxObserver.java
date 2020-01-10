@@ -1,5 +1,7 @@
 package com.sdr.lib.rx.observer;
 
+import android.text.TextUtils;
+
 import com.google.gson.JsonParseException;
 import com.orhanobut.logger.Logger;
 import com.sdr.lib.http.HttpClient;
@@ -11,7 +13,6 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import io.reactivex.observers.ResourceObserver;
 import retrofit2.HttpException;
@@ -45,7 +46,7 @@ public abstract class RxObserver<T, V extends AbstractView> extends ResourceObse
     @Override
     public void onError(Throwable e) {
         // 打印出异常信息
-        Logger.t(HttpClient.TAG).e(e, e.getMessage());
+        Logger.t(HttpClient.TAG).e(e, TextUtils.isEmpty(e.getMessage()) ? "No errMsg!" : e.getMessage());
         if (mView != null) {
             // 处理异常
             boolean solved = false;
