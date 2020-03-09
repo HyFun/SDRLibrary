@@ -20,8 +20,12 @@
 
         <!--检测app更新-->
         <meta-data
-            android:name="AppName"
-            android:value="bpm" />
+            android:name="pyger_api_key"
+            android:value="de4735732955ec956047a908577241f1" />
+
+        <meta-data
+            android:name="pyger_app_key"
+            android:value="1980e02b92ec04a945fe0292fcce3aee" />
 
         <activity
             android:name=".SplashActivity"

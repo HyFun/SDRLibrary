@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.google.gson.reflect.TypeToken;
 import com.liulishuo.okdownload.DownloadTask;
 import com.liulishuo.okdownload.SpeedCalculator;
 import com.liulishuo.okdownload.core.breakpoint.BlockInfo;
@@ -13,8 +14,12 @@ import com.liulishuo.okdownload.core.listener.DownloadListener4WithSpeed;
 import com.liulishuo.okdownload.core.listener.assist.Listener4SpeedAssistExtend;
 import com.sdr.lib.http.HttpClient;
 import com.sdr.lib.mvp.AbstractView;
+import com.sdr.lib.rx.RxUtil;
+import com.sdr.lib.rx.ServerException;
 import com.sdr.lib.rx.observer.RxObserver;
 import com.sdr.lib.support.SDRAPI;
+
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +29,9 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 /**
  * Created by HyFun on 2018/10/30.
@@ -46,36 +53,47 @@ class UpdatePresenter {
         );
     }
 
+
     /**
      * 检测更新
-     *
-     * @param appName
-     * @param versionCode
+     * @param api_key 蒲公英用户的apikey
+     * @param app_key 蒲公英app的app key
+     * @param versionName 当前版本的版本号
      */
-    public void check(String appName, int versionCode) {
+    public void check(String api_key,String app_key, String versionName) {
         // 开始检测更新
         view.showCheckDialog("正在检测更新");
 
-        sdrapi.checkUpdate(appName, versionCode)
-                .compose(new ObservableTransformer<UpdateInfo, UpdateInfo>() {
+        sdrapi.checkUpdate(api_key,app_key,versionName)
+                .flatMap(new Function<ResponseBody, ObservableSource<PgyerUpdateInfo>>() {
                     @Override
-                    public ObservableSource<UpdateInfo> apply(Observable<UpdateInfo> upstream) {
-                        return upstream.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread());
+                    public ObservableSource<PgyerUpdateInfo> apply(ResponseBody responseBody) throws Exception {
+                        String json = responseBody.string();
+                        JSONObject jsonObject = new JSONObject(json);
+                        int code = jsonObject.getInt("code");
+                        if (code == 0){
+                            String data = jsonObject.getString("data");
+                            PgyerUpdateInfo updateInfo = HttpClient.gson.fromJson(data,new TypeToken<PgyerUpdateInfo>(){}.getType());
+                            return RxUtil.createData(updateInfo);
+                        }else {
+                            String error = jsonObject.getString("message");
+                            return Observable.error(new ServerException(error,code+""));
+                        }
                     }
                 })
-                .subscribeWith(new RxObserver<UpdateInfo, AbstractView>() {
+                .compose(RxUtil.<PgyerUpdateInfo>io_main())
+                .subscribeWith(new RxObserver<PgyerUpdateInfo, AbstractView>() {
                     @Override
-                    public void onNext(UpdateInfo updateInfo) {
-                        String downLoadUrl = updateInfo.getAppAddr();
-                        view.isNeedUpdate(!TextUtils.isEmpty(downLoadUrl));
-                        if (TextUtils.isEmpty(downLoadUrl)) {
+                    public void onNext(PgyerUpdateInfo updateInfo) {
+                        String downLoadUrl = updateInfo.getDownloadURL();
+                        view.isNeedUpdate(updateInfo.isBuildHaveNewVersion());
+                        if (!updateInfo.isBuildHaveNewVersion()) {
                             // 说明是最新版本的app
                             view.showCheckDialogResult("当前应用已是最新版本");
                         } else {
                             // 说明需要更新app
                             view.hideCheckDialog();
-                            view.showUpdateDialog(UpdatePresenter.this, updateInfo.getVersionName(), updateInfo.getAppAddr(), updateInfo.getUpdateDetail());
+                            view.showUpdateDialog(UpdatePresenter.this, updateInfo.getBuildVersion(), downLoadUrl, updateInfo.getBuildUpdateDescription());
                         }
                     }
 

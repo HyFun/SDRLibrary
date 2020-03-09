@@ -25,16 +25,23 @@ public class UpdateAppManager {
         try {
             ApplicationInfo info = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             if (info.metaData == null) {
-                Logger.e("请在application中设置meta-data AppName");
+                Logger.e("请在application中设置meta-data pyger_api_key和pyger_app_key");
                 return;
             }
-            String appName = info.metaData.getString("AppName");
-            if (TextUtils.isEmpty(appName)) {
-                Logger.e("请在application中设置meta-data AppName");
+            String apiKey = info.metaData.getString("pyger_api_key");
+            String appKey = info.metaData.getString("pyger_app_key");
+            if (TextUtils.isEmpty(apiKey)) {
+                Logger.e("请在application中设置meta-data pyger_api_key");
                 return;
             }
+
+            if (TextUtils.isEmpty(appKey)) {
+                Logger.e("请在application中设置meta-data pyger_app_key");
+                return;
+            }
+
             UpdatePresenter presenter = new UpdatePresenter(new UpdateImp(context, context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), showDialog, needUpdateListener));
-            presenter.check(appName, CommonUtil.getPackageInfo(context).versionCode);
+            presenter.check(apiKey,appKey,CommonUtil.getPackageInfo(context).versionName);
 
         } catch (PackageManager.NameNotFoundException e) {
             return;
@@ -99,7 +106,8 @@ public class UpdateAppManager {
         public void showUpdateDialog(final UpdatePresenter presenter, String versionName, final String downLoadUrl, String updateDetail) {
             // 显示更新提示框
             // 首先判断该activity是否已经下载了
-            final String apkName = getFileNameByUrl(downLoadUrl);
+//            final String apkName = getFileNameByUrl(downLoadUrl);
+            final String apkName = versionName+".apk";
             final File localFile = getLocalExistFile(apkName, savePath);
 
             new SDRUpdateDialog.Builder(context)
